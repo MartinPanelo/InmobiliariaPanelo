@@ -4,9 +4,9 @@ namespace InmobiliariaPanelo.Models
 
         List<Propietario> PropietarioObtenerTodos();
     //    int PropietarioAlta(Propietario p);
-   //     int PropietarioBaja(int id);
+        int PropietarioEliminar(int id);
    //     int PropietarioModificacion(Propietario p);
-  //      Propietario PropietarioObtenerPorId(int id);
+        Propietario PropietarioObtenerPorId(int id);
 
 
 

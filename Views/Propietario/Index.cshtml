@@ -3,14 +3,15 @@
 @{
     ViewData["Title"] = "Propietarios";
 }
-<h1>Propietarios</h1>
+<h1>Propietario</h1>
 <br>
+<a asp-action="Agregar" class="btn btn-success" title="Agregar Propietario">Agregar Propietario</a>
 <table class="table">
     <thead>
         <tr>
-			<th>
+@* 			<th>
 				@Html.DisplayNameFor(model => model.IdPropietario)
-			</th>
+			</th> *@
             <th>
                 @Html.DisplayNameFor(model => model.Nombre)
             </th>
@@ -26,15 +27,15 @@
             <th>
                 @Html.DisplayNameFor(model => model.Email)
             </th>
-            <th></th>
+            <th>Acciones</th>
         </tr>
     </thead>
 <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
+@*             <td>
                 @Html.DisplayFor(modelItem => item.IdPropietario)
-            </td>
+            </td> *@
             <td>
                 @Html.DisplayFor(modelItem => item.Nombre)
             </td>
@@ -51,11 +52,10 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
 			<td>
-				<a asp-action="Edit" asp-route-id="@item.IdPropietario" title="Editar"><span class="lnr lnr-pencil"></span></a>&nbsp;
-				<a asp-action="Eliminar" asp-route-id="@item.IdPropietario" title="Eliminar"><span class="lnr lnr-cross"></span></a>
-				<a asp-action="PorPropietario" asp-controller="Inmuebles" asp-route-id="@item.IdPropietario" title="Mis Propiedades"><span class="lnr lnr-apartment"></span></a>
-                @Html.ActionLink("Mis Propiedades", "PorPropietario", "Inmuebles", new { id= item.IdPropietario })
-			</td>
+                <a type="button" class="btn btn-danger" asp-action="PropietarioEliminar" asp-route-id="@item.IdPropietario" title="Eliminar propietario"><span>Borrar</span></a>
+                <a type="button" class="btn btn-warning" asp-action="PropietarioEditar" asp-route-id="@item.IdPropietario" title="Editar propietario"><span>Editar</span></a>
+
+            </td>
         </tr>
 }
     </tbody>

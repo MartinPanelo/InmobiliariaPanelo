@@ -8,7 +8,53 @@ namespace InmobiliariaPanelo.Models
         //protected readonly string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=inmobiliaria;Trusted_Connection=True;MultipleActiveResultSets=true";
         readonly string	connectionString = "server=localhost;user=root;database=inmobiliaria;port=3306;password=";
 
+		public Propietario PropietarioObtenerPorId(int id){
+			Propietario? p = null;
+			using (var connection = new MySqlConnection(connectionString)){
+				string sql = @"SELECT IdPropietario, Nombre, Apellido, Dni, Telefono, Email, Clave FROM propietarios WHERE IdPropietario = @id";
+				
+				using (var command = new MySqlCommand(sql, connection))
+				{
+					command.Parameters.AddWithValue("@id", id);
+					connection.Open();
+					MySqlDataReader reader = command.ExecuteReader();
+					
+					if (reader.Read())
+					{
+						p = new Propietario
+						(
+							reader.GetInt32(nameof(Propietario.IdPropietario)),
+							reader.GetString("Nombre"),
+							reader.GetString("Apellido"),
+							reader.GetString("Dni"),
+							reader.GetString("Telefono"),
+							reader.GetString("Email"),
+							reader.GetString("Clave")
+                        );
+					}
+					connection.Close();
+				}			
+			}
+			return p!;
+		}
 
+        public int PropietarioEliminar(int id)
+        {
+            int res = 0;
+			using (var connection = new MySqlConnection(connectionString))
+			{
+				string sql = @$"DELETE FROM propietarios WHERE {nameof(Propietario.IdPropietario)} = @id";
+				using (var command = new MySqlCommand(sql, connection))
+				{
+					command.CommandType = CommandType.Text;
+					command.Parameters.AddWithValue("@id", id);
+					connection.Open();
+					res = command.ExecuteNonQuery();
+					connection.Close();
+				}
+			}
+			return res;
+        }
 
         public List<Propietario> PropietarioObtenerTodos()
         {
