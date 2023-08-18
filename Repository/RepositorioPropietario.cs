@@ -3,7 +3,7 @@ using MySql.Data.MySqlClient;
 
 namespace InmobiliariaPanelo.Models
 {
-	public class RepositorioPropietario : IPropietarioRepositorio
+	public class RepositorioPropietario// : IPropietarioRepositorio
 	{
         //protected readonly string connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=inmobiliaria;Trusted_Connection=True;MultipleActiveResultSets=true";
         readonly string	connectionString = "server=localhost;user=root;database=inmobiliaria;port=3306;password=";
@@ -22,15 +22,15 @@ namespace InmobiliariaPanelo.Models
 					if (reader.Read())
 					{
 						p = new Propietario
-						(
-							reader.GetInt32(nameof(Propietario.IdPropietario)),
-							reader.GetString("Nombre"),
-							reader.GetString("Apellido"),
-							reader.GetString("Dni"),
-							reader.GetString("Telefono"),
-							reader.GetString("Email"),
-							reader.GetString("Clave")
-                        );
+						{
+							IdPropietario = reader.GetInt32("IdPropietario"),
+							Nombre = reader.GetString("Nombre"),
+							Apellido = reader.GetString("Apellido"),
+							Dni = reader.GetString("Dni"),
+							Telefono = reader.GetString("Telefono"),
+							Email = reader.GetString("Email"),
+							Clave = reader.GetString("Clave")
+						};
 					}
 					connection.Close();
 				}			
@@ -73,15 +73,15 @@ namespace InmobiliariaPanelo.Models
 					while (reader.Read())
 					{
 						Propietario p = new Propietario
-						(
-							reader.GetInt32(nameof(Propietario.IdPropietario)),
-							reader.GetString("Nombre"),
-							reader.GetString("Apellido"),
-							reader.GetString("Dni"),
-							reader.GetString("Telefono"),
-							reader.GetString("Email"),
-							reader.GetString("Clave")
-                        );
+						{
+							IdPropietario = reader.GetInt32("IdPropietario"),
+							Nombre = reader.GetString("Nombre"),
+							Apellido = reader.GetString("Apellido"),
+							Dni = reader.GetString("Dni"),
+							Telefono = reader.GetString("Telefono"),
+							Email = reader.GetString("Email"),
+							Clave = reader.GetString("Clave")
+						};
 						res.Add(p);
 					}
 					connection.Close();

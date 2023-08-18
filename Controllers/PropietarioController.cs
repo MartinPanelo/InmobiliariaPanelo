@@ -6,16 +6,17 @@ namespace InmobiliariaPanelo.Controllers{
 
     public class PropietarioController : Controller{
 
-        private readonly IPropietarioRepositorio repositorio;
-		public PropietarioController(){
+        private readonly RepositorioPropietario repositorio = new RepositorioPropietario();
+		/* public PropietarioController(){
 			repositorio = new RepositorioPropietario();
-		}
+		} */
 
 
         public ActionResult Index(){
 			var lista = repositorio.PropietarioObtenerTodos();
 		//	Console.WriteLine(TempData["mensaje"]);
             return View(lista);
+            
         }
 
         public ActionResult PropietarioEliminar(int id){

@@ -7,18 +7,19 @@ namespace InmobiliariaPanelo.Models{
         [Display(Name = "Identificador")]
         public int IdPropietario {get; set;}
         [Required]
-		public string Nombre { get; set; }
+		public string? Nombre { get; set; }// = ""; / = String.Empty; 
 		[Required]
-		public string Apellido { get; set; }
+		public string? Apellido { get; set; }
 		[Required]
-		public string Dni { get; set; }
+		public string? Dni { get; set; }
 		public string? Telefono { get; set; }
 		[Required, DataType(DataType.EmailAddress)]
-		public string Email { get; set; }
+		public string? Email { get; set; }
 		[Required, DataType(DataType.Password)]
-		public string Clave { get; set; }
+		public string? Clave { get; set; }
 
-		public Propietario(int id, string nombre, string apellido, string dni, string? telefono, string email, string clave){
+
+		/* public Propietario(int id, string nombre, string apellido, string dni, string? telefono, string email, string clave){
 			IdPropietario = id;
 			Nombre = nombre;
 			Apellido = apellido;
@@ -26,7 +27,7 @@ namespace InmobiliariaPanelo.Models{
 			Telefono = telefono;
 			Email = email;
 			Clave = clave;
-		}
+		} */
 
     }
 }
