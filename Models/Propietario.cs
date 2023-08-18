@@ -12,8 +12,9 @@ namespace InmobiliariaPanelo.Models{
 		public string? Apellido { get; set; }
 		[Required]
 		public string? Dni { get; set; }
+		[Required]
 		public string? Telefono { get; set; }
-		[Required, DataType(DataType.EmailAddress)]
+		[EmailAddress]
 		public string? Email { get; set; }
 		[Required, DataType(DataType.Password)]
 		public string? Clave { get; set; }

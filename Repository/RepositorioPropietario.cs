@@ -91,6 +91,51 @@ namespace InmobiliariaPanelo.Models
 			return res;
 		}
 
+		public int PropietarioAlta(Propietario propietario){
+			int res = -1;
+			using (var connection = new MySqlConnection(connectionString))
+			{
+				string sql = @"INSERT INTO propietarios 
+					(Nombre, Apellido, Dni, Telefono, Email, Clave) 
+					VALUES (@nombre, @apellido, @dni, @telefono, @email, @clave);
+					SELECT LAST_INSERT_ID();";//devuelve el id insertado (SCOPE_IDENTITY para sql)
+				using (var command = new MySqlCommand(sql, connection))
+				{
+					command.CommandType = CommandType.Text;
+					command.Parameters.AddWithValue("@nombre", propietario.Nombre);
+					command.Parameters.AddWithValue("@apellido", propietario.Apellido);
+					command.Parameters.AddWithValue("@dni", propietario.Dni);
+					command.Parameters.AddWithValue("@telefono", propietario.Telefono);
+					command.Parameters.AddWithValue("@email", propietario.Email);
+					command.Parameters.AddWithValue("@clave", propietario.Clave);
+					connection.Open();
+					res = Convert.ToInt32(command.ExecuteScalar());
+					propietario.IdPropietario = res;
+					connection.Close();
+				}
+			}
+			return res; // devuelve el id del propietario insertado
+		}
+		public int Baja(int id)
+		{
+			int res = -1;
+			using (var connection = new MySqlConnection(connectionString))
+			{
+				string sql = @$"DELETE FROM Propietarios WHERE {nameof(Propietario.IdPropietario)} = @id";
+				using (var command = new MySqlCommand(sql, connection))
+				{
+					command.CommandType = CommandType.Text;
+					command.Parameters.AddWithValue("@id", id);
+					connection.Open();
+					res = command.ExecuteNonQuery();
+					connection.Close();
+				}
+			}
+			return res;
+		}
+
+
+		}
+
     }
 
-}

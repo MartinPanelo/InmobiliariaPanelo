@@ -19,8 +19,9 @@ namespace InmobiliariaPanelo.Controllers{
             
         }
 
-        public ActionResult PropietarioEliminar(int id){
 
+        public ActionResult PropietarioEliminar(int id){
+            //esto es la vista
             var PropietarioEliminar = repositorio.PropietarioObtenerPorId(id);
 
 
@@ -31,17 +32,24 @@ namespace InmobiliariaPanelo.Controllers{
         }
         [HttpPost]
         public ActionResult PropietarioEliminar(int id,int id2=0){
-          
+            //esto es la accion
+
+            
            try
 			{
+                
+                var PropietarioEliminar = repositorio.PropietarioObtenerPorId(id);
+    //TempData["Mensaje"] = "Se elimino correctamente al Propietario : " + PropietarioEliminar.Nombre + " " + PropietarioEliminar.Apellido;
+
 				repositorio.PropietarioEliminar(id);
-				TempData["Mensaje"] = "Eliminación realizada correctamente";
-				return RedirectToAction(nameof(Index));
+
+				return RedirectToAction("Index");
 			}
+            
 			catch (Exception ex)
 			{
-                TempData["Mensaje"] = ex.Message;
-                return RedirectToAction(nameof(Index));
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Index");
 			}
         }
 
@@ -56,5 +64,34 @@ namespace InmobiliariaPanelo.Controllers{
         
         
         }
+        public ActionResult PropietarioAgregar(){
+			
+            return View("VistaAgregar");
+            
+        }
+        [HttpPost]
+        public ActionResult PropietarioAgregar(Propietario propietario){
+			
+            try
+			{
+				if (ModelState.IsValid)
+				{
+					repositorio.PropietarioAlta(propietario);
+
+					//TempData["Id"] = propietario.IdPropietario;
+					return RedirectToAction("Index");
+				}
+				else
+					return View(propietario);
+			}
+			catch (Exception ex)
+			{
+                TempData["Error"] = ex.Message;
+                //mandar el error tambien
+                return RedirectToAction("Index");
+			}
+            
+        }
+
     }
 }

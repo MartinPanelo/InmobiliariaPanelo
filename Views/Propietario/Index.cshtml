@@ -3,9 +3,14 @@
 @{
     ViewData["Title"] = "Propietarios";
 }
+
 <h1>Propietario</h1>
+
+
+        @TempData["Mensaje"]
+
 <br>
-<a asp-action="Agregar" class="btn btn-success" title="Agregar Propietario">Agregar Propietario</a>
+<a asp-action="PropietarioAgregar" class="btn btn-success" title="Agregar Propietario">Agregar Propietario</a>
 <table class="table">
     <thead>
         <tr>
@@ -60,3 +65,4 @@
 }
     </tbody>
 </table>
+
