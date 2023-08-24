@@ -23,29 +23,20 @@ namespace InmobiliariaPanelo.Controllers{
         public ActionResult PropietarioEliminar(int id){
             //esto es la vista
             var PropietarioEliminar = repositorio.PropietarioObtenerPorId(id);
-
-
-            return View("VistaEliminar", PropietarioEliminar);
-        
-        
-        
+            return View("VistaEliminar", PropietarioEliminar);          
         }
+
         [HttpPost]
         public ActionResult PropietarioEliminar(int id,int id2=0){
             //esto es la accion
-
-            
            try
 			{
-                
                 var PropietarioEliminar = repositorio.PropietarioObtenerPorId(id);
     //TempData["Mensaje"] = "Se elimino correctamente al Propietario : " + PropietarioEliminar.Nombre + " " + PropietarioEliminar.Apellido;
 
 				repositorio.PropietarioEliminar(id);
-
 				return RedirectToAction("Index");
-			}
-            
+			}            
 			catch (Exception ex)
 			{
                 TempData["Error"] = ex.Message;
@@ -53,31 +44,16 @@ namespace InmobiliariaPanelo.Controllers{
 			}
         }
 
-
-        public ActionResult PropietarioEditar(int id){
-
-            var PropietarioEditar = repositorio.PropietarioObtenerPorId(id);
-
-
-            return View("VistaEditar", PropietarioEditar);
-        
-        
-        
-        }
-        public ActionResult PropietarioAgregar(){
-			
-            return View("VistaAgregar");
-            
+        public ActionResult PropietarioAgregar(){			
+            return View("VistaAgregar");            
         }
         [HttpPost]
-        public ActionResult PropietarioAgregar(Propietario propietario){
-			
+        public ActionResult PropietarioAgregar(Propietario propietario){			
             try
 			{
 				if (ModelState.IsValid)
 				{
 					repositorio.PropietarioAlta(propietario);
-
 					//TempData["Id"] = propietario.IdPropietario;
 					return RedirectToAction("Index");
 				}
@@ -91,6 +67,32 @@ namespace InmobiliariaPanelo.Controllers{
                 return RedirectToAction("Index");
 			}
             
+        }
+
+        public ActionResult PropietarioEditar(int id){
+
+            var PropietarioEditar = repositorio.PropietarioObtenerPorId(id);
+            return View("VistaEditar", PropietarioEditar);        
+        }
+        [HttpPost]
+        public ActionResult PropietarioEditar(int id, Propietario propietario){
+
+            Propietario? p = null;
+            try{
+                p = repositorio.PropietarioObtenerPorId(id);
+                p.Nombre = propietario.Nombre;
+                p.Apellido = propietario.Apellido;
+                p.Dni = propietario.Dni;
+                p.Telefono = propietario.Telefono;
+                p.Email = propietario.Email;
+                repositorio.PropietarioEditar(p);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Index");
+            }
         }
 
     }

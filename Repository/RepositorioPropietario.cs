@@ -11,7 +11,7 @@ namespace InmobiliariaPanelo.Models
 		public Propietario PropietarioObtenerPorId(int id){
 			Propietario? p = null;
 			using (var connection = new MySqlConnection(connectionString)){
-				string sql = @"SELECT IdPropietario, Nombre, Apellido, Dni, Telefono, Email, Clave FROM propietarios WHERE IdPropietario = @id";
+				string sql = @"SELECT IdPropietario, Nombre, Apellido, Dni, Telefono, Email FROM propietarios WHERE IdPropietario = @id";
 				
 				using (var command = new MySqlCommand(sql, connection))
 				{
@@ -29,7 +29,6 @@ namespace InmobiliariaPanelo.Models
 							Dni = reader.GetString("Dni"),
 							Telefono = reader.GetString("Telefono"),
 							Email = reader.GetString("Email"),
-							Clave = reader.GetString("Clave")
 						};
 					}
 					connection.Close();
@@ -64,7 +63,7 @@ namespace InmobiliariaPanelo.Models
 
 			using (var connection = new MySqlConnection(connectionString))
 			{
-				string sql = @"SELECT IdPropietario, Nombre, Apellido, Dni, Telefono, Email, Clave FROM propietarios";
+				string sql = @"SELECT IdPropietario, Nombre, Apellido, Dni, Telefono, Email FROM propietarios";
 				using (var command = new MySqlCommand(sql, connection))
 				{
 					command.CommandType = CommandType.Text;
@@ -80,7 +79,6 @@ namespace InmobiliariaPanelo.Models
 							Dni = reader.GetString("Dni"),
 							Telefono = reader.GetString("Telefono"),
 							Email = reader.GetString("Email"),
-							Clave = reader.GetString("Clave")
 						};
 						res.Add(p);
 					}
@@ -96,8 +94,8 @@ namespace InmobiliariaPanelo.Models
 			using (var connection = new MySqlConnection(connectionString))
 			{
 				string sql = @"INSERT INTO propietarios 
-					(Nombre, Apellido, Dni, Telefono, Email, Clave) 
-					VALUES (@nombre, @apellido, @dni, @telefono, @email, @clave);
+					(Nombre, Apellido, Dni, Telefono, Email) 
+					VALUES (@nombre, @apellido, @dni, @telefono, @email);
 					SELECT LAST_INSERT_ID();";//devuelve el id insertado (SCOPE_IDENTITY para sql)
 				using (var command = new MySqlCommand(sql, connection))
 				{
@@ -107,7 +105,6 @@ namespace InmobiliariaPanelo.Models
 					command.Parameters.AddWithValue("@dni", propietario.Dni);
 					command.Parameters.AddWithValue("@telefono", propietario.Telefono);
 					command.Parameters.AddWithValue("@email", propietario.Email);
-					command.Parameters.AddWithValue("@clave", propietario.Clave);
 					connection.Open();
 					res = Convert.ToInt32(command.ExecuteScalar());
 					propietario.IdPropietario = res;
@@ -116,16 +113,23 @@ namespace InmobiliariaPanelo.Models
 			}
 			return res; // devuelve el id del propietario insertado
 		}
-		public int Baja(int id)
+
+		public int PropietarioEditar(Propietario propietario)
 		{
 			int res = -1;
 			using (var connection = new MySqlConnection(connectionString))
 			{
-				string sql = @$"DELETE FROM Propietarios WHERE {nameof(Propietario.IdPropietario)} = @id";
+				string sql = @"UPDATE propietarios
+					SET Nombre=@nombre, Apellido=@apellido, Dni=@dni, Telefono=@telefono, Email=@email WHERE IdPropietario = @id";
 				using (var command = new MySqlCommand(sql, connection))
 				{
 					command.CommandType = CommandType.Text;
-					command.Parameters.AddWithValue("@id", id);
+					command.Parameters.AddWithValue("@nombre", propietario.Nombre);
+					command.Parameters.AddWithValue("@apellido", propietario.Apellido);
+					command.Parameters.AddWithValue("@dni", propietario.Dni);
+					command.Parameters.AddWithValue("@telefono", propietario.Telefono);
+					command.Parameters.AddWithValue("@email", propietario.Email);
+					command.Parameters.AddWithValue("@id", propietario.IdPropietario);
 					connection.Open();
 					res = command.ExecuteNonQuery();
 					connection.Close();
@@ -133,7 +137,6 @@ namespace InmobiliariaPanelo.Models
 			}
 			return res;
 		}
-
 
 		}
 

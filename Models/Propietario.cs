@@ -14,20 +14,18 @@ namespace InmobiliariaPanelo.Models{
 		public string? Dni { get; set; }
 		[Required]
 		public string? Telefono { get; set; }
-		[EmailAddress]
+		[Required, EmailAddress]
 		public string? Email { get; set; }
-		[Required, DataType(DataType.Password)]
-		public string? Clave { get; set; }
 
 
-		/* public Propietario(int id, string nombre, string apellido, string dni, string? telefono, string email, string clave){
+		/* public Propietario(int id, string nombre, string apellido, string dni, string? telefono, string email){
 			IdPropietario = id;
 			Nombre = nombre;
 			Apellido = apellido;
 			Dni = dni;
 			Telefono = telefono;
 			Email = email;
-			Clave = clave;
+
 		} */
 
     }
