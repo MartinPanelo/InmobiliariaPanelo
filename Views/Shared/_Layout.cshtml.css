@@ -44,5 +44,33 @@ button.accept-policy {
   bottom: 0;
   width: 100%;
   white-space: nowrap;
-  line-height: 60px;
+ /*  line-height: 60px; */
+}
+
+
+.pieDePagina {
+  background-image: linear-gradient( to bottom, rgba(255, 255, 255, 0), rgba(242, 241, 254, 1), rgba(221, 225, 254, 1), rgba(199, 212, 255, 1), rgba(173, 201, 255, 1) );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+/*     height: 120px; */
+  font-family: "Raleway", sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+
+}
+
+.pieDePagina a {
+text-decoration: none;
+color: #2a7ae4;
+}
+
+
+
+
+.enunciado{
+  margin: 30px;
+  padding: 30px;
+  border-radius: 30px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }

@@ -1,16 +1,16 @@
-@model InmobiliariaPanelo.Models.Propietario
+@model InmobiliariaPanelo.Models.Inquilino
 
 @{
-    ViewData["Title"] = "Agregar Propietario";
+    ViewData["Title"] = "Agregar Inquilino";
 }
 
-<h1>Agregar propietario</h1>
+<h1>Agregar Inquilino</h1>
 
 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="PropietarioAgregar">
+        <form asp-action="InquilinoAgregar">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>

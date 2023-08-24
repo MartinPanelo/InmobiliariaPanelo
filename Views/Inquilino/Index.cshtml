@@ -1,0 +1,62 @@
+@model IEnumerable<InmobiliariaPanelo.Models.Inquilino>
+
+@{
+    ViewData["Title"] = "Inquilinos";
+}
+
+<h1>Inquilinos</h1>
+
+
+        @TempData["Mensaje"]
+
+<br>
+<a asp-action="InquilinoAgregar" class="btn btn-success" title="Agregar Inquilino">Agregar Inquilino</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Apellido)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dni)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Telefono)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+<tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Dni)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+			<td>
+                <a type="button" class="btn btn-danger" asp-action="InquilinoEliminar" asp-route-id="@item.IdInquilino" title="Eliminar inquilino"><span>Borrar</span></a>
+                <a type="button" class="btn btn-warning" asp-action="InquilinoEditar" asp-route-id="@item.IdInquilino" title="Editar inquilino"><span>Editar</span></a>
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+

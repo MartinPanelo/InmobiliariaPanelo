@@ -1,17 +1,17 @@
-@model InmobiliariaPanelo.Models.Propietario
-
+@model InmobiliariaPanelo.Models.Inquilino
 @{
-    ViewData["Title"] = "Agregar Propietario";
+    ViewData["Title"] = "Editar Inquilino";
 }
 
-<h1>Agregar propietario</h1>
+<h1>Editar Inquilino</h1>
 
 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="PropietarioAgregar">
+        <form asp-action="InquilinoEditar">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="IdInquilino" value="@Model.IdInquilino" />
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />
@@ -39,7 +39,7 @@
             </div>
             <div class="form-group mt-4">
               <a asp-action="Index" class="btn btn-primary ">Volver al listado</a> | 
-                <input type="submit" value="Agregar" class="btn btn-success" />                            
+                <input type="submit" value="Guardar" class="btn btn-success" />                            
             </div>
         </form>
     </div>
@@ -48,5 +48,3 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
-
-

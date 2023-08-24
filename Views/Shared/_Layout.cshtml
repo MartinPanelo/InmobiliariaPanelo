@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/InmobiliariaPanelo.styles.css" asp-append-version="true" />
+      <script src="https://kit.fontawesome.com/fc73908a79.js" crossorigin="anonymous"></script>
     
 </head>
 <body>
@@ -21,13 +22,13 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Paguina principal</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Propietario" asp-action="Index">Propietarios</a>
+                        </li>
+                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Inquilino" asp-action="Index">Inquilinos</a>
                         </li>
                     </ul>
                 </div>
@@ -41,9 +42,11 @@
     </div>
 
     <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - InmobiliariaPanelo - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
+           <div class="pieDePagina">
+                <br>
+                <span>Desarrollado por Panelo Martin 2023 - Trabajo practico .NET</span>
+                <a class="mb-1" href="https://github.com/MartinPanelo/InmobiliariaPanelo">Github del proyecto <i class="fa-brands fa-github"></i></a>
+            </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

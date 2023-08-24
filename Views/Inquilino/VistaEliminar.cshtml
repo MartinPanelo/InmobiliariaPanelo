@@ -1,20 +1,20 @@
-@model InmobiliariaPanelo.Models.Propietario
+@model InmobiliariaPanelo.Models.Inquilino
 
 @{
-    ViewData["Title"] = "Eliminar Propietario";
+    ViewData["Title"] = "Eliminar Inquilino";
 }
 
-<h1>Eliminar Propietario</h1>
+<h1>Eliminar Inquilino</h1>
 
-<h3>¿Seguro que desea eliminar al propietario?</h3>
+<h3>¿Seguro que desea eliminar al inquilino?</h3>
 <div>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IdPropietario)
+            @Html.DisplayNameFor(model => model.IdInquilino)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IdPropietario)
+            @Html.DisplayFor(model => model.IdInquilino)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Nombre)
@@ -48,7 +48,7 @@
         </dd>
     </dl>
     
-    <form asp-action="PropietarioEliminar">
+    <form asp-action="InquilinoEliminar">
         <a class="btn btn-primary" asp-action="Index">Volver al listado</a> | 
         <input type="submit" value="Eliminar" class="btn btn-danger" /> 
         
