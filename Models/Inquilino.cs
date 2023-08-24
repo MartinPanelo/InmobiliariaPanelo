@@ -4,6 +4,7 @@ namespace InmobiliariaPanelo.Models{
 
     public class Inquilino{
         [Key]
+		[Display(Name = "Identificador")]
         public int IdInquilino {get; set;}
         [Required]
 		public string? Nombre { get; set; }

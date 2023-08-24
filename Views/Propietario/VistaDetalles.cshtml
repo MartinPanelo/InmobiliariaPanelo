@@ -1,0 +1,51 @@
+@model InmobiliariaPanelo.Models.Propietario
+@{
+    ViewData["Title"] = "Detalle";
+}
+
+<h1>@ViewData["detalle"]</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "my-2 col-sm-2">
+            @Html.DisplayNameFor(model => model.IdPropietario)
+        </dt>
+        <dd class = "my-2 col-sm-10">
+            @Html.DisplayFor(model => model.IdPropietario)
+        </dd>
+        <dt class = "my-2 col-sm-2">
+            @Html.DisplayNameFor(model => model.Nombre)
+        </dt>
+        <dd class = "my-2 col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class = "my-2 col-sm-2">
+            @Html.DisplayNameFor(model => model.Apellido)
+        </dt>
+        <dd class = "my-2 col-sm-10">
+            @Html.DisplayFor(model => model.Apellido)
+        </dd>
+        <dt class = "my-2 col-sm-2">
+            @Html.DisplayNameFor(model => model.Dni)
+        </dt>
+        <dd class = "my-2 col-sm-10">
+            @Html.DisplayFor(model => model.Dni)
+        </dd>
+        <dt class = "my-2 col-sm-2">
+            @Html.DisplayNameFor(model => model.Telefono)
+        </dt>
+        <dd class = "my-2 col-sm-10">
+            @Html.DisplayFor(model => model.Telefono)
+        </dd>
+        <dt class = "my-2 col-sm-2">
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd class = "my-2 col-sm-10">
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+    </dl>
+    
+
+        <a class="btn btn-primary" asp-action="Index">Volver al listado</a>
+</div>

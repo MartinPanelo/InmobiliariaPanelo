@@ -8,6 +8,13 @@ namespace InmobiliariaPanelo.Controllers{
 
         private readonly RepositorioInquilino repositorio = new RepositorioInquilino();
 
+        public ActionResult VistaDetalles(int id){
+		
+		Inquilino i = repositorio.InquilinoObtenerPorId(id);
+        ViewData["detalle"]="detalle del inquilino";
+            return View("VistaDetalles",i);
+            
+        }
         public ActionResult Index(){
 			var lista = repositorio.InquilinoObtenerTodos();
 		//	Console.WriteLine(TempData["mensaje"]);

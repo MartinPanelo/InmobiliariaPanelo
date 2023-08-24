@@ -11,7 +11,15 @@ namespace InmobiliariaPanelo.Controllers{
 			repositorio = new RepositorioPropietario();
 		} */
 
+        public ActionResult VistaDetalles(int id){
+		
+        Propietario p = repositorio.PropietarioObtenerPorId(id);
+        ViewData["detalle"]="detalles del propietario";
 
+
+            return View("VistaDetalles",p);
+            
+        }
         public ActionResult Index(){
 			var lista = repositorio.PropietarioObtenerTodos();
 		//	Console.WriteLine(TempData["mensaje"]);
