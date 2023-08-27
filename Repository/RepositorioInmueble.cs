@@ -29,7 +29,7 @@ namespace InmobiliariaPanelo.Models
 							PropietarioId = reader.GetInt32("PropietarioId"),
 							CantidadAmbientes = reader.GetInt32("CantidadAmbientes"),
 							Uso = reader.GetString("Uso"),
-							Dirreccion = reader.GetString("Direccion"),
+							Direccion = reader.GetString("Direccion"),
 							Tipo = reader.GetString("Tipo"),
 							Latitud = reader.GetDecimal("Latitud"),
 							Longitud = reader.GetDecimal("Longitud"),
@@ -44,5 +44,32 @@ namespace InmobiliariaPanelo.Models
 
 			return res;
 		}
+
+
+		public int PropietarioAlta(Propietario proietario){
+		 	int res = -1;
+		/*	using (var connection = new MySqlConnection(connectionString))
+			{
+				string sql = @"INSERT INTO propietarios 
+					(Nombre, Apellido, Dni, Telefono, Email) 
+					VALUES (@nombre, @apellido, @dni, @telefono, @email);
+					SELECT LAST_INSERT_ID();";//devuelve el id insertado (SCOPE_IDENTITY para sql)
+				 using (var command = new MySqlCommand(sql, connection))
+				{
+					command.CommandType = CommandType.Text;
+					command.Parameters.AddWithValue("@nombre", propietario.Nombre);
+					command.Parameters.AddWithValue("@apellido", propietario.Apellido);
+					command.Parameters.AddWithValue("@dni", propietario.Dni);
+					command.Parameters.AddWithValue("@telefono", propietario.Telefono);
+					command.Parameters.AddWithValue("@email", propietario.Email);
+					connection.Open();
+					res = Convert.ToInt32(command.ExecuteScalar());
+					propietario.IdPropietario = res;
+					connection.Close();
+				} 
+			}*/
+			return res; // devuelve el id del propietario insertado 
+		}
+
     }
 }

@@ -46,7 +46,7 @@ CREATE TABLE `inmuebles` (
   `PropietarioId` int(11) NOT NULL,
   `CantidadAmbientes` int(11) NOT NULL,
   `Uso` enum('comercial','residencial','','') NOT NULL,
-  `Dirreccion` varchar(100) NOT NULL,
+  `Direccion` varchar(100) NOT NULL,
   `Tipo` enum('local','deposito','casa','departamento') NOT NULL,
   `Latitud` decimal(10,0) NOT NULL,
   `Longitud` decimal(10,0) NOT NULL,

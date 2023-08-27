@@ -18,6 +18,14 @@ namespace InmobiliariaPanelo.Models{
 		public string? Email { get; set; }
 
 
+		public override string ToString()
+		{
+			return $"{Nombre} {Apellido}  DNI: {Dni}";
+		}
+
+
+
+
 		/* public Propietario(int id, string nombre, string apellido, string dni, string? telefono, string email){
 			IdPropietario = id;
 			Nombre = nombre;

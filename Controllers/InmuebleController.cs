@@ -7,14 +7,9 @@ namespace InmobiliariaPanelo.Controllers{
     public class InmuebleController : Controller{
 
         private readonly RepositorioInmueble repositorio = new RepositorioInmueble();
+        private readonly RepositorioPropietario repositorioP = new RepositorioPropietario();
 
-      /*   public ActionResult VistaDetalles(int id){
-		
-		Inquilino i = repositorio.InquilinoObtenerPorId(id);
-        ViewData["detalle"]="detalle del inquilino";
-            return View("VistaDetalles",i);
-            
-        } */
+
         public ActionResult Index(){
 		    var lista = repositorio.InmuebleObtenerTodos();
 		//	Console.WriteLine(TempData["mensaje"]);
@@ -22,44 +17,32 @@ namespace InmobiliariaPanelo.Controllers{
             
         }
 
-/* 
-        public ActionResult InquilinoEliminar(int id){
-            //esto es la vista
-            var InquilinoEliminar = repositorio.InquilinoObtenerPorId(id);
-            return View("VistaEliminar", InquilinoEliminar);          
-        }
 
-        [HttpPost]
-        public ActionResult InquilinoEliminar(int id,int id2=0){
-            //esto es la accion
-           try
-			{
-                var InquilinoEliminar = repositorio.InquilinoObtenerPorId(id);
-				repositorio.InquilinoEliminar(id);
-				return RedirectToAction("Index");
-			}            
-			catch (Exception ex)
-			{
-                TempData["Error"] = ex.Message;
-                return RedirectToAction("Index");
-			}
-        }
+        public ActionResult InmuebleAgregar(){		
 
-        public ActionResult InquilinoAgregar(){			
+            ViewBag.Propietarios = repositorioP.PropietarioObtenerTodos();
+
+            
+
             return View("VistaAgregar");            
         }
+
+
+
+
+
         [HttpPost]
-        public ActionResult InquilinoAgregar(Inquilino inquilino){			
+        public ActionResult InmuebleAgregar(Propietario propietario){			
             try
 			{
 				if (ModelState.IsValid)
 				{
-					repositorio.InquilinoAlta(inquilino);
-
+					repositorio.PropietarioAlta(propietario);
+					//TempData["Id"] = propietario.IdPropietario;
 					return RedirectToAction("Index");
 				}
 				else
-					return View(inquilino);
+					return View(propietario);
 			}
 			catch (Exception ex)
 			{
@@ -70,31 +53,6 @@ namespace InmobiliariaPanelo.Controllers{
             
         }
 
-        public ActionResult InquilinoEditar(int id){
-
-            var inquilinoEditar = repositorio.InquilinoObtenerPorId(id);
-            return View("VistaEditar", inquilinoEditar);        
-        }
-        [HttpPost]
-        public ActionResult InquilinoEditar(int id, Inquilino inquilino){
-
-            Inquilino? i = null;
-            try{
-                i = repositorio.InquilinoObtenerPorId(id);
-                i.Nombre = inquilino.Nombre;
-                i.Apellido = inquilino.Apellido;
-                i.Dni = inquilino.Dni;
-                i.Telefono = inquilino.Telefono;
-                i.Email = inquilino.Email;
-                repositorio.InquilinoEditar(i);
-                return RedirectToAction("Index");
-            }
-            catch (Exception ex)
-            {
-                TempData["Error"] = ex.Message;
-                return RedirectToAction("Index");
-            }
-        } */
 
     }
 }

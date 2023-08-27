@@ -14,7 +14,7 @@ namespace InmobiliariaPanelo.Models{
 		[Required]
 		public string? Uso { get; set; }
 		[Required]
-		public string? Dirreccion { get; set; }
+		public string? Direccion { get; set; }
 		[Required]
 		public string? Tipo { get; set; }
 		[Required]
