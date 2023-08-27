@@ -14,9 +14,9 @@ namespace InmobiliariaPanelo.Models{
 		[Required]
 		public string? Uso { get; set; }
 		[Required]
-		public string? Direccion { get; set; }
+		public string? Tipo { get; set; }//tabla o enum
 		[Required]
-		public string? Tipo { get; set; }
+		public string? Direccion { get; set; }//tabla o enum
 		[Required]
 		public decimal Latitud { get; set; }
 		[Required]
@@ -25,5 +25,8 @@ namespace InmobiliariaPanelo.Models{
 		public decimal Precio { get; set; }
 		[Required]
 		public bool Disponible { get; set; }
+		[Required]
+		[Display(Name = "Dueño")]
+		public Propietario? Propietario{ get; set; }
     }
 }

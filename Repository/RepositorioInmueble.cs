@@ -15,7 +15,8 @@ namespace InmobiliariaPanelo.Models
 			List<Inmueble> res = new List<Inmueble>();
 			using (var connection = new MySqlConnection(connectionString))
 			{
-				string sql = @"SELECT IdInmueble, PropietarioId, CantidadAmbientes, Uso, Direccion, Tipo, Latitud, Longitud, Precio, Disponible FROM inmuebles";
+				string sql = @"SELECT IdInmueble, PropietarioId, CantidadAmbientes, Uso, Direccion, Tipo, Latitud, Longitud, Precio, Disponible,
+				 P.Nombre, P.Apellido FROM inmuebles I INNER JOIN propietarios P ON I.PropietarioId = P.IdPropietario";
 				using (var command = new MySqlCommand(sql, connection))
 				{
 					command.CommandType = CommandType.Text;
@@ -34,7 +35,12 @@ namespace InmobiliariaPanelo.Models
 							Latitud = reader.GetDecimal("Latitud"),
 							Longitud = reader.GetDecimal("Longitud"),
 							Precio = reader.GetInt32("Precio"),
-							Disponible = reader.GetBoolean("Disponible")
+							Disponible = reader.GetBoolean("Disponible"),
+							Propietario = new Propietario{
+								IdPropietario = reader.GetInt32("PropietarioId"),
+								Nombre = reader.GetString("Nombre"),
+								Apellido = reader.GetString("Apellido")
+							}
 						};
 						res.Add(inmueble);
 					}

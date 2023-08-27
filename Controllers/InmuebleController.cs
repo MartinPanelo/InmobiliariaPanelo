@@ -12,6 +12,7 @@ namespace InmobiliariaPanelo.Controllers{
 
         public ActionResult Index(){
 		    var lista = repositorio.InmuebleObtenerTodos();
+            
 		//	Console.WriteLine(TempData["mensaje"]);
             return View(lista);
             
