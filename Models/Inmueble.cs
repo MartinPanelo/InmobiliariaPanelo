@@ -8,14 +8,15 @@ namespace InmobiliariaPanelo.Models{
         public int IdInmueble {get; set;}
         [Required]
 		public int PropietarioId { get; set; }
+		[Display(Name = "Cantidad de ambientes")]
 		[Required]
 		public int CantidadAmbientes { get; set; }
 		[Required]
-		public string Uso { get; set; }
+		public string? Uso { get; set; }
 		[Required]
-		public string Dirreccion { get; set; }
+		public string? Dirreccion { get; set; }
 		[Required]
-		public string tipo { get; set; }
+		public string? Tipo { get; set; }
 		[Required]
 		public decimal Latitud { get; set; }
 		[Required]
@@ -23,6 +24,6 @@ namespace InmobiliariaPanelo.Models{
 		[Required]
 		public decimal Precio { get; set; }
 		[Required]
-		public string Disponible { get; set; }
+		public bool Disponible { get; set; }
     }
 }

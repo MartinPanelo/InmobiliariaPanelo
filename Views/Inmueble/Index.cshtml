@@ -1,28 +1,28 @@
 @model IEnumerable<InmobiliariaPanelo.Models.Inmueble>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Inmuebles";
 }
 
-<h1>Index</h1>
-@* 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<h1>Inmuebles</h1>
+
+
+<br>
+<a asp-action="InmuebleAgregar" class="btn btn-success" title="Agregar Inquilino">Agregar Inmueble</a>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Id)
+                @Html.DisplayNameFor(model => model.CantidadAmbientes)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Direccion)
+                @Html.DisplayNameFor(model => model.Uso)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Ambientes)
+                @Html.DisplayNameFor(model => model.Dirreccion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Superficie)
+                @Html.DisplayNameFor(model => model.Tipo)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Latitud)
@@ -31,7 +31,10 @@
                 @Html.DisplayNameFor(model => model.Longitud)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PropietarioId)
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+			<th>
+                @Html.DisplayNameFor(model => model.Disponible)
             </th>
             <th></th>
         </tr>
@@ -41,16 +44,16 @@
 		{
 			<tr>
 				<td>
-					@Html.DisplayFor(modelItem => item.Id)
+					@Html.DisplayFor(modelItem => item.CantidadAmbientes)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Direccion)
+					@Html.DisplayFor(modelItem => item.Uso)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Ambientes)
+					@Html.DisplayFor(modelItem => item.Dirreccion)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Superficie)
+					@Html.DisplayFor(modelItem => item.Tipo)
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.Latitud)
@@ -59,14 +62,15 @@
 					@Html.DisplayFor(modelItem => item.Longitud)
 				</td>
 				<td>
-					@(item.Duenio.Nombre + " " + item.Duenio.Apellido)
+					@Html.DisplayFor(modelItem => item.Precio)
 				</td>
 				<td>
-					<a asp-action="Edit" asp-route-id="@item.Id" title="Editar"><span class="lnr lnr-pencil"></span></a>&nbsp;
-					<a asp-action="Eliminar" asp-route-id="@item.Id" title="Eliminar"><span class="lnr lnr-cross"></span></a>
+					@Html.DisplayFor(modelItem => item.Disponible)				
+				<td>
+					<a asp-action="Edit" asp-route-id="@item.IdInmueble" title="Editar"><span class="lnr lnr-pencil"></span></a>&nbsp;
+					<a asp-action="Eliminar" asp-route-id="@item.IdInmueble" title="Eliminar"><span class="lnr lnr-cross"></span></a>
 				</td>
 			</tr>
 			}
 		</tbody>
 </table>
- *@

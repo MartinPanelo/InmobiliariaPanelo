@@ -16,9 +16,9 @@ namespace InmobiliariaPanelo.Controllers{
             
         } */
         public ActionResult Index(){
-			//var lista = repositorio.InquilinoObtenerTodos();
+		    var lista = repositorio.InmuebleObtenerTodos();
 		//	Console.WriteLine(TempData["mensaje"]);
-            return View("Index");
+            return View(lista);
             
         }
 
