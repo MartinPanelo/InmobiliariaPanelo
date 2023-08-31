@@ -138,9 +138,11 @@ namespace InmobiliariaPanelo.Models
 		public Inmueble InmuebleObtenerPorId(int id){
 			Inmueble? i = null;
 			using (var connection = new MySqlConnection(connectionString)){
-				string sql = @"SELECT T1.IdInmueble, T1.PropietarioId, T1.Direccion,
+				string sql = @"SELECT T1.IdInmueble, T1.PropietarioId, T1.CantidadAmbientes, T3.Uso, T1.Direccion, T2.Tipo, 
 				 T1.Latitud, T1.Longitud, T1.Precio, T1.Disponible, T4.Nombre, T4.Apellido, T4.Dni
 				 FROM inmuebles AS T1 
+				 INNER JOIN tiposInmuebles AS T2 ON T1.Tipo = T2.IdTipoInmueble 
+				 INNER JOIN usosInmuebles AS T3 ON T1.Uso = T3.IdUsoInmueble 
 				 INNER JOIN propietarios AS T4 ON T1.PropietarioId = T4.IdPropietario AND T1.IdInmueble = @id";
 				
 				using (var command = new MySqlCommand(sql, connection))
@@ -155,10 +157,13 @@ namespace InmobiliariaPanelo.Models
 						{
 							IdInmueble = reader.GetInt32("IdInmueble"),
 							PropietarioId = reader.GetInt32("PropietarioId"),
+							CantidadAmbientes = reader.GetInt32("CantidadAmbientes"),
+							Uso = reader.GetString("Uso"),
 							Direccion = reader.GetString("Direccion"),
+							Tipo = reader.GetString("Tipo"),
 							Latitud = reader.GetDecimal("Latitud"),
 							Longitud = reader.GetDecimal("Longitud"),
-							Precio = reader.GetDecimal("Precio"),
+							Precio = reader.GetInt32("Precio"),
 							Disponible = reader.GetBoolean("Disponible"),
 							Propietario = new Propietario{
 								IdPropietario = reader.GetInt32("PropietarioId"),

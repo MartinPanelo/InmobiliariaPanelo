@@ -18,6 +18,13 @@ namespace InmobiliariaPanelo.Controllers{
             
         }
 
+        public ActionResult VistaDetalles(int id){
+		
+		Inmueble i = repositorio.InmuebleObtenerPorId(id);
+        ViewData["detalle"]="detalle del inmueble";
+            return View("VistaDetalles",i);
+            
+        }
 
         public ActionResult InmuebleAgregar(){		
 
