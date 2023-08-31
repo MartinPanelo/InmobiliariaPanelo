@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 24-08-2023 a las 21:58:11
+-- Servidor: localhost
+-- Tiempo de generación: 01-09-2023 a las 01:03:05
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -35,6 +35,14 @@ CREATE TABLE `contratos` (
   `FechaHasta` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Volcado de datos para la tabla `contratos`
+--
+
+INSERT INTO `contratos` (`IdContrato`, `InquilinoId`, `InmuebleId`, `FechaDesde`, `FechaHasta`) VALUES
+(1, 1, 11, '2023-09-01', '2024-08-31'),
+(2, 1, 13, '2023-08-15', '2024-08-14');
+
 -- --------------------------------------------------------
 
 --
@@ -45,14 +53,22 @@ CREATE TABLE `inmuebles` (
   `IdInmueble` int(11) NOT NULL,
   `PropietarioId` int(11) NOT NULL,
   `CantidadAmbientes` int(11) NOT NULL,
-  `Uso` enum('comercial','residencial','','') NOT NULL,
+  `Uso` int(11) NOT NULL,
   `Direccion` varchar(100) NOT NULL,
-  `Tipo` enum('local','deposito','casa','departamento') NOT NULL,
+  `Tipo` int(11) NOT NULL,
   `Latitud` decimal(10,0) NOT NULL,
   `Longitud` decimal(10,0) NOT NULL,
   `Precio` decimal(10,0) NOT NULL,
   `Disponible` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `inmuebles`
+--
+
+INSERT INTO `inmuebles` (`IdInmueble`, `PropietarioId`, `CantidadAmbientes`, `Uso`, `Direccion`, `Tipo`, `Latitud`, `Longitud`, `Precio`, `Disponible`) VALUES
+(11, 19, 3, 1, '123 Calle Principal', 1, 41, -74, 250000, 1),
+(13, 23, 2, 2, '789 Calle Secundaria', 2, 52, 0, 180000, 0);
 
 -- --------------------------------------------------------
 
@@ -86,7 +102,8 @@ CREATE TABLE `pagos` (
   `IdPago` int(11) NOT NULL,
   `ContratoId` int(11) NOT NULL,
   `Pago` decimal(10,0) NOT NULL,
-  `Fecha` date NOT NULL
+  `Fecha` date NOT NULL,
+  `NumeroPago` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -113,6 +130,47 @@ INSERT INTO `propietarios` (`IdPropietario`, `Nombre`, `Apellido`, `Dni`, `Telef
 (23, 'Pepe', 'Perez', '393939', '266444444', 'pepe_Perez@mail.com'),
 (24, 'Juan', 'Domino', '123321', '549789999', 'JDomino@email.com');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tiposInmuebles`
+--
+
+CREATE TABLE `tiposInmuebles` (
+  `IdTipoInmueble` int(11) NOT NULL,
+  `Tipo` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `tiposInmuebles`
+--
+
+INSERT INTO `tiposInmuebles` (`IdTipoInmueble`, `Tipo`) VALUES
+(1, 'local'),
+(2, 'depósito'),
+(3, 'casa'),
+(4, 'departamento');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `usosInmuebles`
+--
+
+CREATE TABLE `usosInmuebles` (
+  `IdUsoInmueble` int(11) NOT NULL,
+  `Uso` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Volcado de datos para la tabla `usosInmuebles`
+--
+
+INSERT INTO `usosInmuebles` (`IdUsoInmueble`, `Uso`) VALUES
+(1, 'comercial'),
+(2, 'residencial'),
+(3, 'industrial');
+
 --
 -- Índices para tablas volcadas
 --
@@ -130,7 +188,9 @@ ALTER TABLE `contratos`
 --
 ALTER TABLE `inmuebles`
   ADD PRIMARY KEY (`IdInmueble`),
-  ADD KEY `PropietarioId` (`PropietarioId`);
+  ADD KEY `PropietarioId` (`PropietarioId`),
+  ADD KEY `Uso` (`Uso`),
+  ADD KEY `Tipo` (`Tipo`);
 
 --
 -- Indices de la tabla `inquilinos`
@@ -152,6 +212,18 @@ ALTER TABLE `propietarios`
   ADD PRIMARY KEY (`IdPropietario`);
 
 --
+-- Indices de la tabla `tiposInmuebles`
+--
+ALTER TABLE `tiposInmuebles`
+  ADD PRIMARY KEY (`IdTipoInmueble`);
+
+--
+-- Indices de la tabla `usosInmuebles`
+--
+ALTER TABLE `usosInmuebles`
+  ADD PRIMARY KEY (`IdUsoInmueble`);
+
+--
 -- AUTO_INCREMENT de las tablas volcadas
 --
 
@@ -159,13 +231,13 @@ ALTER TABLE `propietarios`
 -- AUTO_INCREMENT de la tabla `contratos`
 --
 ALTER TABLE `contratos`
-  MODIFY `IdContrato` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IdContrato` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `inmuebles`
 --
 ALTER TABLE `inmuebles`
-  MODIFY `IdInmueble` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `IdInmueble` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `inquilinos`
@@ -186,6 +258,18 @@ ALTER TABLE `propietarios`
   MODIFY `IdPropietario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
+-- AUTO_INCREMENT de la tabla `tiposInmuebles`
+--
+ALTER TABLE `tiposInmuebles`
+  MODIFY `IdTipoInmueble` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT de la tabla `usosInmuebles`
+--
+ALTER TABLE `usosInmuebles`
+  MODIFY `IdUsoInmueble` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- Restricciones para tablas volcadas
 --
 
@@ -200,7 +284,9 @@ ALTER TABLE `contratos`
 -- Filtros para la tabla `inmuebles`
 --
 ALTER TABLE `inmuebles`
-  ADD CONSTRAINT `inmuebles_ibfk_1` FOREIGN KEY (`PropietarioId`) REFERENCES `propietarios` (`IdPropietario`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `inmuebles_ibfk_1` FOREIGN KEY (`PropietarioId`) REFERENCES `propietarios` (`IdPropietario`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `inmuebles_ibfk_3` FOREIGN KEY (`Uso`) REFERENCES `usosInmuebles` (`IdUsoInmueble`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `inmuebles_ibfk_4` FOREIGN KEY (`Tipo`) REFERENCES `tiposInmuebles` (`IdTipoInmueble`) ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `pagos`
