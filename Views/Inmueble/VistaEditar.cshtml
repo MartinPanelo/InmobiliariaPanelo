@@ -1,0 +1,100 @@
+@model InmobiliariaPanelo.Models.Inmueble
+@{
+    ViewData["Title"] = "Editar Inmueble";
+      var listaPropietarios = (IList<Propietario>)ViewBag.Propietarios;
+    var diccionarioUsos = (Dictionary<string, int>)ViewBag.Usos;
+    var diccionarioTipos = (Dictionary<string, int>)ViewBag.Tipos;
+}
+
+<h1>Editar Inmueble</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="PropietarioEditar">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="IdPropietario" value="@Model.IdInmueble" />
+           <div class="form-group">
+                <label asp-for="CantidadAmbientes" class="control-label"></label>
+                <input asp-for="CantidadAmbientes" class="form-control" />
+                <span asp-validation-for="CantidadAmbientes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+				<label class="control-label">Uso</label>
+				<select class="form-control" name="Uso">
+					@foreach (var item in diccionarioUsos)
+					{
+						<option value="@item.Value">@(item.Key)</option>
+					}
+				</select>
+				<span asp-validation-for="Uso" class="text-danger"></span>
+			</div>
+            @* <div class="form-group">
+                <label asp-for="Uso" class="control-label"></label>
+                <input asp-for="Uso" class="form-control" />
+                <span asp-validation-for="Uso" class="text-danger"></span>
+            </div> *@
+           <div class="form-group">
+                <label asp-for="Direccion" class="control-label"></label>
+                <input asp-for="Direccion" class="form-control" />
+                <span asp-validation-for="Direccion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+				<label class="control-label">Tipo</label>
+				<select class="form-control" name="Tipo">
+					@foreach (var item in diccionarioTipos)
+					{
+						<option value="@item.Value">@(item.Key)</option>
+					}
+				</select>
+				<span asp-validation-for="Tipo" class="text-danger"></span>
+			</div>
+@*             <div class="form-group">
+                <label asp-for="Tipo" class="control-label"></label>
+                <input asp-for="Tipo" class="form-control" />
+                <span asp-validation-for="Tipo" class="text-danger"></span>
+            </div> *@
+            <div class="form-group">
+                <label asp-for="Latitud" class="control-label"></label>
+                <input asp-for="Latitud" class="form-control" />
+                <span asp-validation-for="Latitud" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Longitud" class="control-label"></label>
+                <input asp-for="Longitud" class="form-control" />
+                <span asp-validation-for="Longitud" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Precio" class="control-label"></label>
+                <input asp-for="Precio" class="form-control" />
+                <span asp-validation-for="Precio" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Disponible" class="control-label"></label>
+                <input asp-for="Disponible" type="checkbox"/>
+                <span asp-validation-for="Disponible" class="text-danger"></span>
+            </div> 
+
+            <div class="form-group">
+				<label class="control-label">Propietario</label>
+				<select class="form-control" name="PropietarioId">
+					@foreach (var item in listaPropietarios)
+					{
+						<option value="@item.IdPropietario">@(item.ToString())</option>
+					}
+				</select>
+				<span asp-validation-for="PropietarioId" class="text-danger"></span>
+			</div>
+            <div class="form-group my-2">
+              <a asp-action="Index" class="btn btn-primary ">Volver al listado</a> | 
+                <input type="submit" value="Guardar" class="btn btn-success" />                            
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

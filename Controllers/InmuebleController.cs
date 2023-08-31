@@ -86,5 +86,33 @@ namespace InmobiliariaPanelo.Controllers{
 			}
         }
 
+
+        public ActionResult InmuebleEditar(int id){
+
+            var InmuebleEditar = repositorio.InmuebleObtenerPorId(id);
+             ViewBag.Propietarios = repositorioP.PropietarioObtenerTodos();
+            ViewBag.Usos = repositorio.usos();
+            ViewBag.Tipos = repositorio.tipos();
+            return View("VistaEditar", InmuebleEditar);        
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }
