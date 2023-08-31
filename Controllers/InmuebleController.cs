@@ -22,7 +22,8 @@ namespace InmobiliariaPanelo.Controllers{
         public ActionResult InmuebleAgregar(){		
 
             ViewBag.Propietarios = repositorioP.PropietarioObtenerTodos();
-
+            ViewBag.Usos = repositorio.usos();
+            ViewBag.Tipos = repositorio.tipos();
             
 
             return View("VistaAgregar");            
@@ -33,17 +34,18 @@ namespace InmobiliariaPanelo.Controllers{
 
 
         [HttpPost]
-        public ActionResult InmuebleAgregar(Propietario propietario){			
+        public ActionResult InmuebleAgregar(Inmueble inmueble){		
+
             try
 			{
 				if (ModelState.IsValid)
 				{
-					repositorio.PropietarioAlta(propietario);
+					repositorio.InmuebleAlta(inmueble);
 					//TempData["Id"] = propietario.IdPropietario;
 					return RedirectToAction("Index");
 				}
 				else
-					return View(propietario);
+					return View(inmueble);
 			}
 			catch (Exception ex)
 			{
@@ -51,9 +53,31 @@ namespace InmobiliariaPanelo.Controllers{
                 //mandar el error tambien
                 return RedirectToAction("Index");
 			}
-            
+        } 
+
+
+
+        public ActionResult InmuebleEliminar(int id){
+            //esto es la vista
+            var InmuebleEliminar = repositorio.InmuebleObtenerPorId(id);
+            return View("VistaEliminar", InmuebleEliminar);          
         }
 
+        [HttpPost]
+        public ActionResult InmuebleEliminar(int id,int id2=0){
+            //esto es la accion
+           try
+			{
+                var InmuebleEliminar = repositorio.InmuebleObtenerPorId(id);
+				repositorio.InmuebleEliminar(id);
+				return RedirectToAction("Index");
+			}            
+			catch (Exception ex)
+			{
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Index");
+			}
+        }
 
     }
 }

@@ -8,7 +8,7 @@
 
 
 <br>
-<a asp-action="InmuebleAgregar" class="btn btn-success" title="Agregar Inquilino">Agregar Inmueble</a>
+<a asp-action="InmuebleAgregar" class="btn btn-success" title="Agregar Inmueble">Agregar Inmueble</a>
 <table class="table">
     <thead>
         <tr>
@@ -39,6 +39,7 @@
 			<th>
                 @Html.DisplayNameFor(model => model.Disponible)
             </th> 
+			<th>Acciones</th>
         </tr>
     </thead>
 	<tbody>
@@ -71,11 +72,11 @@
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.Disponible)
-				</td>				
+				</td>	
 				<td>
-
-					<a asp-action="Edit" asp-route-id="@item.IdInmueble" title="Editar"><span class="lnr lnr-pencil"></span></a>&nbsp;
-					<a asp-action="Eliminar" asp-route-id="@item.IdInmueble" title="Eliminar"><span class="lnr lnr-cross"></span></a>
+              	  <a type="button" class="btn btn-danger" asp-action="InmuebleEliminar" asp-route-id="@item.IdInmueble" title="Eliminar inmueble"><span>Borrar</span></a>
+              	  <a type="button" class="btn btn-warning" asp-action="InquilinoEditar" asp-route-id="@item.IdInmueble" title="Editar inmueble"><span>Editar</span></a>
+              	  <a type="button" class="btn btn-primary" asp-action="VistaDetalles" asp-route-id="@item.IdInmueble" title="Detalles"><span>Detalles</span></a>
 				</td>
 			</tr>
 			}

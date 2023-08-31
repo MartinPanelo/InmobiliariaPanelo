@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace InmobiliariaPanelo.Models{
 
@@ -6,17 +7,15 @@ namespace InmobiliariaPanelo.Models{
         [Key]
 		[Display(Name = "Identificador")]
         public int IdInmueble {get; set;}
-        [Required]
-		public int PropietarioId { get; set; }
 		[Display(Name = "Cantidad de ambientes")]
 		[Required]
 		public int CantidadAmbientes { get; set; }
 		[Required]
-		public string? Uso { get; set; }
+		public string? Uso { get; set; }//tabla o enum
 		[Required]
 		public string? Tipo { get; set; }//tabla o enum
 		[Required]
-		public string? Direccion { get; set; }//tabla o enum
+		public string? Direccion { get; set; }
 		[Required]
 		public decimal Latitud { get; set; }
 		[Required]
@@ -25,8 +24,14 @@ namespace InmobiliariaPanelo.Models{
 		public decimal Precio { get; set; }
 		[Required]
 		public bool Disponible { get; set; }
-		[Required]
-		[Display(Name = "Dueño")]
+
+
+
+		[Display(Name = "Propietario")]
+		public int PropietarioId { get; set; }
+		[ForeignKey(nameof(PropietarioId))]
 		public Propietario? Propietario{ get; set; }
+		
+		
     }
 }
