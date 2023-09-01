@@ -8,7 +8,7 @@
 
 
 <br>
-<a asp-action="AAAAAAAAAAAA" class="btn btn-success" title="Crear contrato">Agregar Inmueble</a>
+<a asp-action="ContratoAgregar" class="btn btn-success" title="Crear contrato">Agregar contrato</a>
 <table class="table">
     <thead>
         <tr>
@@ -31,7 +31,7 @@
                 @Html.DisplayNameFor(model => model.FechaDesde)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FechaFin)
+                @Html.DisplayNameFor(model => model.FechaHasta)
             </th>
 
 			<th>Acciones</th>
@@ -60,7 +60,7 @@
 					@Html.DisplayFor(modelItem => item.FechaDesde)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.FechaFin)
+					@Html.DisplayFor(modelItem => item.FechaHasta)
 				</td>
 	
 				<td> 

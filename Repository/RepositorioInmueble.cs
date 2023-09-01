@@ -198,5 +198,48 @@ namespace InmobiliariaPanelo.Models
 			return res;
         }
 
+
+		public int InmuebleEditar(Inmueble inmueble)
+		{
+			int res = -1;
+			using (var connection = new MySqlConnection(connectionString))
+			{
+				string sql = @"UPDATE inmuebles
+					SET PropietarioId=@PropietarioId, CantidadAmbientes=@CantidadAmbientes, Uso=@Uso, Direccion=@Direccion, 
+						Tipo=@Tipo, Latitud=@Latitud, Longitud=@Longitud, Precio=@Precio, Disponible=@Disponible WHERE IdInmueble=@id";
+				using (var command = new MySqlCommand(sql, connection))
+				{
+					command.CommandType = CommandType.Text;
+					command.Parameters.AddWithValue("@PropietarioId", inmueble.PropietarioId);
+					command.Parameters.AddWithValue("@CantidadAmbientes", inmueble.CantidadAmbientes);
+					command.Parameters.AddWithValue("@Uso", inmueble.Uso);
+					command.Parameters.AddWithValue("@Direccion", inmueble.Direccion);
+					command.Parameters.AddWithValue("@Tipo", inmueble.Tipo);
+					command.Parameters.AddWithValue("@Latitud", inmueble.Latitud);
+					command.Parameters.AddWithValue("@Longitud", inmueble.Longitud);
+					command.Parameters.AddWithValue("@Precio", inmueble.Precio);
+					command.Parameters.AddWithValue("@Disponible", inmueble.Disponible);
+					command.Parameters.AddWithValue("@id", inmueble.IdInmueble);
+
+					connection.Open();
+					res = command.ExecuteNonQuery();
+					connection.Close();
+				}
+			}
+			return res;
+		}
+
+
+
+
+
+
+
+
+
+
+
+
+
     }
 }

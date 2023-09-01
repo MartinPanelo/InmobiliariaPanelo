@@ -8,15 +8,17 @@ namespace InmobiliariaPanelo.Models{
 		[Display(Name = "Identificador")]
         public int IdContrato {get; set;}
 
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+       // [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         [Display(Name = "Fecha desde")]
+        [DataType(DataType.Date)]
         [Required]
         public DateTime FechaDesde { get; set; }
             
-        [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
+      //  [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)] 
         [Display(Name = "Fecha hasta")]
+        [DataType(DataType.Date)]
         [Required]
-        public DateTime FechaFin { get; set; }
+        public DateTime FechaHasta { get; set; }
 
 
 
@@ -30,6 +32,7 @@ namespace InmobiliariaPanelo.Models{
 		public int InmuebleId { get; set; }
 		[ForeignKey(nameof(InmuebleId))]
 		public Inmueble? Inmueble{ get; set; }
+
 		
     }
 }

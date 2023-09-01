@@ -1,0 +1,81 @@
+@model InmobiliariaPanelo.Models.Contrato
+
+@{
+    ViewData["Title"] = "Agregar Contrato";
+        var listaInquilinos = (IList<Inquilino>)ViewBag.listaInquilinos;
+        var listaInmuebles = (IList<Inmueble>)ViewBag.listaInmuebles;
+}
+
+<h1>Agregar Contrato</h1>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ContratoAgregar">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="FechaDesde" class="control-label"></label>
+                <input asp-for="FechaDesde" class="form-control" />
+                <span asp-validation-for="FechaDesde" class="text-danger"></span>
+            </div>
+           <div class="form-group">
+                <label asp-for="FechaHasta" class="control-label"></label>
+                <input asp-for="FechaHasta" class="form-control" />
+                <span asp-validation-for="FechaHasta" class="text-danger"></span>
+            </div>
+
+
+            <div class="form-group">
+				<label class="control-label">Inquilino</label>
+				<select class="form-control" name="InquilinoId">
+					@foreach (var item in listaInquilinos)
+					{
+						<option value="@item.IdInquilino">@(item.ToString())</option>
+                        <span asp-validation-for="InquilinoId" class="text-danger"></span>
+					}
+				</select>
+				
+			</div>
+
+
+
+            <div class="form-group">
+				<label class="control-label">Inmueble</label>
+				<select class="form-control" name="InmuebleId">
+					@foreach (var item in listaInmuebles)
+					{
+						<option value="@item.IdInmueble">@(item.ToString())</option>
+                        <span asp-validation-for="InmuebleId" class="text-danger"></span>
+					}
+				</select>
+				
+			</div> 
+          @*    <div class="form-group">
+                <label asp-for="Dni" class="control-label"></label>
+                <input asp-for="Dni" class="form-control" />
+                <span asp-validation-for="Dni" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Telefono" class="control-label"></label>
+                <input asp-for="Telefono" class="form-control" />
+                <span asp-validation-for="Telefono" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div> *@
+            <div class="form-group mt-4">
+              <a asp-action="Index" class="btn btn-primary ">Volver al listado</a> | 
+                <input type="submit" value="Agregar" class="btn btn-success" />                            
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+

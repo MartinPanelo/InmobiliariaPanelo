@@ -9,7 +9,7 @@
 
 <br>
 <a asp-action="InmuebleAgregar" class="btn btn-success" title="Agregar Inmueble">Agregar Inmueble</a>
-<table class="table">
+<table class="table ">
     <thead>
         <tr>
 			<th>
@@ -19,20 +19,20 @@
                 @Html.DisplayNameFor(model => model.CantidadAmbientes)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Uso)
+                @Html.DisplayNameFor(model => model.Direccion)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Direccion)
+                @Html.DisplayNameFor(model => model.Uso)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Tipo)
             </th>
-            <th>
+            @* <th>
                 @Html.DisplayNameFor(model => model.Latitud)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Longitud)
-            </th>
+            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.Precio)
             </th>
@@ -53,20 +53,20 @@
 					@Html.DisplayFor(modelItem => item.CantidadAmbientes)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Uso)
+					@Html.DisplayFor(modelItem => item.Direccion)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Direccion)
+					@Html.DisplayFor(modelItem => item.Uso)
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.Tipo)
 				</td>
-				<td>
+				@* <td>
 					@Html.DisplayFor(modelItem => item.Latitud)
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.Longitud)
-				</td>
+				</td> *@
 				<td>
 					@Html.DisplayFor(modelItem => item.Precio)
 				</td>

@@ -90,13 +90,37 @@ namespace InmobiliariaPanelo.Controllers{
         public ActionResult InmuebleEditar(int id){
 
             var InmuebleEditar = repositorio.InmuebleObtenerPorId(id);
-             ViewBag.Propietarios = repositorioP.PropietarioObtenerTodos();
+            ViewBag.Propietarios = repositorioP.PropietarioObtenerTodos();
             ViewBag.Usos = repositorio.usos();
             ViewBag.Tipos = repositorio.tipos();
             return View("VistaEditar", InmuebleEditar);        
         }
 
 
+        [HttpPost]
+        public ActionResult InmuebleEditar(int id, Inmueble inmueble){
+
+            Inmueble? i = null;
+            try{
+                i = repositorio.InmuebleObtenerPorId(id);
+                i.CantidadAmbientes = inmueble.CantidadAmbientes;
+                i.Direccion = inmueble.Direccion;
+                i.Precio = inmueble.Precio;
+                i.Tipo = inmueble.Tipo;
+                i.Uso = inmueble.Uso;
+                i.PropietarioId = inmueble.PropietarioId;
+                i.Latitud = inmueble.Latitud;
+                i.Longitud = inmueble.Longitud;
+                i.Disponible = inmueble.Disponible;
+                repositorio.InmuebleEditar(i);
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Index");
+            }
+        }
 
 
 

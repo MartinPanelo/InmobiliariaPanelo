@@ -31,7 +31,12 @@ namespace InmobiliariaPanelo.Models{
 		public int PropietarioId { get; set; }
 		[ForeignKey(nameof(PropietarioId))]
 		public Propietario? Propietario{ get; set; }
-		
+
+
+		public override string ToString()
+		{
+			return $"{Direccion} - {Propietario?.Nombre} {Propietario?.Apellido}";
+		}
 		
     }
 }

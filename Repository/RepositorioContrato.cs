@@ -34,7 +34,7 @@ namespace InmobiliariaPanelo.Models
 							InquilinoId = reader.GetInt32("InquilinoId"),
 							InmuebleId = reader.GetInt32("InmuebleId"),
 							FechaDesde = reader.GetDateTime("FechaDesde"),
-							FechaFin = reader.GetDateTime("FechaHasta"),
+							FechaHasta = reader.GetDateTime("FechaHasta"),
 							Inmueble = repositorioInmueble.InmuebleObtenerPorId(reader.GetInt32("InmuebleId")),
 							Inquilino = repositorioInquilino.InquilinoObtenerPorId(reader.GetInt32("InquilinoId")),
 						
@@ -48,6 +48,39 @@ namespace InmobiliariaPanelo.Models
 
 			return res;
 		}
+
+
+
+		public int ContratoAlta(Contrato contrato){
+		 	int res = -1;
+
+			using (var connection = new MySqlConnection(connectionString))
+			{
+
+				string sql = @"INSERT INTO contratos (InquilinoId, InmuebleId, FechaDesde, FechaHasta)
+					VALUES (@InquilinoId, @InmuebleId, @FechaDesde, @FechaHasta);
+					SELECT LAST_INSERT_ID();";//devuelve el id insertado (SCOPE_IDENTITY para sql)
+				 using (var command = new MySqlCommand(sql, connection))
+				{
+					command.CommandType = CommandType.Text;
+					command.Parameters.AddWithValue("@InquilinoId", contrato.InquilinoId);
+					command.Parameters.AddWithValue("@InmuebleId", contrato.InmuebleId);
+					command.Parameters.AddWithValue("@FechaDesde", contrato.FechaDesde);
+					command.Parameters.AddWithValue("@FechaHasta", contrato.FechaHasta);
+
+					
+					connection.Open();
+					res = Convert.ToInt32(command.ExecuteScalar());
+					contrato.IdContrato = res;
+					connection.Close();
+				} 
+			}
+			return res; // devuelve el id del contrato insertado 
+		}
+
+
+
+
 
     }
 }

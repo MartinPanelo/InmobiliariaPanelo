@@ -1,7 +1,7 @@
 @model InmobiliariaPanelo.Models.Inmueble
 @{
     ViewData["Title"] = "Editar Inmueble";
-      var listaPropietarios = (IList<Propietario>)ViewBag.Propietarios;
+    var listaPropietarios = (IList<Propietario>)ViewBag.Propietarios;
     var diccionarioUsos = (Dictionary<string, int>)ViewBag.Usos;
     var diccionarioTipos = (Dictionary<string, int>)ViewBag.Tipos;
 }
@@ -11,7 +11,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="PropietarioEditar">
+        <form asp-action="InmuebleEditar">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" name="IdPropietario" value="@Model.IdInmueble" />
            <div class="form-group">
@@ -24,10 +24,15 @@
 				<select class="form-control" name="Uso">
 					@foreach (var item in diccionarioUsos)
 					{
-						<option value="@item.Value">@(item.Key)</option>
+                        if(item.Key == Model.Uso){
+                            <option selected value="@item.Value">@(item.Key)</option>
+                        }else{
+						    <option value="@item.Value">@(item.Key)</option>
+                        }
+                        <span asp-validation-for="Uso" class="text-danger"></span>
+
 					}
 				</select>
-				<span asp-validation-for="Uso" class="text-danger"></span>
 			</div>
             @* <div class="form-group">
                 <label asp-for="Uso" class="control-label"></label>
@@ -44,10 +49,15 @@
 				<select class="form-control" name="Tipo">
 					@foreach (var item in diccionarioTipos)
 					{
-						<option value="@item.Value">@(item.Key)</option>
+                        if(item.Key == Model.Tipo){
+                            <option selected value="@item.Value">@(item.Key)</option>
+                        }else{
+						    <option value="@item.Value">@(item.Key)</option>
+                        }
+                        <span asp-validation-for="Tipo" class="text-danger"></span>
 					}
 				</select>
-				<span asp-validation-for="Tipo" class="text-danger"></span>
+				
 			</div>
 @*             <div class="form-group">
                 <label asp-for="Tipo" class="control-label"></label>
@@ -56,23 +66,23 @@
             </div> *@
             <div class="form-group">
                 <label asp-for="Latitud" class="control-label"></label>
-                <input asp-for="Latitud" class="form-control" />
+                <input asp-for="Latitud" type="number" class="form-control" />
                 <span asp-validation-for="Latitud" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Longitud" class="control-label"></label>
-                <input asp-for="Longitud" class="form-control" />
+                <input asp-for="Longitud" type="number" class="form-control" />
                 <span asp-validation-for="Longitud" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Precio" class="control-label"></label>
-                <input asp-for="Precio" class="form-control" />
+                <input asp-for="Precio" type="number" class="form-control" />
                 <span asp-validation-for="Precio" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="Disponible" class="control-label"></label>
-                <input asp-for="Disponible" type="checkbox"/>
+                <input asp-for="Disponible" type="checkbox" />
                 <span asp-validation-for="Disponible" class="text-danger"></span>
             </div> 
 
@@ -81,10 +91,15 @@
 				<select class="form-control" name="PropietarioId">
 					@foreach (var item in listaPropietarios)
 					{
-						<option value="@item.IdPropietario">@(item.ToString())</option>
+                        if(item.IdPropietario == Model.Propietario.IdPropietario){
+                            <option selected asp-for="PropietarioId" value="@item.IdPropietario">@(item.ToString())</option>
+                        }else{
+                            <option  asp-for="PropietarioId" value="@item.IdPropietario">@(item.ToString())</option>
+                        }
+						<span asp-validation-for="PropietarioId" class="text-danger"></span>
 					}
 				</select>
-				<span asp-validation-for="PropietarioId" class="text-danger"></span>
+				
 			</div>
             <div class="form-group my-2">
               <a asp-action="Index" class="btn btn-primary ">Volver al listado</a> | 
