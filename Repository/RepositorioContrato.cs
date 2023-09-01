@@ -79,8 +79,53 @@ namespace InmobiliariaPanelo.Models
 		}
 
 
+		public int ContratoEliminar(int id)
+        {
+            int res = 0;
+			using (var connection = new MySqlConnection(connectionString))
+			{
+				string sql = @$"DELETE FROM contratos WHERE {nameof(Contrato.IdContrato)} = @id";
+				using (var command = new MySqlCommand(sql, connection))
+				{
+					command.CommandType = CommandType.Text;
+					command.Parameters.AddWithValue("@id", id);
+					connection.Open();
+					res = command.ExecuteNonQuery();
+					connection.Close();
+				}
+			}
+			return res;
+        }
 
 
+		public Contrato ContratoObtenerPorId(int id){
+			Contrato? c = null;
+			using (var connection = new MySqlConnection(connectionString)){
+				string sql = @"SELECT IdContrato, InquilinoId, InmuebleId, FechaDesde, FechaHasta FROM contratos WHERE IdContrato = @id";
+				
+				using (var command = new MySqlCommand(sql, connection))
+				{
+					command.Parameters.AddWithValue("@id", id);
+					connection.Open();
+					MySqlDataReader reader = command.ExecuteReader();
+					
+					if (reader.Read())
+					{
+						c = new Contrato
+						{
+							IdContrato = reader.GetInt32("IdContrato"),
+							InquilinoId = reader.GetInt32("InquilinoId"),
+							InmuebleId = reader.GetInt32("InmuebleId"),
+							FechaDesde = reader.GetDateTime("FechaDesde"),
+							FechaHasta = reader.GetDateTime("FechaHasta"),
+
+						};
+					}
+					connection.Close();
+				}			
+			}
+			return c!;
+		}
 
     }
 }

@@ -58,10 +58,28 @@ namespace InmobiliariaPanelo.Controllers{
 
 
 
+         public ActionResult ContratoEliminar(int id){
+            //esto es la vista
+            var ContratoEliminar = repositorio.ContratoObtenerPorId(id);
+            return View("VistaEliminar", ContratoEliminar);          
+        }
 
 
-
-
+        [HttpPost]
+        public ActionResult ContratoEliminar(int id,int id2=0){
+            //esto es la accion
+           try
+			{
+                var ContratoEliminar = repositorio.ContratoObtenerPorId(id);
+				repositorio.ContratoEliminar(id);
+				return RedirectToAction("Index");
+			}            
+			catch (Exception ex)
+			{
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Index");
+			}
+        }
 
 
 
