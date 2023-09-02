@@ -11,13 +11,13 @@ namespace InmobiliariaPanelo.Models{
        // [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)]
         [Display(Name = "Fecha desde")]
         [DataType(DataType.Date)]
-        [Required]
+        [Required(ErrorMessage = "La fecha es obligatoria.")]
         public DateTime FechaDesde { get; set; }
             
       //  [DisplayFormat(DataFormatString = "{0:d}", ApplyFormatInEditMode = true)] 
         [Display(Name = "Fecha hasta")]
         [DataType(DataType.Date)]
-        [Required]
+        [Required(ErrorMessage = "La fecha es obligatoria.")]
         public DateTime FechaHasta { get; set; }
 
 

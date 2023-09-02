@@ -37,14 +37,20 @@ namespace InmobiliariaPanelo.Controllers{
         			
             try
 			{
-				if (ModelState.IsValid)
+				if (ModelState.IsValid && contrato.FechaDesde < contrato.FechaHasta)
 				{
 					repositorio.ContratoAlta(contrato);
 
 					return RedirectToAction("Index");
 				}
 				else
-					return View(contrato);
+
+                 ViewBag.listaInmuebles = repositorioInmueble.InmuebleObtenerTodos();
+                ViewBag.listaInquilinos = repositorioInquilino.InquilinoObtenerTodos();
+                if(contrato.FechaDesde > contrato.FechaHasta){
+                    TempData["mensaje"] = "La fecha de inicio debe ser menor a la fecha de finalización";
+                }
+					return View("VistaAgregar", contrato);
 			}
 			catch (Exception ex)
 			{
@@ -100,9 +106,8 @@ namespace InmobiliariaPanelo.Controllers{
          public ActionResult ContratoEditar(int id){
 
             var ContratoEditar = repositorio.ContratoObtenerPorId(id);
-         /*    ViewBag.Propietarios = repositorioP.PropietarioObtenerTodos();
-            ViewBag.Usos = repositorio.usos();
-            ViewBag.Tipos = repositorio.tipos(); */
+            ViewBag.listaInmuebles = repositorioInmueble.InmuebleObtenerTodos();
+            ViewBag.listaInquilinos = repositorioInquilino.InquilinoObtenerTodos();
             return View("VistaEditar", ContratoEditar);        
         }
 
