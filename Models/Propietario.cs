@@ -6,15 +6,19 @@ namespace InmobiliariaPanelo.Models{
         [Key]
         [Display(Name = "Identificador")]
         public int IdPropietario {get; set;}
-        [Required]
-		public string? Nombre { get; set; }// = ""; / = String.Empty; 
-		[Required]
+		[Required(ErrorMessage = "El nombre es obligatorio."),RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "El nombre debe contener solo letras.")]
+		public string? Nombre { get; set; }
+		[Required(ErrorMessage = "El apellido es obligatorio.")]
+	    [RegularExpression(@"^[a-zA-Z]+$", ErrorMessage = "El apellido debe contener solo letras.")]	
 		public string? Apellido { get; set; }
-		[Required]
+		[Required(ErrorMessage = "El D.N.I. es obligatorio.")]
+		[RegularExpression(@"^\d{8}$", ErrorMessage = "El DNI debe contener 8 dígitos.")]
+		[Display(Name = "D.N.I.")]
 		public string? Dni { get; set; }
-		[Required]
+		[Required(ErrorMessage = "El teléfono es obligatorio."), DataType(DataType.PhoneNumber, ErrorMessage = "El teléfono debe contener solo numeros.")]
+		[Display(Name = "Teléfono")]
 		public string? Telefono { get; set; }
-		[Required, EmailAddress]
+		[DataType(DataType.EmailAddress, ErrorMessage = "El email debe contener un formato valido.")]
 		public string? Email { get; set; }
 
 

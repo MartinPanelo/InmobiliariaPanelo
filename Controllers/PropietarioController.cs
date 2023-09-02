@@ -14,7 +14,7 @@ namespace InmobiliariaPanelo.Controllers{
         public ActionResult VistaDetalles(int id){
 		
         Propietario p = repositorio.PropietarioObtenerPorId(id);
-        ViewData["detalle"]="detalles del propietario";
+       // ViewData["detalle"]="Detalles del propietario";
 
 
             return View("VistaDetalles",p);
@@ -66,7 +66,7 @@ namespace InmobiliariaPanelo.Controllers{
 					return RedirectToAction("Index");
 				}
 				else
-					return View(propietario);
+					return View("VistaAgregar",propietario);
 			}
 			catch (Exception ex)
 			{
