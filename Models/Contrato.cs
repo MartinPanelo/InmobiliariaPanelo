@@ -33,6 +33,8 @@ namespace InmobiliariaPanelo.Models{
 		[ForeignKey(nameof(InmuebleId))]
 		public Inmueble? Inmueble{ get; set; }
 
-		
+
+
+
     }
 }

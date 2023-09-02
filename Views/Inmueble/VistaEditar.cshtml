@@ -54,7 +54,7 @@
                         }else{
 						    <option value="@item.Value">@(item.Key)</option>
                         }
-                        <span asp-validation-for="Tipo" class="text-danger"></span>
+                       // <span asp-validation-for="Tipo" class="text-danger"></span>
 					}
 				</select>
 				<span asp-validation-for="Tipo" class="text-danger"></span>
@@ -98,7 +98,7 @@
                         }else{
                             <option  asp-for="PropietarioId" value="@item.IdPropietario">@(item.ToString())</option>
                         }
-						<span asp-validation-for="PropietarioId" class="text-danger"></span>
+						//<span asp-validation-for="PropietarioId" class="text-danger"></span>
 					}
 				</select>
         <input type="text" class="form-control"  name="otroInput" id="filtroInput" placeholder="Filtrar Propietarios">

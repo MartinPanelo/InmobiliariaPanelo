@@ -15,24 +15,24 @@
 			<th>
                 @Html.DisplayNameFor(model => model.IdContrato)
             </th>
-              <th>
+            @*   <th>
                 @Html.DisplayNameFor(model => model.InmuebleId)
-            </th>
+            </th> *@
    			<th>
                 @Html.DisplayNameFor(model => model.Inmueble)
             </th>
-            <th>
+         @*    <th>
                 @Html.DisplayNameFor(model => model.InquilinoId)
-            </th>
+            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.Inquilino)
             </th>
-            <th>
+          @*   <th>
                 @Html.DisplayNameFor(model => model.FechaDesde)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.FechaHasta)
-            </th>
+            </th> *@
 
 			<th>Acciones</th>
         </tr>
@@ -44,26 +44,28 @@
 			 	<td>
 					@Html.DisplayFor(modelItem => item.IdContrato)
 				</td>
-				<td>
+@* 				<td>
 					@Html.DisplayFor(modelItem => item.InmuebleId)
-				</td>
+				</td> *@
 				<td>
 					@Html.DisplayFor(modelItem => item.Inmueble.Direccion)
 				</td>
-				<td>
+@* 				<td>
 					@Html.DisplayFor(modelItem => item.InquilinoId)
-				</td>
+				</td> *@
 				<td>
+					@Html.DisplayFor(modelItem => item.Inquilino.Nombre)
 					@Html.DisplayFor(modelItem => item.Inquilino.Apellido)
+
 				</td>
-				<td>
+@* 				<td>
 					@Html.DisplayFor(modelItem => item.FechaDesde)
 				</td>
 				<td>
 					@Html.DisplayFor(modelItem => item.FechaHasta)
-				</td>
+				</td> *@
 	
-				<td> 
+				<td>
               	  <a type="button" class="btn btn-danger" asp-action="ContratoEliminar" asp-route-id="@item.IdContrato" title="Eliminar contrato"><span>Borrar</span></a>
               	  <a type="button" class="btn btn-warning" asp-action="ContratoEditar" asp-route-id="@item.IdContrato" title="Editar inmueble"><span>Editar</span></a>
               	  <a type="button" class="btn btn-primary" asp-action="VistaDetalles" asp-route-id="@item.IdContrato" title="Detalles"><span>Detalles</span></a>
