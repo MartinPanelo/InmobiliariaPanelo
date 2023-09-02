@@ -59,7 +59,7 @@ namespace InmobiliariaPanelo.Controllers{
 					return RedirectToAction("Index");
 				}
 				else
-					return View(inquilino);
+					return View("VistaAgregar",inquilino);
 			}
 			catch (Exception ex)
 			{
