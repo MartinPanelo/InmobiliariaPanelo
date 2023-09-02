@@ -15,9 +15,9 @@
 			<th>
                 @Html.DisplayNameFor(model => model.Propietario)
             </th>
-            <th>
+            @* <th>
                 @Html.DisplayNameFor(model => model.CantidadAmbientes)
-            </th>
+            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.Direccion)
             </th>
@@ -49,9 +49,9 @@
 				<td>					
 					@(item.Propietario.Nombre + " " + item.Propietario.Apellido)
 				</td>
-				 <td>
+				@*  <td>
 					@Html.DisplayFor(modelItem => item.CantidadAmbientes)
-				</td>
+				</td> *@
 				<td>
 					@Html.DisplayFor(modelItem => item.Direccion)
 				</td>

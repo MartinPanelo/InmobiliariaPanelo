@@ -139,7 +139,8 @@ namespace InmobiliariaPanelo.Models
 			Inmueble? i = null;
 			using (var connection = new MySqlConnection(connectionString)){
 				string sql = @"SELECT T1.IdInmueble, T1.PropietarioId, T1.CantidadAmbientes, T3.Uso, T1.Direccion, T2.Tipo, 
-				 T1.Latitud, T1.Longitud, T1.Precio, T1.Disponible, T4.Nombre, T4.Apellido, T4.Dni
+				 T1.Latitud, T1.Longitud, T1.Precio, T1.Disponible, 
+				 T4.Nombre, T4.Apellido, T4.Dni, T4.Telefono, T4.Email
 				 FROM inmuebles AS T1 
 				 INNER JOIN tiposInmuebles AS T2 ON T1.Tipo = T2.IdTipoInmueble 
 				 INNER JOIN usosInmuebles AS T3 ON T1.Uso = T3.IdUsoInmueble 
@@ -169,7 +170,9 @@ namespace InmobiliariaPanelo.Models
 								IdPropietario = reader.GetInt32("PropietarioId"),
 								Nombre = reader.GetString("Nombre"),
 								Apellido = reader.GetString("Apellido"),
-								Dni = reader.GetString("Dni")
+								Dni = reader.GetString("Dni"),
+								Telefono = reader.GetString("Telefono"),
+								Email = reader.GetString("Email")
 							}
 							
 						};

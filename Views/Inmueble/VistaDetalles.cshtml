@@ -69,7 +69,7 @@
     </div>
 
     <div class="col">
-        <h1>Propietario de  inmueble</h1>
+        <h1>Detalles del propietario</h1>
         <hr />
         <dl class="row align-items-center">                
             <dt class = "my-2 col-sm-2">
@@ -89,6 +89,18 @@
             </dt>
             <dd class = "my-2 col-sm-10">
                 @Html.DisplayFor(model => model.Propietario.Dni)
+            </dd>
+                        <dt class = "my-2 col-sm-2">
+                @Html.DisplayNameFor(model => model.Propietario.Telefono)
+            </dt>
+            <dd class = "my-2 col-sm-10">
+                @Html.DisplayFor(model => model.Propietario.Telefono)
+            </dd>
+                        <dt class = "my-2 col-sm-2">
+                @Html.DisplayNameFor(model => model.Propietario.Email)
+            </dt>
+            <dd class = "my-2 col-sm-10">
+                @Html.DisplayFor(model => model.Propietario.Email)
             </dd>
         </dl>
     </div>

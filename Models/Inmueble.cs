@@ -8,21 +8,26 @@ namespace InmobiliariaPanelo.Models{
 		[Display(Name = "Identificador")]
         public int IdInmueble {get; set;}
 		[Display(Name = "Cantidad de ambientes")]
-		[Required]
+		[RegularExpression(@"^\d+$", ErrorMessage = "Debe ser un número entero.")]
+		[Required(ErrorMessage = "Este campo es obligatorio.")]
 		public int CantidadAmbientes { get; set; }
-		[Required]
+		[Required(ErrorMessage = "Este campo es obligatorio.")]
 		public string? Uso { get; set; }//tabla o enum
-		[Required]
+		[Required(ErrorMessage = "Este campo es obligatorio.")]
 		public string? Tipo { get; set; }//tabla o enum
-		[Required]
+		[Required(ErrorMessage = "Este campo es obligatorio.")]
+		[Display(Name = "Dirección")]
 		public string? Direccion { get; set; }
-		[Required]
+		[RegularExpression(@"^\d+(\.\d{1,2})?$", ErrorMessage = "Debe ser un número con hasta dos decimales.")]
+		[Required(ErrorMessage = "Este campo es obligatorio.")]
 		public decimal Latitud { get; set; }
-		[Required]
+		[RegularExpression(@"^\d+(\.\d{1,2})?$", ErrorMessage = "Debe ser un número con hasta dos decimales.")]
+		[Required(ErrorMessage = "Este campo es obligatorio.")]
 		public decimal Longitud { get; set; }
-		[Required]
+		[RegularExpression(@"^\d+(\.\d{1,2})?$", ErrorMessage = "Debe ser un número con hasta dos decimales.")]
+		[Required(ErrorMessage = "Este campo es obligatorio.")]
 		public decimal Precio { get; set; }
-		[Required]
+		[Required(ErrorMessage = "Este campo es obligatorio.")]
 		public bool Disponible { get; set; }
 
 
