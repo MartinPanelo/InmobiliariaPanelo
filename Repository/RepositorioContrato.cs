@@ -101,8 +101,17 @@ namespace InmobiliariaPanelo.Models
 		public Contrato ContratoObtenerPorId(int id){
 			Contrato? c = null;
 			using (var connection = new MySqlConnection(connectionString)){
-				string sql = @"SELECT IdContrato, InquilinoId, InmuebleId, FechaDesde, FechaHasta FROM contratos WHERE IdContrato = @id";
+				//string sql = @"SELECT IdContrato, InquilinoId, InmuebleId, FechaDesde, FechaHasta FROM contratos WHERE IdContrato = @id";
 				
+				 string sql = @"SELECT T1.IdContrato, T1.InquilinoId, T1.InmuebleId, T1.FechaDesde, T1.FechaHasta,
+				 T2.IdInquilino, T2.Nombre, T2.Apellido, T2.Dni, T2.Telefono, T2.Email,
+				 T3.IdInmueble, T3.Direccion, T3.Tipo, T3.Latitud, T3.Longitud, T3.Precio, T3.Disponible
+				 FROM contratos AS T1 
+				 INNER JOIN inquilinos AS T2 ON T1.InquilinoId = T2.IdInquilino 
+				 INNER JOIN inmuebles AS T3 ON T1.InmuebleId = T3.IdInmueble AND T1.IdContrato = @id";
+
+
+
 				using (var command = new MySqlCommand(sql, connection))
 				{
 					command.Parameters.AddWithValue("@id", id);
@@ -118,6 +127,8 @@ namespace InmobiliariaPanelo.Models
 							InmuebleId = reader.GetInt32("InmuebleId"),
 							FechaDesde = reader.GetDateTime("FechaDesde"),
 							FechaHasta = reader.GetDateTime("FechaHasta"),
+							Inmueble = repositorioInmueble.InmuebleObtenerPorId(reader.GetInt32("InmuebleId")),
+							Inquilino = repositorioInquilino.InquilinoObtenerPorId(reader.GetInt32("InquilinoId")),
 
 						};
 					}
@@ -126,6 +137,34 @@ namespace InmobiliariaPanelo.Models
 			}
 			return c!;
 		}
+
+
+		public int ContratoEditar(Contrato contrato)
+		{
+			int res = -1;
+			using (var connection = new MySqlConnection(connectionString))
+			{
+				string sql = @"UPDATE contratos
+					SET	InquilinoId=@InquilinoId, InmuebleId=@InmuebleId, FechaDesde=@FechaDesde, FechaHasta=@FechaHasta
+					WHERE IdContrato=@IdContrato;";
+				using (var command = new MySqlCommand(sql, connection))
+				{
+					command.CommandType = CommandType.Text;
+					command.Parameters.AddWithValue("@IdContrato", contrato.IdContrato);
+					command.Parameters.AddWithValue("@InquilinoId", contrato.InquilinoId);
+					command.Parameters.AddWithValue("@InmuebleId", contrato.InmuebleId);
+					command.Parameters.AddWithValue("@FechaDesde", contrato.FechaDesde);
+					command.Parameters.AddWithValue("@FechaHasta", contrato.FechaHasta);
+
+					connection.Open();
+					res = command.ExecuteNonQuery();
+					connection.Close();
+				}
+			}
+			return res;
+		}
+
+
 
     }
 }

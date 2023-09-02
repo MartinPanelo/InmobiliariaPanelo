@@ -1,0 +1,52 @@
+@model InmobiliariaPanelo.Models.Contrato
+@{
+    ViewData["Title"] = "Detalle";
+}
+
+<h1>@ViewData["detalle"]</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "my-2 col-sm-2">
+            @Html.DisplayNameFor(model => model.IdContrato)
+        </dt>
+        <dd class = "my-2 col-sm-10">
+            @Html.DisplayFor(model => model.IdContrato)
+        </dd>
+        <dt class = "my-2 col-sm-2">
+            @Html.DisplayNameFor(model => model.InquilinoId)
+        </dt>
+        <dd class = "my-2 col-sm-10">
+            @Html.DisplayFor(model => model.InquilinoId)
+        </dd>
+        <dt class = "my-2 col-sm-2">
+            @Html.DisplayNameFor(model => model.InmuebleId)
+        </dt>
+        <dd class = "my-2 col-sm-10">
+            @Html.DisplayFor(model => model.InmuebleId)
+        </dd>
+        <dt class = "my-2 col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaDesde)
+        </dt>
+        <dd class = "my-2 col-sm-10">
+            @Html.DisplayFor(model => model.FechaDesde)
+        </dd>
+        <dt class = "my-2 col-sm-2">
+            @Html.DisplayNameFor(model => model.FechaHasta)
+        </dt>
+        <dd class = "my-2 col-sm-10">
+            @Html.DisplayFor(model => model.FechaHasta)
+        </dd>
+                
+        <dt class = "my-2 col-sm-2">
+            @Html.DisplayNameFor(model => model.Inmueble)
+        </dt>
+        <dd class = "my-2 col-sm-10">
+            @Html.DisplayFor(model => model.Inmueble.Direccion)
+        </dd>
+    </dl>
+    
+
+        <a class="btn btn-primary" asp-action="Index">Volver al listado</a>
+</div>

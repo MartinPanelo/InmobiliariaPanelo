@@ -84,12 +84,50 @@ namespace InmobiliariaPanelo.Controllers{
 
 
 
+        public ActionResult VistaDetalles(int id){
+		
+		Contrato c = repositorio.ContratoObtenerPorId(id);
+
+        
+
+        ViewData["detalle"]="detalle del Contrato";
+            return View("VistaDetalles",c);
+            
+        }
 
 
 
+         public ActionResult ContratoEditar(int id){
 
+            var ContratoEditar = repositorio.ContratoObtenerPorId(id);
+         /*    ViewBag.Propietarios = repositorioP.PropietarioObtenerTodos();
+            ViewBag.Usos = repositorio.usos();
+            ViewBag.Tipos = repositorio.tipos(); */
+            return View("VistaEditar", ContratoEditar);        
+        }
 
+ 
+        [HttpPost]
+        public ActionResult ContratoEditar(int id, Contrato contrato){
 
+            Contrato? c = null;
+            try{
+                c = repositorio.ContratoObtenerPorId(id);
+                c.InquilinoId = contrato.InquilinoId;
+                c.InmuebleId = contrato.InmuebleId;
+                c.FechaDesde = contrato.FechaDesde;
+                c.FechaHasta = contrato.FechaHasta;
+                repositorio.ContratoEditar(c);
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Index");
+            }
+        }
+ 
 
 
 
