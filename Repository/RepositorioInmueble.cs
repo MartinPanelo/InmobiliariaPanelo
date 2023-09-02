@@ -85,7 +85,7 @@ namespace InmobiliariaPanelo.Models
 							Tipo = reader.GetString("Tipo"),
 							Latitud = reader.GetDecimal("Latitud"),
 							Longitud = reader.GetDecimal("Longitud"),
-							Precio = reader.GetInt32("Precio"),
+							Precio = reader.GetDecimal("Precio"),
 							Disponible = reader.GetBoolean("Disponible"),
 							Propietario = new Propietario{
 								IdPropietario = reader.GetInt32("PropietarioId"),
@@ -164,7 +164,7 @@ namespace InmobiliariaPanelo.Models
 							Tipo = reader.GetString("Tipo"),
 							Latitud = reader.GetDecimal("Latitud"),
 							Longitud = reader.GetDecimal("Longitud"),
-							Precio = reader.GetInt32("Precio"),
+							Precio = reader.GetDecimal("Precio"),
 							Disponible = reader.GetBoolean("Disponible"),
 							Propietario = new Propietario{
 								IdPropietario = reader.GetInt32("PropietarioId"),

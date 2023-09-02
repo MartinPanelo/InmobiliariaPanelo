@@ -45,14 +45,18 @@ namespace InmobiliariaPanelo.Controllers{
 
             try
 			{
-				if (ModelState.IsValid)
+				if (ModelState.IsValid && inmueble.PropietarioId != 0)
 				{
 					repositorio.InmuebleAlta(inmueble);
 					//TempData["Id"] = propietario.IdPropietario;
 					return RedirectToAction("Index");
 				}
 				else
-					return View("VistaAgregar",inmueble);
+                    ViewBag.Propietarios = repositorioP.PropietarioObtenerTodos();
+                    ViewBag.Usos = repositorio.usos();
+                    ViewBag.Tipos = repositorio.tipos();
+                    return View("VistaAgregar");
+				//	return View("VistaAgregar",inmueble);
 			}
 			catch (Exception ex)
 			{

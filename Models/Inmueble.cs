@@ -21,10 +21,10 @@ namespace InmobiliariaPanelo.Models{
 		[RegularExpression(@"^\d+(\.\d{1,2})?$", ErrorMessage = "Debe ser un número con hasta dos decimales.")]
 		[Required(ErrorMessage = "Este campo es obligatorio.")]
 		public decimal Latitud { get; set; }
-		[RegularExpression(@"^\d+(\.\d{1,2})?$", ErrorMessage = "Debe ser un número con hasta dos decimales.")]
+		[RegularExpression(@"^-?\d+(\.\d{1,2})?$", ErrorMessage = "Debe ser un número con hasta dos decimales.")]
 		[Required(ErrorMessage = "Este campo es obligatorio.")]
 		public decimal Longitud { get; set; }
-		[RegularExpression(@"^\d+(\.\d{1,2})?$", ErrorMessage = "Debe ser un número con hasta dos decimales.")]
+		[RegularExpression(@"^-?\d+(\.\d{1,2})?$", ErrorMessage = "Debe ser un número con hasta dos decimales.")]
 		[Required(ErrorMessage = "Este campo es obligatorio.")]
 		public decimal Precio { get; set; }
 		[Required(ErrorMessage = "Este campo es obligatorio.")]
@@ -33,6 +33,8 @@ namespace InmobiliariaPanelo.Models{
 
 
 		[Display(Name = "Propietario")]
+		[RegularExpression(@"^[1-9]\d*$", ErrorMessage = "Debe seleccionar un propietario.")]
+
 		public int PropietarioId { get; set; }
 		[ForeignKey(nameof(PropietarioId))]
 		public Propietario? Propietario{ get; set; }
@@ -45,3 +47,7 @@ namespace InmobiliariaPanelo.Models{
 		
     }
 }
+
+
+
+

@@ -12,19 +12,19 @@
 
 
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="InmuebleAgregar">
+<div class="row ">
+    <div class="col-md-6" >
+        <form asp-action="InmuebleAgregar" >
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
 
 
-            <div class="form-group">
+            <div class="col-md-6 form-group ">
                 <label asp-for="CantidadAmbientes" class="control-label"></label>
-                <input asp-for="CantidadAmbientes" class="form-control" />
+                <input min="1" asp-for="CantidadAmbientes" class="form-control" />
                 <span asp-validation-for="CantidadAmbientes" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="col-md-6 form-group">
 				<label class="control-label">Uso</label>
 				<select class="form-control" name="Uso">
 					@foreach (var item in diccionarioUsos)
@@ -39,12 +39,12 @@
                 <input asp-for="Uso" class="form-control" />
                 <span asp-validation-for="Uso" class="text-danger"></span>
             </div> *@
-           <div class="form-group">
+           <div class="col-md-6 form-group">
                 <label asp-for="Direccion" class="control-label"></label>
                 <input asp-for="Direccion" class="form-control" />
                 <span asp-validation-for="Direccion" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="col-md-6 form-group">
 				<label class="control-label">Tipo</label>
 				<select class="form-control" name="Tipo">
 					@foreach (var item in diccionarioTipos)
@@ -59,38 +59,44 @@
                 <input asp-for="Tipo" class="form-control" />
                 <span asp-validation-for="Tipo" class="text-danger"></span>
             </div> *@
-            <div class="form-group">
+            <div class="col-md-6 form-group">
                 <label asp-for="Latitud" class="control-label"></label>
                 <input asp-for="Latitud" class="form-control" />
                 <span asp-validation-for="Latitud" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="col-md-6 form-group">
                 <label asp-for="Longitud" class="control-label"></label>
                 <input asp-for="Longitud" class="form-control" />
                 <span asp-validation-for="Longitud" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="col-md-6 form-group">
                 <label asp-for="Precio" class="control-label"></label>
                 <input asp-for="Precio" class="form-control" />
                 <span asp-validation-for="Precio" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <div class="col-md-6 form-group">
                 <label asp-for="Disponible" class="control-label"></label>
                 <input asp-for="Disponible" type="checkbox"/>
                 <span asp-validation-for="Disponible" class="text-danger"></span>
             </div> 
 
-            <div class="form-group">
-				<label class="control-label">Propietario</label>
-				<select class="form-control" name="PropietarioId">
-					@foreach (var item in listaPropietarios)
-					{
-						<option value="@item.IdPropietario">@(item.ToString())</option>
-					}
-				</select>
-				<span asp-validation-for="PropietarioId" class="text-danger"></span>
-			</div>
+<div class=" form-group">
+    <label class="control-label">Propietario</label>
+    <div class="input-group">
+        <select class="form-control" name="PropietarioId" id="miSelect">
+            <option value="-1">Seleccione un Propietario</option>
+            @foreach (var item in listaPropietarios)
+            {
+                <option value="@item.IdPropietario">@(item.ToString())</option>
+            }
+        </select>
+        <input type="text" class="form-control"  name="otroInput" id="filtroInput" placeholder="Filtrar Propietarios">
+
+
+    </div>
+    <span asp-validation-for="PropietarioId" class="text-danger"></span>
+</div>
 
             <div class="mb-3 form-group mt-4">
               <a asp-action="Index" class="btn btn-primary ">Volver al listado</a> | 
@@ -105,3 +111,26 @@
 }
 
 
+
+
+
+
+    <script>
+        var filtroInput = document.getElementById("filtroInput");
+        filtroInput.addEventListener("input", filtrarOpciones);
+
+        function filtrarOpciones() {
+            var filtro = filtroInput.value.toLowerCase();
+            var select = document.getElementById("miSelect");
+            var opciones = select.getElementsByTagName("option");
+
+            for (var i = 0; i < opciones.length; i++) {
+                var opcionTexto = opciones[i].text.toLowerCase();
+                if (opcionTexto.includes(filtro)) {
+                    opciones[i].style.display = "";
+                } else {
+                    opciones[i].style.display = "none";
+                }
+            }
+        }
+    </script>
