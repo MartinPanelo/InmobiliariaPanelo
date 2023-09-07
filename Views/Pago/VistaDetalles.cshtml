@@ -1,0 +1,120 @@
+@model InmobiliariaPanelo.Models.Pago
+@{
+    ViewData["Title"] = "Detalle";
+}
+
+
+
+<div class="row">
+    <div class="col">
+        <h1>@ViewData["detalle"]</h1> VER QUE MAS MOSTRAR
+        <hr/>
+        <dl class="row align-items-center">        
+            <dt class = "my-2 col-sm-3">
+                @Html.DisplayNameFor(model => model.IdPago)
+            </dt>
+            <dd class = "my-2 col-sm-9">
+                @Html.DisplayFor(model => model.IdPago)
+            </dd>
+            <dt class = "my-2 col-sm-3">
+                @Html.DisplayNameFor(model => model.ContratoId)
+            </dt>
+            <dd class = "my-2 col-sm-9">
+                @Html.DisplayFor(model => model.ContratoId)
+            </dd>
+@*             <dt class = "my-2 col-sm-3">
+                @Html.DisplayNameFor(model => model.Monto)
+            </dt>
+            <dd class = "my-2 col-sm-9">
+                @Html.DisplayFor(model => model.Monto)
+            </dd>
+            <dt class = "my-2 col-sm-3">
+                @Html.DisplayNameFor(model => model.Fecha)
+            </dt>
+            <dd class = "my-2 col-sm-9">
+                @Html.DisplayFor(model => model.Fecha)
+            </dd> *@
+
+           
+        </dl>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Fecha)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Monto)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@Html.DisplayFor(model => model.Fecha)</td>
+                    <td>@Html.DisplayFor(model => model.Monto)</td>
+                </tr>
+            </tbody>
+        </table>
+        <a class="mb-3 btn btn-primary" asp-action="Index">Volver al listado</a>
+    </div>
+
+@*     <div class="col">
+        <h1>Detalles del propietario</h1>
+        <hr />
+        <dl class="row align-items-center">                
+            <dt class = "my-2 col-sm-2">
+                @Html.DisplayNameFor(model => model.Propietario.Nombre)
+            </dt>
+            <dd class = "my-2 col-sm-10">
+                @Html.DisplayFor(model => model.Propietario.Nombre)
+            </dd>
+            <dt class = "my-2 col-sm-2">
+                @Html.DisplayNameFor(model => model.Propietario.Apellido)
+            </dt>
+            <dd class = "my-2 col-sm-10">
+                @Html.DisplayFor(model => model.Propietario.Apellido)
+            </dd>
+            <dt class = "my-2 col-sm-2">
+                @Html.DisplayNameFor(model => model.Propietario.Dni)
+            </dt>
+            <dd class = "my-2 col-sm-10">
+                @Html.DisplayFor(model => model.Propietario.Dni)
+            </dd>
+                        <dt class = "my-2 col-sm-2">
+                @Html.DisplayNameFor(model => model.Propietario.Telefono)
+            </dt>
+            <dd class = "my-2 col-sm-10">
+                @Html.DisplayFor(model => model.Propietario.Telefono)
+            </dd>
+                        <dt class = "my-2 col-sm-2">
+                @Html.DisplayNameFor(model => model.Propietario.Email)
+            </dt>
+            <dd class = "my-2 col-sm-10">
+                @Html.DisplayFor(model => model.Propietario.Email)
+            </dd>
+        </dl>
+    </div> *@
+</div>
+
+@* 
+<div class="row">
+    <div class="col">
+        <h1>@ViewData["detalle"]</h1>
+        <hr/>
+
+        <dl class="row align-items-center">        
+            <dt class="my-2 col-sm-3">
+                Identificador
+            </dt>
+            <dd class="my-2 col-sm-9">
+                @Html.DisplayFor(model => model.IdPago)
+            </dd>
+            <dt class="my-2 col-sm-3">
+                Contrato
+            </dt>
+            <dd class="my-2 col-sm-9">
+                @Html.DisplayFor(model => model.ContratoId)
+            </dd>
+        </dl>
+
+        
+
+        <a class="mb-3 btn btn-primary" asp-action="Index">Volver al listado</a>
+    </div>
+</div> *@

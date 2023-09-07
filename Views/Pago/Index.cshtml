@@ -1,4 +1,4 @@
-@model IEnumerable<InmobiliariaPanelo.Models.Contrato>
+@model IEnumerable<InmobiliariaPanelo.Models.Pago>
 
 @{
     ViewData["Title"] = "Gestion de pagos";
@@ -15,13 +15,13 @@
     <thead>
         <tr>
 			<th>
-                @Html.DisplayNameFor(model => model.InquilinoId)
-             
+                @Html.DisplayNameFor(model => model.Contrato.Inquilino.IdInquilino)
+            
 
             </th>
 
    		 	<th>
-                @Html.DisplayNameFor(model => model.Inmueble)
+                @Html.DisplayNameFor(model => model.Contrato.Inmueble.Direccion)
             </th>
         @*     <th>
                 @Html.DisplayNameFor(model => model.InquilinoId)
@@ -44,13 +44,13 @@
 		{
 			<tr>
 			 	<td>
-					@Html.DisplayFor(modelItem => item.Inquilino.Nombre)
-                    @Html.DisplayFor(modelItem => item.Inquilino.Apellido)
+					@Html.DisplayFor(modelItem => item.Contrato.Inquilino.Nombre)
+                    @Html.DisplayFor(modelItem => item.Contrato.Inquilino.Apellido)
+                    
 				</td>
 		        <td>
-					@Html.DisplayFor(modelItem => item.Inmueble.Direccion)
-                 - dueño:  @Html.DisplayFor(modelItem => item.Inmueble.Propietario.Nombre)
-                  @Html.DisplayFor(modelItem => item.Inmueble.Propietario.Apellido)
+					@Html.DisplayFor(modelItem => item.Contrato.Inmueble.Direccion)
+                
 
 				</td>
 			@* 			<td>
@@ -72,8 +72,8 @@
 				</td> *@
 	
 				<td>
-              	  <a type="button" class="btn btn-warning" asp-action="VistaDetalles" asp-route-id="@item.IdContrato" title="Realizar pago"><span>Realizar pago</span></a>
-                   <a type="button" class="btn btn-primary" asp-action="VistaDetalles" asp-route-id="@item.IdContrato" title="Detalles"><span>Detalles</span></a>
+              	  <a type="button" class="btn btn-warning" asp-action="VistaDetalles" asp-route-id="@item.IdPago" title="Realizar pago"><span>Realizar pago</span></a>
+                   <a type="button" class="btn btn-primary" asp-action="VistaDetalles" asp-route-id="@item.IdPago" title="Detalles"><span>Detalles</span></a>
 
 				</td>
 			</tr>

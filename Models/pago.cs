@@ -13,7 +13,8 @@ namespace InmobiliariaPanelo.Models{
 		public int ContratoId { get; set; }
         public Contrato? Contrato{ get; set; }
 		public decimal Monto{ get; set; }
-
+        
+        [DataType(DataType.Date)]
         public DateTime Fecha { get; set; }
 
 
