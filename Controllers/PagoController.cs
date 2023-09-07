@@ -28,5 +28,16 @@ namespace InmobiliariaPanelo.Controllers{
             
         }
 
+
+        public ActionResult VistaPago(int id){
+		
+		Pago pago = repositorioPago.PagoObtenerPorId(id);
+        ViewData["detalle"]="detalle del pago";
+            return View("VistaPago",pago);
+            
+        }
+
+
+
     }
 }
