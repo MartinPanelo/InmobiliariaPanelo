@@ -16,7 +16,7 @@ namespace InmobiliariaPanelo.Models
 
 			using (var connection = new MySqlConnection(connectionString))
 			{
-				string sql = @"SELECT IdContrato, InquilinoId, InmuebleId, FechaDesde, FechaHasta
+				string sql = @"SELECT IdContrato, InquilinoId, InmuebleId, FechaDesde, FechaHasta, Monto
 								FROM contratos;";
 /* 									contratos AS T1
 									INNER JOIN inquilinos AS T2 ON T1.InquilinoId = T2.IdInquilino
@@ -35,9 +35,10 @@ namespace InmobiliariaPanelo.Models
 							InmuebleId = reader.GetInt32("InmuebleId"),
 							FechaDesde = reader.GetDateTime("FechaDesde"),
 							FechaHasta = reader.GetDateTime("FechaHasta"),
+							Monto = reader.GetDecimal("Monto"),
 							Inmueble = repositorioInmueble.InmuebleObtenerPorId(reader.GetInt32("InmuebleId")),
 							Inquilino = repositorioInquilino.InquilinoObtenerPorId(reader.GetInt32("InquilinoId")),
-						
+							
 							
 						};
 						res.Add(c);
@@ -57,8 +58,8 @@ namespace InmobiliariaPanelo.Models
 			using (var connection = new MySqlConnection(connectionString))
 			{
 
-				string sql = @"INSERT INTO contratos (InquilinoId, InmuebleId, FechaDesde, FechaHasta)
-					VALUES (@InquilinoId, @InmuebleId, @FechaDesde, @FechaHasta);
+				string sql = @"INSERT INTO contratos (InquilinoId, InmuebleId, FechaDesde, FechaHasta, Monto)
+					VALUES (@InquilinoId, @InmuebleId, @FechaDesde, @FechaHasta, @Monto);
 					SELECT LAST_INSERT_ID();";//devuelve el id insertado (SCOPE_IDENTITY para sql)
 				 using (var command = new MySqlCommand(sql, connection))
 				{
@@ -67,6 +68,7 @@ namespace InmobiliariaPanelo.Models
 					command.Parameters.AddWithValue("@InmuebleId", contrato.InmuebleId);
 					command.Parameters.AddWithValue("@FechaDesde", contrato.FechaDesde);
 					command.Parameters.AddWithValue("@FechaHasta", contrato.FechaHasta);
+					command.Parameters.AddWithValue("@Monto", repositorioInmueble.InmuebleObtenerPorId(contrato.InmuebleId).Precio);
 
 					
 					connection.Open();
@@ -127,6 +129,7 @@ namespace InmobiliariaPanelo.Models
 							InmuebleId = reader.GetInt32("InmuebleId"),
 							FechaDesde = reader.GetDateTime("FechaDesde"),
 							FechaHasta = reader.GetDateTime("FechaHasta"),
+							Monto = reader.GetDecimal("Precio"),
 							Inmueble = repositorioInmueble.InmuebleObtenerPorId(reader.GetInt32("InmuebleId")),
 							Inquilino = repositorioInquilino.InquilinoObtenerPorId(reader.GetInt32("InquilinoId")),
 

@@ -34,7 +34,11 @@
                 @Html.DisplayNameFor(model => model.FechaHasta)
             </th> *@
 
+
 			<th>Acciones</th>
+@* 			<th>
+				| Gestionar pagos
+			</th> *@
         </tr>
     </thead>
 	<tbody>
@@ -70,6 +74,11 @@
               	  <a type="button" class="btn btn-warning" asp-action="ContratoEditar" asp-route-id="@item.IdContrato" title="Editar inmueble"><span>Editar</span></a>
               	  <a type="button" class="btn btn-primary" asp-action="VistaDetalles" asp-route-id="@item.IdContrato" title="Detalles"><span>Detalles</span></a>
 				</td>
+@* 				<td>
+					<a type="button" class="btn btn-primary" asp-action="Pago/VistaPago" asp-route-id="@item.IdContrato" title="Realizar pago"><span>Realizar pago</span></a>
+					<a type="button" class="btn btn-primary" asp-action="VistaDetalles" asp-route-id="@item.IdContrato" title="Detalles de pago"><span>Detalles de pago</span></a>
+
+				</td> *@
 			</tr>
 			}
 		</tbody>

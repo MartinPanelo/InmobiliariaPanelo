@@ -39,13 +39,14 @@ namespace InmobiliariaPanelo.Controllers{
 			{
 				if (ModelState.IsValid && contrato.FechaDesde < contrato.FechaHasta)
 				{
+                    
 					repositorio.ContratoAlta(contrato);
 
 					return RedirectToAction("Index");
 				}
 				else
 
-                 ViewBag.listaInmuebles = repositorioInmueble.InmuebleObtenerTodos();
+                ViewBag.listaInmuebles = repositorioInmueble.InmuebleObtenerTodos();
                 ViewBag.listaInquilinos = repositorioInquilino.InquilinoObtenerTodos();
                 if(contrato.FechaDesde > contrato.FechaHasta){
                     TempData["mensaje"] = "La fecha de inicio debe ser menor a la fecha de finalización";

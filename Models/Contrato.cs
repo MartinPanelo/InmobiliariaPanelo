@@ -20,6 +20,9 @@ namespace InmobiliariaPanelo.Models{
         [Required(ErrorMessage = "La fecha es obligatoria.")]
         public DateTime FechaHasta { get; set; }
 
+        [Required]
+        public decimal Monto { get; set; }
+
 
 
 		[Display(Name = "Inquilino")]
