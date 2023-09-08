@@ -22,7 +22,7 @@ namespace InmobiliariaPanelo.Controllers{
 
         public ActionResult VistaDetalles(int id){
 		
-		Pago pago = repositorioPago.PagoObtenerPorId(id);
+		var pago = repositorioPago.PagosObtenerPorIdContrato(id);
         ViewData["detalle"]="detalle del pago";
             return View("VistaDetalles",pago);
             
@@ -31,9 +31,37 @@ namespace InmobiliariaPanelo.Controllers{
 
         public ActionResult VistaPago(int id){
 		
-		Pago pago = repositorioPago.PagoObtenerPorId(id);
+		Pago pago = repositorioPago.PagoObtenerPorIdContrato(id);
         ViewData["detalle"]="detalle del pago";
             return View("VistaPago",pago);
+            
+        }
+
+        [HttpPost]
+        public ActionResult RealizarPago(Pago pago){
+            
+        			
+            try
+			{
+
+				if (ModelState.IsValid)
+				{
+                    
+					repositorioPago.PagoAlta(pago);
+
+					return RedirectToAction("Index");
+				}
+				else{
+
+					return View("VistaPago", pago);
+                }
+			}
+			catch (Exception ex)
+			{
+                TempData["Error"] = ex.Message;
+                //mandar el error tambien
+                return RedirectToAction("Index");
+			}
             
         }
 

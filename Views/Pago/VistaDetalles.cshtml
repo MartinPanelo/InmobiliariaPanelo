@@ -1,4 +1,4 @@
-@model InmobiliariaPanelo.Models.Pago
+@model IEnumerable<InmobiliariaPanelo.Models.Pago>
 @{
     ViewData["Title"] = "Detalle";
 }
@@ -11,16 +11,19 @@
         <hr/>
         <dl class="row align-items-center">        
             <dt class = "my-2 col-sm-3">
-                @Html.DisplayNameFor(model => model.IdPago)
+                @* @Html.DisplayNameFor(model => model.Contrato.IdContrato) *@
+                Identificador de Contrato
             </dt>
             <dd class = "my-2 col-sm-9">
-                @Html.DisplayFor(model => model.IdPago)
+                @Html.DisplayFor(model => model.FirstOrDefault().Contrato.IdContrato)
             </dd>
             <dt class = "my-2 col-sm-3">
-                @Html.DisplayNameFor(model => model.ContratoId)
+                @* @Html.DisplayNameFor(model => model.Contrato.Inquilino.Nombre) *@
+                Nombre del inquilino
             </dt>
             <dd class = "my-2 col-sm-9">
-                @Html.DisplayFor(model => model.ContratoId)
+                @Html.DisplayFor(model => model.FirstOrDefault().Contrato.Inquilino.Nombre)
+                @Html.DisplayFor(model => model.FirstOrDefault().Contrato.Inquilino.Apellido)
             </dd>
 @*             <dt class = "my-2 col-sm-3">
                 @Html.DisplayNameFor(model => model.Monto)
@@ -37,20 +40,27 @@
 
            
         </dl>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Fecha)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Monto)</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>@Html.DisplayFor(model => model.Fecha)</td>
-                    <td>@Html.DisplayFor(model => model.Monto)</td>
-                </tr>
-            </tbody>
-        </table>
+
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">@Html.DisplayNameFor(model => model.Fecha)</th>
+                        <th scope="col">@Html.DisplayNameFor(model => model.Monto)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model) {
+                        <tr>
+                            <td>@Html.DisplayFor(model => item.Fecha)</td>
+                            <td>@Html.DisplayFor(model => item.Monto)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+
+
         <a class="mb-3 btn btn-primary" asp-action="Index">Volver al listado</a>
     </div>
 

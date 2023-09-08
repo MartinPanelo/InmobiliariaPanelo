@@ -44,14 +44,15 @@ namespace InmobiliariaPanelo.Controllers{
 
 					return RedirectToAction("Index");
 				}
-				else
+				else{
 
                 ViewBag.listaInmuebles = repositorioInmueble.InmuebleObtenerTodos();
                 ViewBag.listaInquilinos = repositorioInquilino.InquilinoObtenerTodos();
                 if(contrato.FechaDesde > contrato.FechaHasta){
                     TempData["mensaje"] = "La fecha de inicio debe ser menor a la fecha de finalización";
                 }
-					return View("VistaAgregar", contrato);
+				return View("VistaAgregar", contrato);
+                }
 			}
 			catch (Exception ex)
 			{
