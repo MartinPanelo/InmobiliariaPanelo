@@ -20,3 +20,11 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+
+.vertical-line {
+  border-left: 1px solid #000; /* Cambia el color y grosor según tus preferencias */
+  height: 200px; /* Ajusta la altura de la línea vertical */
+  margin: 0 20px; /* Añade margen para separarla de otros elementos si es necesario */
+}

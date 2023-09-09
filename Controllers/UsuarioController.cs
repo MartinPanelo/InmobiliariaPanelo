@@ -31,8 +31,8 @@ namespace InmobiliariaPanelo.Controllers
 		}
 		public ActionResult Gestion()
 		{
-			
-			return View("Gestion");
+			IList<Usuario> usuarios = repositorioUsuario.ObtenerTodos();
+			return View("Gestion",usuarios);
 		}
 		public ActionResult AgregarUsuario()
 		{
@@ -58,7 +58,7 @@ namespace InmobiliariaPanelo.Controllers
 									numBytesRequested: 256 / 8));
 					u.Clave = hashed;
 					u.Rol = User.IsInRole("Administrador") ? u.Rol : (int)enRoles.Empleado;
-					var nbreRnd = Guid.NewGuid();//posible nombre aleatorio
+				//	var nbreRnd = Guid.NewGuid();//posible nombre aleatorio
 					int res = repositorioUsuario.UsuarioAlta(u);
 					if (u.AvatarFile != null && u.Id > 0)
 					{
@@ -79,7 +79,7 @@ namespace InmobiliariaPanelo.Controllers
 						}
 						repositorioUsuario.Modificacion(u);
 					}
-					return RedirectToAction(nameof(Index));
+					return Gestion(); 
 				}
 				catch (Exception ex)
 				{
@@ -91,6 +91,7 @@ namespace InmobiliariaPanelo.Controllers
                            .Where(y=>y.Count>0)
                            .ToList();
 					AgregarUsuario();
+					
 			}
 			
 			return View("VistaAgregar");
@@ -148,7 +149,8 @@ namespace InmobiliariaPanelo.Controllers
 				//	return Redirect(returnUrl);
 				}
 			//	TempData["returnUrl"] = returnUrl;
-				return View("gestion");
+				return Gestion();
+			//	return View("gestion");
 			}
 			catch (Exception ex)
 			{
@@ -156,6 +158,76 @@ namespace InmobiliariaPanelo.Controllers
 				return View();
 			}
 		}
+
+
+		public async Task<ActionResult> Logout()
+		{
+			await HttpContext.SignOutAsync(
+					CookieAuthenticationDefaults.AuthenticationScheme);
+			//return RedirectToAction("Index", "Home");
+			return View("Login");
+		}
+
+
+		public ActionResult UsuarioEliminar(int id)
+		{
+			var u = repositorioUsuario.ObtenerPorId(id);
+			return View("VistaEliminar",u);
+		}
+
+		[HttpPost]
+		public ActionResult UsuarioEliminar(int id, Usuario usuario)
+		{
+
+
+			try
+			{
+				var UsuarioEliminar = repositorioUsuario.ObtenerPorId(id);
+				int res = repositorioUsuario.UsuarioBorrar(id);
+				if(res > 0){
+					var ruta = Path.Combine(environment.WebRootPath, "Uploads", $"avatar_{id}" + Path.GetExtension(usuario.Avatar));
+					if (System.IO.File.Exists(ruta))
+						System.IO.File.Delete(ruta);
+				}
+
+				return Gestion();
+			}
+			catch
+			{
+				return View();
+			}
+		}
+
+
+		 public ActionResult VistaDetalles(int id){
+		
+		Usuario u = repositorioUsuario.ObtenerPorId(id);
+
+        
+
+      
+            return View("VistaDetalles",u);
+            
+        }
+
+
+
+		public ActionResult UsuarioEditar()
+		{
+			
+		//	var u = repositorioUsuario.ObtenerPorEmail(User.Identity.Name); este seria para el caso de q
+		// voy a editar el perfil del logeado
+			ViewBag.Roles = Usuario.ObtenerRoles();
+			return View("VistaEditar", u);
+		}
+
+
+
+
+
+
+
+
 
 
 

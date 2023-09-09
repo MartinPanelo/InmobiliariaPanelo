@@ -105,7 +105,7 @@ namespace InmobiliariaPanelo.Controllers{
 
 
 
-         public ActionResult ContratoEditar(int id){
+        public ActionResult ContratoEditar(int id){
 
             var ContratoEditar = repositorio.ContratoObtenerPorId(id);
             ViewBag.listaInmuebles = repositorioInmueble.InmuebleObtenerTodos();

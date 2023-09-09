@@ -1,0 +1,100 @@
+@model InmobiliariaPanelo.Models.Usuario
+@{
+    ViewData["Title"] = "Editar Usuario";
+}
+
+
+<h4>Usuario</h4>
+<hr />
+<div class="row">
+    <!-- Primera columna para editar Nombre, Apellido y Email -->
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <!-- Código para editar Nombre -->
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label"></label>
+                <input asp-for="Nombre" class="form-control" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            
+            <!-- Código para editar Apellido -->
+            <div class="form-group">
+                <label asp-for="Apellido" class="control-label"></label>
+                <input asp-for="Apellido" class="form-control" />
+                <span asp-validation-for="Apellido" class="text-danger"></span>
+            </div>
+            
+            <!-- Código para editar Email -->
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            
+            <!-- Botón para enviar el formulario de esta columna -->
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+    <!-- Segunda columna para editar Avatar -->
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <!-- Código para editar Avatar -->
+            <div class="form-group">
+                <label asp-for="Avatar" class="control-label"></label><br />
+               @if (Model.Avatar != "" && Model.Avatar != null)
+				{
+					<img width="256"  src="@Model.Avatar" />
+				}
+				else
+				{
+					<p>Sin avatar</p>
+				}
+            </div>
+            
+            <!-- Botón para enviar el formulario de esta columna -->
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+    <!-- Tercera columna para editar Contraseña -->
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <!-- Código para editar Contraseña actual -->
+                <div class="form-group">
+                    <label asp-for="Clave" class="control-label">Contraseña Actual</label>
+                    <input asp-for="Clave" class="form-control" type="password" />
+                    <span asp-validation-for="Clave" class="text-danger"></span>
+                </div>
+
+                <!-- Código para editar Nueva Contraseña -->
+                <div class="form-group">
+                    <label for="ClaveNueva" class="control-label">Nueva Contraseña</label>
+                    <input id="ClaveNueva" name="ClaveNueva" class="form-control" type="password" />
+                    <span asp-validation-for="Clave" class="text-danger"></span>
+                </div>
+
+                                <!-- Código para confirmar Nueva Contraseña -->
+                <div class="form-group">
+                    <label for="ClaveNueva" class="control-label">Nueva Contraseña</label>
+                    <input id="ClaveNueva" name="ClaveNueva" class="form-control" type="password" />
+                    <span asp-validation-for="Clave" class="text-danger"></span>
+                </div>
+
+                <!-- Botón para enviar el formulario de esta columna -->
+                <div class="form-group">
+                    <input type="submit" value="Guardar" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver al Listado</a>
+</div>
+
+

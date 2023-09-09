@@ -13,8 +13,9 @@ public class HomeController : Controller
     {
         _logger = logger;
     } */
-    [Authorize]
-    public IActionResult Index()
+   // [Authorize]
+    [Authorize(Policy = "Administrador")]
+    public ActionResult Index()
     {
         return View();
     }

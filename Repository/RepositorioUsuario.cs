@@ -24,10 +24,10 @@ namespace InmobiliariaPanelo.Models
 					command.CommandType = CommandType.Text;
 					command.Parameters.AddWithValue("@nombre", e.Nombre);
 					command.Parameters.AddWithValue("@apellido", e.Apellido);
-					if (String.IsNullOrEmpty(e.Avatar))
+				//	if (String.IsNullOrEmpty(e.Avatar))
 						command.Parameters.AddWithValue("@avatar", DBNull.Value);
-					else
-						command.Parameters.AddWithValue("@avatar", e.Avatar);
+				//	else
+				//		command.Parameters.AddWithValue("@avatar", e.Avatar);
 					command.Parameters.AddWithValue("@email", e.Email);
 					command.Parameters.AddWithValue("@clave", e.Clave);
 					command.Parameters.AddWithValue("@rol", e.Rol);
@@ -63,7 +63,7 @@ namespace InmobiliariaPanelo.Models
 							Id = reader.GetInt32("Id"),
 							Nombre = reader.GetString("Nombre"),
 							Apellido = reader.GetString("Apellido"),
-							Avatar = reader.GetString("Avatar"),
+							Avatar = !reader.IsDBNull(reader.GetOrdinal("Avatar")) ? reader.GetString(reader.GetOrdinal("Avatar")) : null,
 							Email = reader.GetString("Email"),
 							Clave = reader.GetString("Clave"),
 							Rol = reader.GetInt32("Rol"),
@@ -103,6 +103,97 @@ namespace InmobiliariaPanelo.Models
 		}
 
 
+		public IList<Usuario> ObtenerTodos()
+		{
+			IList<Usuario> res = new List<Usuario>();
+			using (var connection = new MySqlConnection(connectionString))
+			{
+				string sql = @"
+					SELECT Id, Nombre, Apellido, Email, Clave,rol, Avatar
+					FROM usuarios";
+				using (var command = new MySqlCommand(sql, connection))
+				{
+					command.CommandType = CommandType.Text;
+					connection.Open();
+					var reader = command.ExecuteReader();
+					while (reader.Read())
+					{
+						Usuario e = new Usuario
+						{
+							Id = reader.GetInt32("Id"),
+							Nombre = reader.GetString("Nombre"),
+							Apellido = reader.GetString("Apellido"),
+							//Avatar = reader.GetString("Avatar"),
+						//	Avatar = !reader.IsDBNull(reader.GetString("Avatar")) ? null : reader.GetString("Avatar"),
+							Avatar = !reader.IsDBNull(reader.GetOrdinal("Avatar")) ? reader.GetString(reader.GetOrdinal("Avatar")) : null,
+							Email = reader.GetString("Email"),
+							Clave = reader.GetString("Clave"),
+							Rol = reader.GetInt32("Rol"),
+						};
+						res.Add(e);
+					}
+					connection.Close();
+				}
+			}
+			return res; 
+		}
+
+
+
+		public Usuario ObtenerPorId(int id)
+		{
+			Usuario? e = null;
+			using (var connection = new MySqlConnection(connectionString))
+			{
+				string sql = @"SELECT 
+					Id, Nombre, Apellido, Avatar, Email, Clave, Rol 
+					FROM usuarios
+					WHERE Id=@id";
+				using (var command = new MySqlCommand(sql, connection))
+				{
+					command.Parameters.Add("@id", MySqlDbType.Int64).Value = id;
+					command.CommandType = CommandType.Text;
+					connection.Open();
+					var reader = command.ExecuteReader();
+					if (reader.Read())
+					{
+						e = new Usuario
+						{
+							Id = reader.GetInt32("Id"),
+							Nombre = reader.GetString("Nombre"),
+							Apellido = reader.GetString("Apellido"),
+							Avatar = !reader.IsDBNull(reader.GetOrdinal("Avatar")) ? reader.GetString(reader.GetOrdinal("Avatar")) : null,
+							Email = reader.GetString("Email"),
+							Clave = reader.GetString("Clave"),
+							Rol = reader.GetInt32("Rol"),
+						};
+					}
+					connection.Close();
+				}
+			}
+			return e;
+		}
+
+
+
+
+		public int UsuarioBorrar(int id)
+        {
+            int res = 0;
+			using (var connection = new MySqlConnection(connectionString))
+			{
+				string sql = @$"DELETE FROM usuarios WHERE {nameof(Usuario.Id)} = @id";
+				using (var command = new MySqlCommand(sql, connection))
+				{
+					command.CommandType = CommandType.Text;
+					command.Parameters.AddWithValue("@id", id);
+					connection.Open();
+					res = command.ExecuteNonQuery();
+					connection.Close();
+				}
+			}
+			return res;
+        }
 
     }
 }
