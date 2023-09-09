@@ -1,0 +1,34 @@
+@model InmobiliariaPanelo.Models.LoginView
+
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<div class="container">
+    <div class="row justify-content-center mt-5">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Iniciar Sesión</h5>
+                    <form asp-action="Login">
+                        <div class="form-group my-3">
+                            <label asp-for="Usuario" class="control-label"></label>
+                            <input asp-for="Usuario" class="form-control" placeholder="Ingrese Usuario"/>
+                            <span asp-validation-for="Usuario" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Clave" class="control-label"></label>
+                            <input asp-for="Clave" class="form-control" placeholder="Ingrese Clave"/>
+                            <span asp-validation-for="Clave" class="text-danger"></span>
+                        </div>
+                        <div class="text-center  my-3">
+                       
+                            <input type="submit" value="Iniciar Sesión" class="btn btn-success" />  
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
