@@ -273,7 +273,7 @@ namespace InmobiliariaPanelo.Controllers
 		}
 
 
-
+		[HttpPost]
 		public ActionResult UsuarioEditarPerfil(int id, Usuario PerfilNuevo)
 		{
 			Usuario usuarioActual = null;
@@ -315,7 +315,7 @@ namespace InmobiliariaPanelo.Controllers
 		}
 
 
-
+		[HttpPost]
 		public ActionResult UsuarioEditarAvatar(int id, Usuario AvatarNuevo)
 		{
 
