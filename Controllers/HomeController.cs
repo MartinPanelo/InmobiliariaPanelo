@@ -14,7 +14,7 @@ public class HomeController : Controller
         _logger = logger;
     } */
    // [Authorize]
-    [Authorize(Policy = "Administrador")]
+    [AllowAnonymous]
     public ActionResult Index()
     {
         return View();

@@ -24,16 +24,21 @@ namespace InmobiliariaPanelo.Controllers
 
 	private readonly RepositorioUsuario repositorioUsuario = new RepositorioUsuario();  
 
+		[AllowAnonymous]
 		public ActionResult Index()
 		{
 			
 			return View("Login");
 		}
+		
+		[Authorize]
 		public ActionResult Gestion()
 		{
 			IList<Usuario> usuarios = repositorioUsuario.ObtenerTodos();
 			return View("Gestion",usuarios);
 		}
+
+		[Authorize(Policy = "Administrador")]
 		public ActionResult AgregarUsuario()
 		{
 			ViewBag.Roles = Usuario.ObtenerRoles();
@@ -43,7 +48,7 @@ namespace InmobiliariaPanelo.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-	//	[Authorize(Policy = "Administrador")]
+		[Authorize(Policy = "Administrador")]
 		public ActionResult UsuarioAgregar(Usuario u)
 		{
 			if (ModelState.IsValid){
@@ -147,11 +152,12 @@ namespace InmobiliariaPanelo.Controllers
 							new ClaimsPrincipal(claimsIdentity));
 				//	TempData.Remove("returnUrl");
 				//	return Redirect(returnUrl);
-				return  Gestion();
+				IList<Usuario> usuarios = repositorioUsuario.ObtenerTodos();
+				return  Redirect("Gestion");
 				}
 			//	TempData["returnUrl"] = returnUrl;
 				return View();
-			//	return View("gestion");
+
 			}
 			catch (Exception ex)
 			{
@@ -160,16 +166,16 @@ namespace InmobiliariaPanelo.Controllers
 			}
 		}
 
-
+		[Authorize]
 		public async Task<ActionResult> Logout()
 		{
 			await HttpContext.SignOutAsync(
 					CookieAuthenticationDefaults.AuthenticationScheme);
 			//return RedirectToAction("Index", "Home");
-			return View("Login");
+			return Redirect("Index");
 		}
 
-
+		[Authorize(Policy = "Administrador")]
 		public ActionResult UsuarioEliminar(int id)
 		{
 			var u = repositorioUsuario.ObtenerPorId(id);
@@ -177,6 +183,8 @@ namespace InmobiliariaPanelo.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "Administrador")]
 		public ActionResult UsuarioEliminar(int id, Usuario usuario)
 		{
 
@@ -199,7 +207,7 @@ namespace InmobiliariaPanelo.Controllers
 			}
 		}
 
-
+		[Authorize]
 		 public ActionResult VistaDetalles(int id){
 		
 		Usuario u = repositorioUsuario.ObtenerPorId(id);
@@ -212,7 +220,7 @@ namespace InmobiliariaPanelo.Controllers
         }
 
 //------------------------------------------------------------
-
+		[Authorize]
 		public ActionResult MiPerfil()
 		{
 			ViewData["Title"] = "Mi perfil";
@@ -222,7 +230,7 @@ namespace InmobiliariaPanelo.Controllers
 		}
 
 
-		
+		[Authorize(Policy = "Administrador")]
 		public ActionResult UsuarioEditar(int id)
 		{
 			ViewData["Title"] = "Editar usuario";
@@ -232,6 +240,8 @@ namespace InmobiliariaPanelo.Controllers
 		}
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
+		[Authorize]
 		public ActionResult UsuarioEditarContrasena(int id, Usuario ContrasenaNueva)
 		{
 			Usuario usuarioActual = null;
@@ -274,6 +284,8 @@ namespace InmobiliariaPanelo.Controllers
 
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
+		[Authorize]
 		public ActionResult UsuarioEditarPerfil(int id, Usuario PerfilNuevo)
 		{
 			Usuario usuarioActual = null;
@@ -316,6 +328,8 @@ namespace InmobiliariaPanelo.Controllers
 
 
 		[HttpPost]
+		[ValidateAntiForgeryToken]
+		[Authorize]
 		public ActionResult UsuarioEditarAvatar(int id, Usuario AvatarNuevo)
 		{
 

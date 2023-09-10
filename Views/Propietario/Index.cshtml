@@ -50,12 +50,6 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Dni)
             </td>
-@*             <td>
-                @Html.DisplayFor(modelItem => item.Telefono)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td> *@
 			<td>
                 <a type="button" class="btn btn-danger" asp-action="PropietarioEliminar" asp-route-id="@item.IdPropietario" title="Eliminar propietario"><span>Borrar</span></a>
                 <a type="button" class="btn btn-warning" asp-action="PropietarioEditar" asp-route-id="@item.IdPropietario" title="Editar propietario"><span>Editar</span></a>

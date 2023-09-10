@@ -5,12 +5,11 @@
 }
 
 <h1>Gestion de Usuarios</h1>
-
-<p>
-    <a asp-action="AgregarUsuario" class="btn btn-success" title="Agregar Propietario">Agregar Usuario</a>
-
-
-</p>
+@if(User.IsInRole("Administrador")){
+    <p>
+        <a asp-action="AgregarUsuario" class="btn btn-success" title="Agregar Propietario">Agregar Usuario</a>
+    </p>
+}
 <table class="table">
     <thead>
         <tr>
@@ -65,8 +64,10 @@
 				@Html.DisplayFor(modelItem => item.RolNombre)
 			</td>
             <td>
-                <a type="button" class="btn btn-danger" asp-action="UsuarioEliminar" asp-route-id="@item.Id" title="Eliminar propietario"><span>Borrar</span></a>
-                <a type="button" class="btn btn-warning" asp-action="UsuarioEditar" asp-route-id="@item.Id" title="Editar propietario"><span>Editar</span></a>
+                @if(User.IsInRole("Administrador")){
+                    <a type="button" class="btn btn-danger" asp-action="UsuarioEliminar" asp-route-id="@item.Id" title="Eliminar propietario"><span>Borrar</span></a>
+                    <a type="button" class="btn btn-warning" asp-action="UsuarioEditar" asp-route-id="@item.Id" title="Editar propietario"><span>Editar</span></a>
+                }
                 <a type="button" class="btn btn-primary" asp-action="VistaDetalles" asp-route-id="@item.Id" title="Detalles"><span>Detalles</span></a>
 
             </td>
