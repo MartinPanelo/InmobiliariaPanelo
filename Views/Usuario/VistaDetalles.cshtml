@@ -39,7 +39,7 @@
         </dt>
         <dd class = "col-sm-10">
            @*  @Html.DisplayFor(model => model.AvatarFile) *@
-            @if (Model.Avatar != "" && Model.Avatar != null)
+            @if (!string.IsNullOrEmpty(Model.Avatar))
 				{
 					<img width="64"  src="@Model.Avatar" />
 				}

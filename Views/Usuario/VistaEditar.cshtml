@@ -1,15 +1,17 @@
 @model InmobiliariaPanelo.Models.Usuario
-@{
+@* @{
     ViewData["Title"] = "Editar Usuario";
-}
+} *@
 
 
-<h4>Usuario</h4>
+<h4>@ViewData["Title"] </h4>
 <hr />
 <div class="row">
     <!-- Primera columna para editar Nombre, Apellido y Email -->
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="UsuarioEditarPerfil">
+             <input type="hidden" name="Id" value="@Model.Id" />
+
             <!-- Código para editar Nombre -->
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
@@ -30,6 +32,20 @@
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
+
+            @if (User.IsInRole("Administrador"))
+			{
+				<div class="form-group">
+					<label class="control-label">Rol</label>
+					<select class="form-control" name="Rol">
+						@foreach (var kvp in (IDictionary<int, string>)ViewBag.Roles)
+						{
+							@:<option @(kvp.Key == Model.Rol ? "selected" : "") value="@kvp.Key">@kvp.Value</option>
+						}
+					</select>
+					<span asp-validation-for="Rol" class="text-danger"></span>
+				</div>
+			}
             
             <!-- Botón para enviar el formulario de esta columna -->
             <div class="form-group">
@@ -40,7 +56,7 @@
 
     <!-- Segunda columna para editar Avatar -->
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Edit" enctype="multipart/form-data">
             <!-- Código para editar Avatar -->
             <div class="form-group">
                 <label asp-for="Avatar" class="control-label"></label><br />
@@ -63,25 +79,20 @@
 
     <!-- Tercera columna para editar Contraseña -->
         <div class="col-md-4">
-            <form asp-action="Edit">
-                <!-- Código para editar Contraseña actual -->
-                <div class="form-group">
-                    <label asp-for="Clave" class="control-label">Contraseña Actual</label>
-                    <input asp-for="Clave" class="form-control" type="password" />
-                    <span asp-validation-for="Clave" class="text-danger"></span>
-                </div>
+            <form asp-action="UsuarioEditarContrasena">
+                <input type="hidden" name="Id" value="@Model.Id" />
 
                 <!-- Código para editar Nueva Contraseña -->
                 <div class="form-group">
-                    <label for="ClaveNueva" class="control-label">Nueva Contraseña</label>
-                    <input id="ClaveNueva" name="ClaveNueva" class="form-control" type="password" />
+                    <label for="Clave" class="control-label">Nueva Contraseña</label>
+                    <input id="Clave" name="Clave" class="form-control" type="password" />
                     <span asp-validation-for="Clave" class="text-danger"></span>
                 </div>
 
                                 <!-- Código para confirmar Nueva Contraseña -->
                 <div class="form-group">
-                    <label for="ClaveNueva" class="control-label">Nueva Contraseña</label>
-                    <input id="ClaveNueva" name="ClaveNueva" class="form-control" type="password" />
+                    <label for="Clave" class="control-label">Nueva Contraseña</label>
+                    <input id="Clave" name="Clave" class="form-control" type="password" />
                     <span asp-validation-for="Clave" class="text-danger"></span>
                 </div>
 
@@ -94,7 +105,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Volver al Listado</a>
+    <a asp-action="Gestion">Volver al Listado</a>
 </div>
 
 

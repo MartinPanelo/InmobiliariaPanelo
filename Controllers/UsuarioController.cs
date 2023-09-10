@@ -147,9 +147,10 @@ namespace InmobiliariaPanelo.Controllers
 							new ClaimsPrincipal(claimsIdentity));
 				//	TempData.Remove("returnUrl");
 				//	return Redirect(returnUrl);
+				return  Gestion();
 				}
 			//	TempData["returnUrl"] = returnUrl;
-				return Gestion();
+				return View();
 			//	return View("gestion");
 			}
 			catch (Exception ex)
@@ -210,20 +211,108 @@ namespace InmobiliariaPanelo.Controllers
             
         }
 
+//------------------------------------------------------------
 
-
-		public ActionResult UsuarioEditar()
+		public ActionResult MiPerfil()
 		{
-			
-		//	var u = repositorioUsuario.ObtenerPorEmail(User.Identity.Name); este seria para el caso de q
-		// voy a editar el perfil del logeado
+			ViewData["Title"] = "Mi perfil";
+			var u = repositorioUsuario.ObtenerPorEmail(User.Identity.Name);
 			ViewBag.Roles = Usuario.ObtenerRoles();
 			return View("VistaEditar", u);
 		}
 
 
+		
+		public ActionResult UsuarioEditar(int id)
+		{
+			ViewData["Title"] = "Editar usuario";
+			var u = repositorioUsuario.ObtenerPorId(id);
+			ViewBag.Roles = Usuario.ObtenerRoles();
+			return View("VistaEditar",u);
+		}
+
+		[HttpPost]
+		public ActionResult UsuarioEditarContrasena(int id, Usuario ContrasenaNueva)
+		{
+			Usuario usuarioActual = null;
+			if (!User.IsInRole("Administrador"))//no soy admin
+			// sin embargo tengo que ver si esta tratando de modificando a otro usuario lo que no esta permitido
+			// 
+				{
+					usuarioActual = repositorioUsuario.ObtenerPorEmail(User.Identity.Name);
+					if (usuarioActual.Id != id) // estoy editando mi perfil o quiero editar el de alguien mas ( no puedo)
+					{
+
+						return View("AccesoDenegado");
+					}
+				}else{
+					usuarioActual = repositorioUsuario.ObtenerPorId(ContrasenaNueva.Id);
+				}
 
 
+					try{
+						string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+						password: ContrasenaNueva.Clave,
+						salt: System.Text.Encoding.ASCII.GetBytes("Agridulce"),
+						prf: KeyDerivationPrf.HMACSHA1,
+						iterationCount: 1000,
+						numBytesRequested: 256 / 8));
+
+						usuarioActual.Clave = hashed;
+
+						repositorioUsuario.Modificacion(usuarioActual);
+						return Gestion();
+					}
+					catch (Exception ex)
+					{
+						TempData["Error"] = ex.Message;
+						return RedirectToAction("Gestion");
+					}
+					
+		//	return View("VistaEditar");
+		}
+
+
+
+		public ActionResult UsuarioEditarPerfil(int id, Usuario PerfilNuevo)
+		{
+			Usuario usuarioActual = null;
+			if (!User.IsInRole("Administrador"))//no soy admin
+			// sin embargo tengo que ver si esta tratando de modificando a otro usuario lo que no esta permitido
+			// 
+				{
+					usuarioActual = repositorioUsuario.ObtenerPorEmail(User.Identity.Name);
+					if (usuarioActual.Id != id) // estoy editando mi perfil o quiero editar el de alguien mas ( no puedo)
+					{
+
+						return View("AccesoDenegado");
+					}
+				}else{
+					usuarioActual = repositorioUsuario.ObtenerPorId(PerfilNuevo.Id);
+				}
+
+					try{
+
+						usuarioActual.Nombre = PerfilNuevo.Nombre;
+						usuarioActual.Apellido = PerfilNuevo.Apellido;
+						usuarioActual.Email = PerfilNuevo.Email;
+						if(User.IsInRole("Administrador")){
+							usuarioActual.Rol = PerfilNuevo.Rol;
+						}
+						
+						
+
+						repositorioUsuario.Modificacion(usuarioActual);
+						return Gestion();
+					}
+					catch (Exception ex)
+					{
+						TempData["Error"] = ex.Message;
+						return RedirectToAction("Gestion");
+					}
+					
+		//	return View("VistaEditar");
+		}
 
 
 
@@ -237,3 +326,39 @@ namespace InmobiliariaPanelo.Controllers
 
     }
 }
+
+		
+/* 			if (!User.IsInRole("Administrador"))//no soy admin
+			// sin embargo tengo que ver si esta tratando de modificando a otro usuario lo que no esta permitido
+			// 
+				{
+					var usuarioActual = repositorioUsuario.ObtenerPorEmail(User.Identity.Name);
+					if (usuarioActual.Id != id) // estoy editando mi perfil o quiero editar el de alguien mas ( no puedo)
+					{
+
+						return View("AccesoDenegado");
+					}
+				}
+
+
+					try{
+						string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+						password: ContrasenaNueva.Clave,
+						salt: System.Text.Encoding.ASCII.GetBytes("Agridulce"),
+						prf: KeyDerivationPrf.HMACSHA1,
+						iterationCount: 1000,
+						numBytesRequested: 256 / 8));
+
+						usuarioActual.Clave = hashed;
+
+						repositorioUsuario.Modificacion(usuarioActual);
+						return Gestion();
+					}
+					catch (Exception ex)
+					{
+						TempData["Error"] = ex.Message;
+						return RedirectToAction("Index");
+					}
+					
+			return View("VistaEditar");
+		} */

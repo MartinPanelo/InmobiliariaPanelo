@@ -51,7 +51,15 @@
 				@Html.DisplayFor(modelItem => item.Email)
 			</td>
 			<td>
-				<img width="32" src="@item.Avatar" />
+				@* <img width="32" src="@item.Avatar" /> *@
+                 @if (!string.IsNullOrEmpty(@item.Avatar))
+				{
+					<img width="64"  src="@item.Avatar" />
+				}
+				else
+				{
+					<p>Sin avatar</p>
+				}
 			</td>
 			<td>
 				@Html.DisplayFor(modelItem => item.RolNombre)
