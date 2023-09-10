@@ -51,7 +51,9 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
 			<td>
-                <a type="button" class="btn btn-danger" asp-action="InquilinoEliminar" asp-route-id="@item.IdInquilino" title="Eliminar inquilino"><span>Borrar</span></a>
+                @if(User.IsInRole("Administrador")){
+                    <a type="button" class="btn btn-danger" asp-action="InquilinoEliminar" asp-route-id="@item.IdInquilino" title="Eliminar inquilino"><span>Borrar</span></a>
+                }
                 <a type="button" class="btn btn-warning" asp-action="InquilinoEditar" asp-route-id="@item.IdInquilino" title="Editar inquilino"><span>Editar</span></a>
                 <a type="button" class="btn btn-primary" asp-action="VistaDetalles" asp-route-id="@item.IdInquilino" title="Detalles"><span>Detalles</span></a>
 

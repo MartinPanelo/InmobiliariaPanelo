@@ -7,7 +7,7 @@
 <h1>Propietarios</h1>
 
 
-        @TempData["Mensaje"]
+@TempData["Mensaje"]
 
 <br>
 <a asp-action="PropietarioAgregar" class="btn btn-success" title="Agregar Propietario">Agregar Propietario</a>
@@ -26,12 +26,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Dni)
             </th>
-@*             <th>
-                @Html.DisplayNameFor(model => model.Telefono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th> *@
             <th>Acciones</th>
         </tr>
     </thead>
@@ -51,7 +45,9 @@
                 @Html.DisplayFor(modelItem => item.Dni)
             </td>
 			<td>
-                <a type="button" class="btn btn-danger" asp-action="PropietarioEliminar" asp-route-id="@item.IdPropietario" title="Eliminar propietario"><span>Borrar</span></a>
+                @if(User.IsInRole("Administrador")){
+                    <a type="button" class="btn btn-danger" asp-action="PropietarioEliminar" asp-route-id="@item.IdPropietario" title="Eliminar propietario"><span>Borrar</span></a>
+                }
                 <a type="button" class="btn btn-warning" asp-action="PropietarioEditar" asp-route-id="@item.IdPropietario" title="Editar propietario"><span>Editar</span></a>
                 <a type="button" class="btn btn-primary" asp-action="VistaDetalles" asp-route-id="@item.IdPropietario" title="Detalles"><span>Detalles</span></a>
 

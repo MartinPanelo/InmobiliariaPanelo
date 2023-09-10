@@ -1,33 +1,26 @@
 using Microsoft.AspNetCore.Mvc;
 using InmobiliariaPanelo.Models;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace InmobiliariaPanelo.Controllers{
 
     public class PropietarioController : Controller{
 
         private readonly RepositorioPropietario repositorio = new RepositorioPropietario();
-		/* public PropietarioController(){
-			repositorio = new RepositorioPropietario();
-		} */
 
+        [Authorize]
         public ActionResult VistaDetalles(int id){
-		
-        Propietario p = repositorio.PropietarioObtenerPorId(id);
-       // ViewData["detalle"]="Detalles del propietario";
-
-
-            return View("VistaDetalles",p);
-            
+		    Propietario p = repositorio.PropietarioObtenerPorId(id);
+            return View("VistaDetalles",p);            
         }
+        [Authorize]
         public ActionResult Index(){
 			var lista = repositorio.PropietarioObtenerTodos();
-		//	Console.WriteLine(TempData["mensaje"]);
             return View(lista);
             
         }
 
-
+        [Authorize(Policy = "Administrador")]
         public ActionResult PropietarioEliminar(int id){
             //esto es la vista
             var PropietarioEliminar = repositorio.PropietarioObtenerPorId(id);
@@ -35,12 +28,13 @@ namespace InmobiliariaPanelo.Controllers{
         }
 
         [HttpPost]
+		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "Administrador")]
         public ActionResult PropietarioEliminar(int id,int id2=0){
             //esto es la accion
            try
 			{
                 var PropietarioEliminar = repositorio.PropietarioObtenerPorId(id);
-    //TempData["Mensaje"] = "Se elimino correctamente al Propietario : " + PropietarioEliminar.Nombre + " " + PropietarioEliminar.Apellido;
 
 				repositorio.PropietarioEliminar(id);
 				return RedirectToAction("Index");
@@ -51,11 +45,13 @@ namespace InmobiliariaPanelo.Controllers{
                 return RedirectToAction("Index");
 			}
         }
-
+        [Authorize]
         public ActionResult PropietarioAgregar(){			
             return View("VistaAgregar");            
         }
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult PropietarioAgregar(Propietario propietario){			
             try
 			{
@@ -77,12 +73,17 @@ namespace InmobiliariaPanelo.Controllers{
             
         }
 
+        [Authorize]
         public ActionResult PropietarioEditar(int id){
 
             var PropietarioEditar = repositorio.PropietarioObtenerPorId(id);
             return View("VistaEditar", PropietarioEditar);        
         }
+
+
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult PropietarioEditar(int id, Propietario propietario){
 
             Propietario? p = null;

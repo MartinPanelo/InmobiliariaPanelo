@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using InmobiliariaPanelo.Models;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace InmobiliariaPanelo.Controllers{
 
@@ -8,6 +8,7 @@ namespace InmobiliariaPanelo.Controllers{
 
         private readonly RepositorioInquilino repositorio = new RepositorioInquilino();
 
+        [Authorize]
         public ActionResult VistaDetalles(int id){
 		
 		Inquilino i = repositorio.InquilinoObtenerPorId(id);
@@ -15,21 +16,25 @@ namespace InmobiliariaPanelo.Controllers{
             return View("VistaDetalles",i);
             
         }
+
+        [Authorize]
         public ActionResult Index(){
 			var lista = repositorio.InquilinoObtenerTodos();
-		//	Console.WriteLine(TempData["mensaje"]);
             return View(lista);
             
         }
 
-
+        [Authorize(Policy = "Administrador")]
         public ActionResult InquilinoEliminar(int id){
             //esto es la vista
             var InquilinoEliminar = repositorio.InquilinoObtenerPorId(id);
             return View("VistaEliminar", InquilinoEliminar);          
         }
 
+
         [HttpPost]
+		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "Administrador")]
         public ActionResult InquilinoEliminar(int id,int id2=0){
             //esto es la accion
            try
@@ -44,11 +49,14 @@ namespace InmobiliariaPanelo.Controllers{
                 return RedirectToAction("Index");
 			}
         }
-
+        [Authorize]
         public ActionResult InquilinoAgregar(){			
             return View("VistaAgregar");            
         }
+
+
         [HttpPost]
+		[ValidateAntiForgeryToken]
         public ActionResult InquilinoAgregar(Inquilino inquilino){			
             try
 			{
@@ -64,18 +72,21 @@ namespace InmobiliariaPanelo.Controllers{
 			catch (Exception ex)
 			{
                 TempData["Error"] = ex.Message;
-                //mandar el error tambien
+
                 return RedirectToAction("Index");
 			}
             
         }
-
+        [Authorize]
         public ActionResult InquilinoEditar(int id){
 
             var inquilinoEditar = repositorio.InquilinoObtenerPorId(id);
             return View("VistaEditar", inquilinoEditar);        
         }
+
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult InquilinoEditar(int id, Inquilino inquilino){
 
             Inquilino? i = null;
