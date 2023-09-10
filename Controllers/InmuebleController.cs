@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using InmobiliariaPanelo.Models;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace InmobiliariaPanelo.Controllers{
 
@@ -9,15 +9,14 @@ namespace InmobiliariaPanelo.Controllers{
         private readonly RepositorioInmueble repositorio = new RepositorioInmueble();
         private readonly RepositorioPropietario repositorioP = new RepositorioPropietario();
 
-
+        [Authorize]
         public ActionResult Index(){
 		    var lista = repositorio.InmuebleObtenerTodos();
-            
-		//	Console.WriteLine(TempData["mensaje"]);
             return View(lista);
             
         }
 
+        [Authorize]
         public ActionResult VistaDetalles(int id){
 		
 		Inmueble i = repositorio.InmuebleObtenerPorId(id);
@@ -26,12 +25,12 @@ namespace InmobiliariaPanelo.Controllers{
             
         }
 
+        [Authorize]
         public ActionResult InmuebleAgregar(){		
 
             ViewBag.Propietarios = repositorioP.PropietarioObtenerTodos();
             ViewBag.Usos = repositorio.usos();
-            ViewBag.Tipos = repositorio.tipos();
-            
+            ViewBag.Tipos = repositorio.tipos();            
 
             return View("VistaAgregar");            
         }
@@ -41,6 +40,8 @@ namespace InmobiliariaPanelo.Controllers{
 
 
         [HttpPost]
+        [Authorize]
+		[ValidateAntiForgeryToken]
         public ActionResult InmuebleAgregar(Inmueble inmueble){		
 
             try
@@ -48,7 +49,7 @@ namespace InmobiliariaPanelo.Controllers{
 				if (ModelState.IsValid && inmueble.PropietarioId != 0)
 				{
 					repositorio.InmuebleAlta(inmueble);
-					//TempData["Id"] = propietario.IdPropietario;
+
 					return RedirectToAction("Index");
 				}
 				else
@@ -56,18 +57,16 @@ namespace InmobiliariaPanelo.Controllers{
                     ViewBag.Usos = repositorio.usos();
                     ViewBag.Tipos = repositorio.tipos();
                     return View("VistaAgregar");
-				//	return View("VistaAgregar",inmueble);
 			}
 			catch (Exception ex)
 			{
                 TempData["Error"] = ex.Message;
-                //mandar el error tambien
                 return RedirectToAction("Index");
 			}
         } 
 
 
-
+        [Authorize(Policy = "Administrador")]
         public ActionResult InmuebleEliminar(int id){
             //esto es la vista
             var InmuebleEliminar = repositorio.InmuebleObtenerPorId(id);
@@ -75,6 +74,8 @@ namespace InmobiliariaPanelo.Controllers{
         }
 
         [HttpPost]
+		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "Administrador")]
         public ActionResult InmuebleEliminar(int id,int id2=0){
             //esto es la accion
            try
@@ -91,6 +92,7 @@ namespace InmobiliariaPanelo.Controllers{
         }
 
 
+        [Authorize]
         public ActionResult InmuebleEditar(int id){
 
             var InmuebleEditar = repositorio.InmuebleObtenerPorId(id);
@@ -102,6 +104,8 @@ namespace InmobiliariaPanelo.Controllers{
 
 
         [HttpPost]
+        [Authorize]
+		[ValidateAntiForgeryToken]
         public ActionResult InmuebleEditar(int id, Inmueble inmueble){
 
             Inmueble? i = null;
@@ -125,20 +129,6 @@ namespace InmobiliariaPanelo.Controllers{
                 return RedirectToAction("Index");
             }
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

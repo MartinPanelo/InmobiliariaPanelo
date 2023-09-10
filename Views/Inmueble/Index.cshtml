@@ -15,9 +15,6 @@
 			<th>
                 @Html.DisplayNameFor(model => model.Propietario)
             </th>
-            @* <th>
-                @Html.DisplayNameFor(model => model.CantidadAmbientes)
-            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.Direccion)
             </th>
@@ -27,12 +24,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.Tipo)
             </th>
-            @* <th>
-                @Html.DisplayNameFor(model => model.Latitud)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Longitud)
-            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.Precio)
             </th>
@@ -49,9 +40,6 @@
 				<td>					
 					@(item.Propietario.Nombre + " " + item.Propietario.Apellido)
 				</td>
-				@*  <td>
-					@Html.DisplayFor(modelItem => item.CantidadAmbientes)
-				</td> *@
 				<td>
 					@Html.DisplayFor(modelItem => item.Direccion)
 				</td>
@@ -61,12 +49,6 @@
 				<td>
 					@Html.DisplayFor(modelItem => item.Tipo)
 				</td>
-				@* <td>
-					@Html.DisplayFor(modelItem => item.Latitud)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Longitud)
-				</td> *@
 				<td>
 					@Html.DisplayFor(modelItem => item.Precio)
 				</td>
@@ -74,9 +56,11 @@
 					@Html.DisplayFor(modelItem => item.Disponible)
 				</td>	
 				<td>
-              	  <a type="button" class="btn btn-danger" asp-action="InmuebleEliminar" asp-route-id="@item.IdInmueble" title="Eliminar inmueble"><span>Borrar</span></a>
-              	  <a type="button" class="btn btn-warning" asp-action="InmuebleEditar" asp-route-id="@item.IdInmueble" title="Editar inmueble"><span>Editar</span></a>
-              	  <a type="button" class="btn btn-primary" asp-action="VistaDetalles" asp-route-id="@item.IdInmueble" title="Detalles"><span>Detalles</span></a>
+				@if(User.IsInRole("Administrador")){
+              		<a type="button" class="btn btn-danger" asp-action="InmuebleEliminar" asp-route-id="@item.IdInmueble" title="Eliminar inmueble"><span>Borrar</span></a>
+				}
+				<a type="button" class="btn btn-warning" asp-action="InmuebleEditar" asp-route-id="@item.IdInmueble" title="Editar inmueble"><span>Editar</span></a>
+              	<a type="button" class="btn btn-primary" asp-action="VistaDetalles" asp-route-id="@item.IdInmueble" title="Detalles"><span>Detalles</span></a>
 				</td>
 			</tr>
 			}

@@ -1,47 +1,41 @@
 using Microsoft.AspNetCore.Mvc;
 using InmobiliariaPanelo.Models;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace InmobiliariaPanelo.Controllers{
 
     public class ContratoController : Controller{
 
         private readonly RepositorioContrato repositorio = new RepositorioContrato();
-      //  private readonly RepositorioPropietario repositorioP = new RepositorioPropietario();
-      private readonly RepositorioInmueble repositorioInmueble= new RepositorioInmueble();
-      private readonly RepositorioInquilino repositorioInquilino = new RepositorioInquilino();
+        private readonly RepositorioInmueble repositorioInmueble= new RepositorioInmueble();
+        private readonly RepositorioInquilino repositorioInquilino = new RepositorioInquilino();
 
-
+        [Authorize]
         public ActionResult Index(){
 		    var lista = repositorio.ContratoObtenerTodos();
-            
-		//	Console.WriteLine(TempData["mensaje"]);
-            return View(lista);
-            
+            return View(lista);            
         }
 
+        [Authorize]
         public ActionResult ContratoAgregar(){		
 
-           // ViewBag.Propietarios = repositorioP.PropietarioObtenerTodos();
             ViewBag.listaInmuebles = repositorioInmueble.InmuebleObtenerTodos();
             ViewBag.listaInquilinos = repositorioInquilino.InquilinoObtenerTodos();
             
-
             return View("VistaAgregar");            
         }
 
 
         [HttpPost]
-        public ActionResult ContratoAgregar(Contrato contrato){
-            
+        [Authorize]
+		[ValidateAntiForgeryToken]
+        public ActionResult ContratoAgregar(Contrato contrato){            
         			
             try
 			{
 				if (ModelState.IsValid && contrato.FechaDesde < contrato.FechaHasta)
-				{
-                    
+				{                    
 					repositorio.ContratoAlta(contrato);
-
 					return RedirectToAction("Index");
 				}
 				else{
@@ -57,15 +51,12 @@ namespace InmobiliariaPanelo.Controllers{
 			catch (Exception ex)
 			{
                 TempData["Error"] = ex.Message;
-                //mandar el error tambien
                 return RedirectToAction("Index");
-			}
-            
+			}            
         }
 
 
-
-
+        [Authorize(Policy = "Administrador")]
          public ActionResult ContratoEliminar(int id){
             //esto es la vista
             var ContratoEliminar = repositorio.ContratoObtenerPorId(id);
@@ -74,6 +65,8 @@ namespace InmobiliariaPanelo.Controllers{
 
 
         [HttpPost]
+		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "Administrador")]
         public ActionResult ContratoEliminar(int id,int id2=0){
             //esto es la accion
            try
@@ -91,30 +84,31 @@ namespace InmobiliariaPanelo.Controllers{
 
 
 
-
+        [Authorize]
         public ActionResult VistaDetalles(int id){
 		
-		Contrato c = repositorio.ContratoObtenerPorId(id);
-
-        
-
+		Contrato c = repositorio.ContratoObtenerPorId(id);  
         ViewData["detalle"]="detalle del Contrato";
-            return View("VistaDetalles",c);
+
+        return View("VistaDetalles",c);
             
         }
 
 
-
+        [Authorize]
         public ActionResult ContratoEditar(int id){
 
             var ContratoEditar = repositorio.ContratoObtenerPorId(id);
             ViewBag.listaInmuebles = repositorioInmueble.InmuebleObtenerTodos();
             ViewBag.listaInquilinos = repositorioInquilino.InquilinoObtenerTodos();
+
             return View("VistaEditar", ContratoEditar);        
         }
 
  
         [HttpPost]
+        [Authorize]
+		[ValidateAntiForgeryToken]
         public ActionResult ContratoEditar(int id, Contrato contrato){
 
             Contrato? c = null;
@@ -134,15 +128,5 @@ namespace InmobiliariaPanelo.Controllers{
                 return RedirectToAction("Index");
             }
         }
- 
-
-
-
-
-
-
-
-
-
     }
 }

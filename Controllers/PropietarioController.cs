@@ -51,6 +51,7 @@ namespace InmobiliariaPanelo.Controllers{
         }
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult PropietarioAgregar(Propietario propietario){			
             try
@@ -83,6 +84,7 @@ namespace InmobiliariaPanelo.Controllers{
 
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public ActionResult PropietarioEditar(int id, Propietario propietario){
 

@@ -15,27 +15,11 @@
     <thead>
         <tr>
 			<th>
-                @Html.DisplayNameFor(model => model.Inquilino.IdInquilino)
-            
-
+                @Html.DisplayNameFor(model => model.Inquilino.IdInquilino)         
             </th>
-
    		 	<th>
                 @Html.DisplayNameFor(model => model.Inmueble.Direccion)
             </th>
-        @*     <th>
-                @Html.DisplayNameFor(model => model.InquilinoId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Inquilino)
-            </th>
-             <th>
-                @Html.DisplayNameFor(model => model.FechaDesde)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaHasta)
-            </th>  *@
-
 			<th>Acciones</th>
         </tr>
     </thead>
@@ -46,35 +30,13 @@
 			 	<td>
 					@Html.DisplayFor(modelItem => item.Inquilino.Nombre)
                     @Html.DisplayFor(modelItem => item.Inquilino.Apellido)
-                    
 				</td>
 		        <td>
 					@Html.DisplayFor(modelItem => item.Inmueble.Direccion)
-                
-
-				</td>
-			@* 			<td>
-					@Html.DisplayFor(modelItem => item.Inmueble.Direccion)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.InquilinoId)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.Inquilino.Nombre)
-					@Html.DisplayFor(modelItem => item.Inquilino.Apellido)
-
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.FechaDesde)
-				</td>
-				<td>
-					@Html.DisplayFor(modelItem => item.FechaHasta)
-				</td> *@
-	
-				<td>
-              	  <a type="button" class="btn btn-warning" asp-action="VistaPago" asp-route-id="@item.IdContrato" title="Realizar pago"><span>Realizar pago</span></a>
-                   <a type="button" class="btn btn-primary" asp-action="VistaDetalles" asp-route-id="@item.IdContrato" title="Detalles"><span>Detalles</span></a>
-
+              	<a type="button" class="btn btn-warning" asp-action="VistaPago" asp-route-id="@item.IdContrato" title="Realizar pago"><span>Realizar pago</span></a>
+                <a type="button" class="btn btn-primary" asp-action="VistaDetalles" asp-route-id="@item.IdContrato" title="Detalles"><span>Detalles</span></a>
 				</td>
 			</tr>
 			}
@@ -82,24 +44,24 @@
 </table>
 
 
-    <script>
-       
-        var filtroInput = document.getElementById("filtroInput");
-        filtroInput.addEventListener("input", filtrarOpciones);
+<script>      
+    var filtroInput = document.getElementById("filtroInput");
+    filtroInput.addEventListener("input", filtrarOpciones);
 
-        function filtrarOpciones() {
+    function filtrarOpciones(){
 
-            var filtro = filtroInput.value.toLowerCase();
-            var select = document.getElementById("tbody");
-            var opciones = select.getElementsByTagName("tr");
+        var filtro = filtroInput.value.toLowerCase();
+        var select = document.getElementById("tbody");
+        var opciones = select.getElementsByTagName("tr");
 
-            for (var i = 0; i < opciones.length; i++) {
-                var opcionTexto = opciones[i].innerHTML.toLowerCase();
-                if (opcionTexto.includes(filtro)) {
-                    opciones[i].style.display = "";
-                } else {
-                    opciones[i].style.display = "none";
-                }
+        for (var i = 0; i < opciones.length; i++) {
+            var opcionTexto = opciones[i].innerHTML.toLowerCase();
+            if (opcionTexto.includes(filtro)) {
+                opciones[i].style.display = "";
+            }
+            else {
+                opciones[i].style.display = "none";
             }
         }
-    </script>
+    }
+</script>

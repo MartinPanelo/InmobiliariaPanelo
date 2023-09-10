@@ -11,120 +11,42 @@
         <hr/>
         <dl class="row align-items-center">        
             <dt class = "my-2 col-sm-3">
-                @* @Html.DisplayNameFor(model => model.Contrato.IdContrato) *@
                 Identificador de Contrato
             </dt>
             <dd class = "my-2 col-sm-9">
                 @Html.DisplayFor(model => model.FirstOrDefault().Contrato.IdContrato)
             </dd>
             <dt class = "my-2 col-sm-3">
-                @* @Html.DisplayNameFor(model => model.Contrato.Inquilino.Nombre) *@
                 Nombre del inquilino
             </dt>
             <dd class = "my-2 col-sm-9">
                 @Html.DisplayFor(model => model.FirstOrDefault().Contrato.Inquilino.Nombre)
                 @Html.DisplayFor(model => model.FirstOrDefault().Contrato.Inquilino.Apellido)
             </dd>
-@*             <dt class = "my-2 col-sm-3">
-                @Html.DisplayNameFor(model => model.Monto)
-            </dt>
-            <dd class = "my-2 col-sm-9">
-                @Html.DisplayFor(model => model.Monto)
-            </dd>
-            <dt class = "my-2 col-sm-3">
-                @Html.DisplayNameFor(model => model.Fecha)
-            </dt>
-            <dd class = "my-2 col-sm-9">
-                @Html.DisplayFor(model => model.Fecha)
-            </dd> *@
-
-           
         </dl>
 
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">@Html.DisplayNameFor(model => model.Fecha)</th>
-                        <th scope="col">@Html.DisplayNameFor(model => model.Monto)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model) {
-                        <tr>
-                            <td>@Html.DisplayFor(model => item.Fecha)</td>
-                            <td>@Html.DisplayFor(model => item.Monto)</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-
-
-
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Fecha)</th>
+                    <th scope="col">@Html.DisplayNameFor(model => model.Monto)</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model) {
+                <tr>
+                    <td>@Html.DisplayFor(model => item.Fecha)</td>
+                    <td>@Html.DisplayFor(model => item.Monto)</td>
+                    @* @if(User.IsInRole("Administrador")){ *@
+                        <td>                
+                            <a type="button" class="btn btn-danger" asp-action="Vista" asp-route-id="@item" title="Eliminar propietario"><span>Borrar</span></a>
+                        </td>  
+               @*      } *@
+                </tr>
+            }
+            </tbody>
+        </table>
         <a class="mb-3 btn btn-primary" asp-action="Index">Volver al listado</a>
     </div>
-
-@*     <div class="col">
-        <h1>Detalles del propietario</h1>
-        <hr />
-        <dl class="row align-items-center">                
-            <dt class = "my-2 col-sm-2">
-                @Html.DisplayNameFor(model => model.Propietario.Nombre)
-            </dt>
-            <dd class = "my-2 col-sm-10">
-                @Html.DisplayFor(model => model.Propietario.Nombre)
-            </dd>
-            <dt class = "my-2 col-sm-2">
-                @Html.DisplayNameFor(model => model.Propietario.Apellido)
-            </dt>
-            <dd class = "my-2 col-sm-10">
-                @Html.DisplayFor(model => model.Propietario.Apellido)
-            </dd>
-            <dt class = "my-2 col-sm-2">
-                @Html.DisplayNameFor(model => model.Propietario.Dni)
-            </dt>
-            <dd class = "my-2 col-sm-10">
-                @Html.DisplayFor(model => model.Propietario.Dni)
-            </dd>
-                        <dt class = "my-2 col-sm-2">
-                @Html.DisplayNameFor(model => model.Propietario.Telefono)
-            </dt>
-            <dd class = "my-2 col-sm-10">
-                @Html.DisplayFor(model => model.Propietario.Telefono)
-            </dd>
-                        <dt class = "my-2 col-sm-2">
-                @Html.DisplayNameFor(model => model.Propietario.Email)
-            </dt>
-            <dd class = "my-2 col-sm-10">
-                @Html.DisplayFor(model => model.Propietario.Email)
-            </dd>
-        </dl>
-    </div> *@
 </div>
-
-@* 
-<div class="row">
-    <div class="col">
-        <h1>@ViewData["detalle"]</h1>
-        <hr/>
-
-        <dl class="row align-items-center">        
-            <dt class="my-2 col-sm-3">
-                Identificador
-            </dt>
-            <dd class="my-2 col-sm-9">
-                @Html.DisplayFor(model => model.IdPago)
-            </dd>
-            <dt class="my-2 col-sm-3">
-                Contrato
-            </dt>
-            <dd class="my-2 col-sm-9">
-                @Html.DisplayFor(model => model.ContratoId)
-            </dd>
-        </dl>
-
-        
-
-        <a class="mb-3 btn btn-primary" asp-action="Index">Volver al listado</a>
-    </div>
-</div> *@

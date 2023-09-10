@@ -15,30 +15,13 @@
 			<th>
                 @Html.DisplayNameFor(model => model.IdContrato)
             </th>
-            @*   <th>
-                @Html.DisplayNameFor(model => model.InmuebleId)
-            </th> *@
    			<th>
                 @Html.DisplayNameFor(model => model.Inmueble)
             </th>
-         @*    <th>
-                @Html.DisplayNameFor(model => model.InquilinoId)
-            </th> *@
             <th>
                 @Html.DisplayNameFor(model => model.Inquilino)
             </th>
-          @*   <th>
-                @Html.DisplayNameFor(model => model.FechaDesde)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FechaHasta)
-            </th> *@
-
-
 			<th>Acciones</th>
-@* 			<th>
-				| Gestionar pagos
-			</th> *@
         </tr>
     </thead>
 	<tbody>
@@ -48,37 +31,20 @@
 			 	<td>
 					@Html.DisplayFor(modelItem => item.IdContrato)
 				</td>
-@* 				<td>
-					@Html.DisplayFor(modelItem => item.InmuebleId)
-				</td> *@
 				<td>
 					@Html.DisplayFor(modelItem => item.Inmueble.Direccion)
 				</td>
-@* 				<td>
-					@Html.DisplayFor(modelItem => item.InquilinoId)
-				</td> *@
 				<td>
 					@Html.DisplayFor(modelItem => item.Inquilino.Nombre)
 					@Html.DisplayFor(modelItem => item.Inquilino.Apellido)
-
-				</td>
-@* 				<td>
-					@Html.DisplayFor(modelItem => item.FechaDesde)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.FechaHasta)
-				</td> *@
-	
-				<td>
-              	  <a type="button" class="btn btn-danger" asp-action="ContratoEliminar" asp-route-id="@item.IdContrato" title="Eliminar contrato"><span>Borrar</span></a>
-              	  <a type="button" class="btn btn-warning" asp-action="ContratoEditar" asp-route-id="@item.IdContrato" title="Editar inmueble"><span>Editar</span></a>
-              	  <a type="button" class="btn btn-primary" asp-action="VistaDetalles" asp-route-id="@item.IdContrato" title="Detalles"><span>Detalles</span></a>
+				@if(User.IsInRole("Administrador")){
+              		<a type="button" class="btn btn-danger" asp-action="ContratoEliminar" asp-route-id="@item.IdContrato" title="Eliminar contrato"><span>Borrar</span></a>
+              	}
+				<a type="button" class="btn btn-warning" asp-action="ContratoEditar" asp-route-id="@item.IdContrato" title="Editar inmueble"><span>Editar</span></a>
+              	<a type="button" class="btn btn-primary" asp-action="VistaDetalles" asp-route-id="@item.IdContrato" title="Detalles"><span>Detalles</span></a>
 				</td>
-@* 				<td>
-					<a type="button" class="btn btn-primary" asp-action="Pago/VistaPago" asp-route-id="@item.IdContrato" title="Realizar pago"><span>Realizar pago</span></a>
-					<a type="button" class="btn btn-primary" asp-action="VistaDetalles" asp-route-id="@item.IdContrato" title="Detalles de pago"><span>Detalles de pago</span></a>
-
-				</td> *@
 			</tr>
 			}
 		</tbody>
