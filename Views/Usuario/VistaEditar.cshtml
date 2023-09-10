@@ -56,7 +56,8 @@
 
     <!-- Segunda columna para editar Avatar -->
     <div class="col-md-4">
-        <form asp-action="Edit" enctype="multipart/form-data">
+        <form asp-action="UsuarioEditarAvatar" enctype="multipart/form-data">
+        <input type="hidden" name="Id" value="@Model.Id" />
             <!-- Código para editar Avatar -->
             <div class="form-group">
                 <label asp-for="Avatar" class="control-label"></label><br />
@@ -68,6 +69,11 @@
 				{
 					<p>Sin avatar</p>
 				}
+                <div class="form-group">
+				    <label asp-for="AvatarFile" class="control-label"></label>
+				    <input type="file" name="AvatarFile" />
+				<span  class="text-danger"></span>
+			</div>
             </div>
             
             <!-- Botón para enviar el formulario de esta columna -->

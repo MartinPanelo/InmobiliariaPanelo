@@ -316,7 +316,60 @@ namespace InmobiliariaPanelo.Controllers
 
 
 
+		public ActionResult UsuarioEditarAvatar(int id, Usuario AvatarNuevo)
+		{
 
+			Usuario usuarioActual ;
+			if (!User.IsInRole("Administrador"))//no soy admin
+			// sin embargo tengo que ver si esta tratando de modificando a otro usuario lo que no esta permitido
+			// 
+				{
+					usuarioActual = repositorioUsuario.ObtenerPorEmail(User.Identity.Name);
+					if (usuarioActual.Id != id) // estoy editando mi perfil o quiero editar el de alguien mas ( no puedo)
+					{
+
+						return View("AccesoDenegado");
+					}
+				}else{
+					usuarioActual = repositorioUsuario.ObtenerPorId(AvatarNuevo.Id);
+				}
+				
+				
+				try{
+
+			
+					if (AvatarNuevo.AvatarFile != null && AvatarNuevo.Id > 0)
+					{
+						string wwwPath = environment.WebRootPath;
+						string path = Path.Combine(wwwPath, "Uploads");
+						/* if (!Directory.Exists(path))
+						{
+							Directory.CreateDirectory(path);
+						} */
+						//Path.GetFileName(u.AvatarFile.FileName);//este nombre se puede repetir
+						string fileName = "avatar_" + AvatarNuevo.Id + Path.GetExtension(AvatarNuevo.AvatarFile.FileName);
+						string pathCompleto = Path.Combine(path, fileName);
+						AvatarNuevo.Avatar = Path.Combine("/Uploads", fileName);
+						// Esta operación guarda la foto en memoria en la ruta que necesitamos
+						using (FileStream stream = new FileStream(pathCompleto, FileMode.Create))
+						{
+							AvatarNuevo.AvatarFile.CopyTo(stream);
+						}
+						repositorioUsuario.ModificacionAvatar(AvatarNuevo);
+					}
+
+
+						return Gestion();
+					}
+					catch (Exception ex)
+					{
+						TempData["Error"] = ex.Message;
+						return RedirectToAction("Gestion");
+					}
+
+
+
+		}
 
 
 

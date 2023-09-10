@@ -101,6 +101,25 @@ namespace InmobiliariaPanelo.Models
 			}
 			return res;
 		}
+		public int ModificacionAvatar(Usuario e)
+		{
+			int res = -1;
+			using (var connection = new MySqlConnection(connectionString))
+			{
+				string sql = @"UPDATE usuarios 
+					SET Avatar=@avatar WHERE Id = @id";
+				using (var command = new MySqlCommand(sql, connection))
+				{
+					command.CommandType = CommandType.Text;					
+					command.Parameters.AddWithValue("@avatar", e.Avatar);
+					command.Parameters.AddWithValue("@id", e.Id);
+					connection.Open();
+					res = command.ExecuteNonQuery();
+					connection.Close();
+				}
+			}
+			return res;
+		}
 
 
 		public IList<Usuario> ObtenerTodos()
