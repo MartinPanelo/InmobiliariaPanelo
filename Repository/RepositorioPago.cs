@@ -87,6 +87,25 @@ namespace InmobiliariaPanelo.Models
 
 		}
 
+		
+		public int PagoEliminar(int id)
+        {
+            int res = 0;
+			using (var connection = new MySqlConnection(connectionString))
+			{
+				string sql = @$"DELETE FROM pagos WHERE {nameof(Pago.IdPago)} = @id";
+				using (var command = new MySqlCommand(sql, connection))
+				{
+					command.CommandType = CommandType.Text;
+					command.Parameters.AddWithValue("@id", id);
+					connection.Open();
+					res = command.ExecuteNonQuery();
+					connection.Close();
+				}
+			}
+			return res;
+        }
+
 
 		public List<Pago> PagosObtenerPorIdContrato(int id){
 			List<Pago> res = new List<Pago>();
@@ -113,7 +132,7 @@ namespace InmobiliariaPanelo.Models
 					{
 						Pago c = new Pago
 						{
-                            //IdPago = reader.GetInt32("IdPago"),
+                            IdPago = reader.GetInt32("IdPago"),
                             ContratoId = reader.GetInt32("ContratoId"),
                             Monto = reader.GetDecimal("Monto"),
                             Fecha = reader.GetDateTime("Fecha"),

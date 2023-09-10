@@ -65,6 +65,22 @@ namespace InmobiliariaPanelo.Controllers{
         }
 
 
-        // AGREGAR PARA BORRAR LOS PAGOS DE A UNO
+        [HttpPost]
+		[ValidateAntiForgeryToken]
+		[Authorize(Policy = "Administrador")]
+        public ActionResult EliminarPago(int id,int id2=0){
+            //esto es la accion
+           try
+			{
+				repositorioPago.PagoEliminar(id);
+				return VistaDetalles(id2);
+			}            
+			catch (Exception ex)
+			{
+                TempData["Error"] = ex.Message;
+             //   return RedirectToAction("VistaDetalles");
+             return RedirectToAction("Index");
+			}
+        }
     }
 }

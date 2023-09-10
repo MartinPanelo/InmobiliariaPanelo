@@ -34,7 +34,7 @@ namespace InmobiliariaPanelo.Controllers{
             //esto es la accion
            try
 			{
-                var PropietarioEliminar = repositorio.PropietarioObtenerPorId(id);
+              //  var PropietarioEliminar = repositorio.PropietarioObtenerPorId(id);
 
 				repositorio.PropietarioEliminar(id);
 				return RedirectToAction("Index");

@@ -38,11 +38,21 @@
                 <tr>
                     <td>@Html.DisplayFor(model => item.Fecha)</td>
                     <td>@Html.DisplayFor(model => item.Monto)</td>
-                    @* @if(User.IsInRole("Administrador")){ *@
-                        <td>                
-                            <a type="button" class="btn btn-danger" asp-action="Vista" asp-route-id="@item" title="Eliminar propietario"><span>Borrar</span></a>
-                        </td>  
-               @*      } *@
+                    
+                        @if(User.IsInRole("Administrador")){
+                            <td>        
+                                <form asp-action="EliminarPago" method="post">
+                                    <input type="hidden" name="id" value="@item.IdPago" />
+                                    <input type="hidden" name="id2" value="@item.Contrato.IdContrato" />
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                </form>
+                            </td>  
+                        }else{
+                            <td> 
+                                <span>No hay acciones disponibles</span>  
+                            </td>  
+                        }
+                   
                 </tr>
             }
             </tbody>
