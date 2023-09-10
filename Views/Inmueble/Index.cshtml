@@ -6,9 +6,27 @@
 
 <h1>Inmuebles</h1>
 
-
 <br>
-<a asp-action="InmuebleAgregar" class="btn btn-success" title="Agregar Inmueble">Agregar Inmueble</a>
+<div class="container">
+    <div class="row">
+        <div class="col-auto ">
+            <a asp-action="InquilinoAgregar" class="btn btn-success" title="Agregar Inquilino">Agregar Inquilino</a>
+        </div>
+        <div class="col-auto">
+            <div class="input-group mb-3">
+                <label class="input-group-text" for="filtroInput" id="basic-addon1">Buscador</label>
+                <input type="text" class="form-control" name="otroInput" id="filtroInput" placeholder="Buscador">
+            </div>
+        </div>
+        <div class="col-auto my-2">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="porDisponibilidad">
+                <label class="form-check-label" for="porDisponibilidad">Mostrar solo disponibles</label>
+            </div>
+        </div>
+    </div>
+</div>
+
 <table class="table ">
     <thead>
         <tr>
@@ -53,7 +71,18 @@
 					@Html.DisplayFor(modelItem => item.Precio)
 				</td>
 				<td>
-					@Html.DisplayFor(modelItem => item.Disponible)
+					@if(item.Disponible)
+					{
+						<input type="checkbox"  id="miCheckbox" checked style="display: none;">
+
+						<i class="fa-solid fa-check fa-2xl" style="color: #00c20d;"></i>
+					}
+					else
+					{
+						<input type="checkbox"  id="miCheckbox" style="display: none;"> 
+						<i value="@item.Disponible"  class="fa-solid fa-xmark fa-2xl" style="color: #c20000;"></i>
+					}
+
 				</td>	
 				<td>
 				@if(User.IsInRole("Administrador")){
@@ -66,4 +95,6 @@
 			}
 		</tbody>
 </table>
+
+
 

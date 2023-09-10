@@ -46,9 +46,10 @@
 				<select class="form-control" name="InmuebleId">
 					@foreach (var item in listaInmuebles)
 					{
-						<option value="@item.IdInmueble">@(item.ToString())</option>
-                        <span asp-validation-for="InmuebleId" class="text-danger"></span>
-                        
+                        @if(@item.Disponible == true){
+                            <option value="@item.IdInmueble">@(item.ToString())</option>
+                            <span asp-validation-for="InmuebleId" class="text-danger"></span>
+                        }
 					}
 				</select>
 				

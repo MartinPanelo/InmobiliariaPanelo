@@ -10,7 +10,17 @@
  @*        @TempData["Mensaje"] *@
 
 <br>
-<a asp-action="InquilinoAgregar" class="btn btn-success" title="Agregar Inquilino">Agregar Inquilino</a>
+<div class="row">
+     <div class="col-auto">
+        <a asp-action="InquilinoAgregar" class="btn btn-success" title="Agregar Inquilino">Agregar Inquilino</a>
+    </div>
+    <div class="col-auto">        
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="filtroInput" id="basic-addon1">Buscador</label>
+            <input type="text" class="form-control" name="otroInput" id="filtroInput" placeholder="Buscador">
+        </div>
+    </div>   
+</div>
 <table class="table">
     <thead>
         <tr>

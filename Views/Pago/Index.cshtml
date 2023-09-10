@@ -8,8 +8,13 @@
 
 
 <br>
+
+
 <div class="col-4">
-  <input  type="text" class="form-control "  name="otroInput" id="filtroInput" placeholder="Buscador">
+   <div class="input-group mb-3">
+    <label class="input-group-text" for="filtroInput" id="basic-addon1">Buscador</label>
+    <input  type="text" class="form-control "  name="otroInput" id="filtroInput" placeholder="Buscador">
+</div>
 </div>
 <table class="table">
     <thead>
@@ -23,7 +28,7 @@
 			<th>Acciones</th>
         </tr>
     </thead>
-	<tbody id="tbody">
+	<tbody>
 		@foreach (var item in Model)
 		{
 			<tr>
@@ -44,7 +49,7 @@
 </table>
 
 
-<script>      
+@* <script>      
     var filtroInput = document.getElementById("filtroInput");
     filtroInput.addEventListener("input", filtrarOpciones);
 
@@ -64,4 +69,4 @@
             }
         }
     }
-</script>
+</script> *@

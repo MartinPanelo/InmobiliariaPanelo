@@ -8,8 +8,18 @@
 
 
 <br>
-<a asp-action="ContratoAgregar" class="btn btn-success" title="Crear contrato">Agregar contrato</a>
-<table class="table">
+<div class="row">
+    <div class="col-auto">
+		<a asp-action="ContratoAgregar" class="btn btn-success" title="Crear contrato">Agregar contrato</a>
+    </div>
+    <div class="col-auto">        
+        <div class="input-group mb-3">
+            <label class="input-group-text" for="filtroInput" id="basic-addon1">Buscador</label>
+            <input type="text" class="form-control" name="otroInput" id="filtroInput" placeholder="Buscador">
+        </div>
+    </div>   
+</div>
+<table class="table"  id="miTabla"> 
     <thead>
         <tr>
 			<th>
@@ -35,6 +45,8 @@
 					@Html.DisplayFor(modelItem => item.Inmueble.Direccion)
 				</td>
 				<td>
+
+
 					@Html.DisplayFor(modelItem => item.Inquilino.Nombre)
 					@Html.DisplayFor(modelItem => item.Inquilino.Apellido)
 				</td>
@@ -49,3 +61,6 @@
 			}
 		</tbody>
 </table>
+
+
+
