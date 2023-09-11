@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Inmuebles";
+
 }
 
 <h1>Inmuebles</h1>
@@ -10,7 +11,7 @@
 <div class="container">
     <div class="row">
         <div class="col-auto ">
-            <a asp-action="InquilinoAgregar" class="btn btn-success" title="Agregar Inquilino">Agregar Inquilino</a>
+            <a asp-action="InmuebleAgregar" class="btn btn-success" title="Agregar Inquilino">Agregar Inmueble</a>
         </div>
         <div class="col-auto">
             <div class="input-group mb-3">
@@ -24,6 +25,11 @@
                 <label class="form-check-label" for="porDisponibilidad">Mostrar solo disponibles</label>
             </div>
         </div>
+
+	 <div class="col-auto ">
+            <a asp-action="InmuebleBuscador" class="btn btn-success" title="Buscador de Inmuebles">Buscardor de Inmuebles</a>
+        </div>
+
     </div>
 </div>
 
@@ -95,6 +101,8 @@
 			}
 		</tbody>
 </table>
+
+
 
 
 

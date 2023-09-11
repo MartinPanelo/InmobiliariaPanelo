@@ -17,6 +17,61 @@ namespace InmobiliariaPanelo.Controllers{
         }
 
         [Authorize]
+        public ActionResult InmuebleBuscador(){		
+
+            ViewBag.Propietarios = repositorioP.PropietarioObtenerTodos();
+            ViewBag.Usos = repositorio.usos();
+            ViewBag.Tipos = repositorio.tipos();            
+
+            return View("VistaBuscador");            
+        }
+        
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public ActionResult InmuebleBuscador(Inmueble inmueble, String FechaDesde, String FechaHasta){		
+
+            try
+            {
+            ViewBag.InmuebleFiltro = repositorio.InmuebleObtenerConFiltro(inmueble,FechaDesde,FechaHasta);
+            ViewBag.Propietarios = repositorioP.PropietarioObtenerTodos();
+            ViewBag.Usos = repositorio.usos();
+            ViewBag.Tipos = repositorio.tipos();   
+                return View("VistaBuscador");
+            }
+            catch (Exception ex)
+            {
+                TempData["Error"] = ex.Message;
+                return RedirectToAction("Index");
+            }
+        } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        [Authorize]
         public ActionResult VistaDetalles(int id){
 		
 		Inmueble i = repositorio.InmuebleObtenerPorId(id);

@@ -53,6 +53,64 @@ namespace InmobiliariaPanelo.Models
 			return res;
 		}
 
+
+		public List<Inmueble> InmuebleObtenerConFiltro(Inmueble datos,String FechaDesde, String FechaHasta){
+
+			List<Inmueble> res = new List<Inmueble>();
+
+
+			using (var connection = new MySqlConnection(connectionString))
+			{
+				
+				 string sql = @"SELECT i.`IdInmueble`, i.`PropietarioId`, i.`CantidadAmbientes`, i.`Uso`, i.`Direccion`, i.`Tipo`, i.`Latitud`, i.`Longitud`, i.`Precio`, i.`Disponible`,
+				 				T4.Nombre, T4.Apellido
+								FROM `inmuebles` AS i
+								INNER JOIN contratos AS c ON i.`IdInmueble` = c.InmuebleId 
+								INNER JOIN propietarios AS T4 ON i.PropietarioId = T4.IdPropietario
+								WHERE i.`CantidadAmbientes` = @CantidadAmbientes AND i.`Uso` = @Uso AND i.`Tipo` = @Tipo AND i.`Precio` BETWEEN (75000 - 5000) AND (75000 + 5000) AND i.`Disponible` = 1
+								AND (c.FechaDesde > @FechaHasta OR c.FechaHasta < @FechaDesde)";
+
+				using (var command = new MySqlCommand(sql, connection))
+				{
+					command.CommandType = CommandType.Text;
+					command.Parameters.AddWithValue("@CantidadAmbientes", datos.CantidadAmbientes);
+					command.Parameters.AddWithValue("@Uso", datos.Uso);
+					command.Parameters.AddWithValue("@Tipo", datos.Tipo);
+					command.Parameters.AddWithValue("@FechaDesde", FechaDesde);
+					command.Parameters.AddWithValue("@FechaHasta", FechaHasta);
+
+					connection.Open();
+					var reader = command.ExecuteReader();
+					while (reader.Read())
+					{
+						Inmueble inmueble = new Inmueble
+						{
+							IdInmueble = reader.GetInt32("IdInmueble"),
+							PropietarioId = reader.GetInt32("PropietarioId"),
+							CantidadAmbientes = reader.GetInt32("CantidadAmbientes"),
+							Uso = reader.GetString("Uso"),
+							Direccion = reader.GetString("Direccion"),
+							Tipo = reader.GetString("Tipo"),
+							Latitud = reader.GetDecimal("Latitud"),
+							Longitud = reader.GetDecimal("Longitud"),
+							Precio = reader.GetDecimal("Precio"),
+							Disponible = reader.GetBoolean("Disponible"),
+							Propietario = new Propietario{
+								IdPropietario = reader.GetInt32("PropietarioId"),
+								Nombre = reader.GetString("Nombre"),
+								Apellido = reader.GetString("Apellido")
+							}
+						};
+						res.Add(inmueble);
+					}
+					connection.Close();
+				}
+			}
+
+			return res;
+		}
+
+
 		public List<Inmueble> InmuebleObtenerTodos()
         {
 

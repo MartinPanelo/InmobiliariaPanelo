@@ -9,24 +9,6 @@
         <h1>@ViewData["detalle"]</h1>
         <hr/>
         <dl class="row align-items-center">
-@*             <dt class = "my-2 col-sm-3">
-                @Html.DisplayNameFor(model => model.IdContrato)
-            </dt>
-            <dd class = "my-2 col-sm-9">
-                @Html.DisplayFor(model => model.IdContrato)
-            </dd> *@
-          @*   <dt class = "my-2 col-sm-3">
-                @Html.DisplayNameFor(model => model.InquilinoId)
-            </dt>
-            <dd class = "my-2 col-sm-9">
-                @Html.DisplayFor(model => model.InquilinoId)
-            </dd>
-            <dt class = "my-2 col-sm-3">
-                @Html.DisplayNameFor(model => model.InmuebleId)
-            </dt>
-            <dd class = "my-2 col-sm-9">
-                @Html.DisplayFor(model => model.InmuebleId)
-            </dd> *@
             <dt class = "my-2 col-sm-3">
                 @Html.DisplayNameFor(model => model.FechaDesde)
             </dt>
@@ -39,12 +21,6 @@
             <dd class = "my-2 col-sm-9">
                 @Html.DisplayFor(model => model.FechaHasta)
             </dd>
-@*             <dt class = "my-2 col-sm-3">
-                @Html.DisplayNameFor(model => model.Monto)
-            </dt>
-            <dd class = "my-2 col-sm-9">
-                @Html.DisplayFor(model => model.Monto)
-            </dd> *@
                     
             <dt class = "my-2 col-sm-3">
                 @Html.DisplayNameFor(model => model.Inmueble)
@@ -80,7 +56,17 @@
                             @Html.DisplayNameFor(model => model.Inmueble.Disponible)
                         </dt>
                         <dd class="my-2 col-sm-9">
-                            @Html.DisplayFor(model => model.Inmueble.Disponible)
+                           @if(@Model.Inmueble.Disponible)
+                                {
+                                    <input type="checkbox"  id="miCheckbox" checked style="display: none;">
+
+                                    <i class="fa-solid fa-check fa-2xl" style="color: #00c20d;"></i>
+                                }
+                                else
+                                {
+                                    <input type="checkbox"  id="miCheckbox" style="display: none;"> 
+                                    <i value="@Model.Inmueble.Disponible"  class="fa-solid fa-xmark fa-2xl" style="color: #c20000;"></i>
+                                }
                         </dd>
 
                     </dl>

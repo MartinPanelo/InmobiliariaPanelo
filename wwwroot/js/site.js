@@ -99,3 +99,22 @@
             }
         }
     }
+
+
+    var filtroInput = document.getElementById("filtroInput");
+    filtroInput.addEventListener("input", filtrarOpciones);
+
+    function filtrarOpciones() {
+        var filtro = filtroInput.value.toLowerCase();
+        var select = document.getElementById("miSelect");
+        var opciones = select.getElementsByTagName("option");
+
+        for (var i = 0; i < opciones.length; i++) {
+            var opcionTexto = opciones[i].text.toLowerCase();
+            if (opcionTexto.includes(filtro)) {
+                opciones[i].style.display = "";
+            } else {
+                opciones[i].style.display = "none";
+            }
+        }
+    }

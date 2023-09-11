@@ -24,6 +24,7 @@ namespace InmobiliariaPanelo.Controllers{
             
         }
 
+
         [Authorize(Policy = "Administrador")]
         public ActionResult InquilinoEliminar(int id){
             //esto es la vista

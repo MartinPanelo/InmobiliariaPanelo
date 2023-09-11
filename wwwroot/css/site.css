@@ -28,3 +28,25 @@ body {
   height: 200px; /* Ajusta la altura de la línea vertical */
   margin: 0 20px; /* Añade margen para separarla de otros elementos si es necesario */
 }
+
+
+.btnvar {
+ /*  background-color: #3498db;  *//* Color de fondo del botón */
+  color: #ffffff; /* Color de texto */
+  border: 1px solid #8b8b8b; /* Borde del botón */
+  /*  padding: -5px -10px; */  /* Espaciado interno */
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: -5px 0px;
+  cursor: pointer;
+  border-radius: 5px; /* Bordes redondeados */
+}
+
+/* Estilo cuando el mouse está sobre el botón */
+.btnvar:hover {
+  border-color: #3ca8e741; /* Cambiar color del borde en hover */
+  background-color: #3cc5e750; /* Cambiar color de fondo en hover */
+  color: #ffffff; /* Cambiar color de texto en hover */
+}

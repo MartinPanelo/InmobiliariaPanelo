@@ -1,0 +1,179 @@
+@model InmobiliariaPanelo.Models.Inmueble
+
+@{
+    ViewData["Title"] = "Buscador Inmueble";
+    var listaPropietarios = (IList<Propietario>)ViewBag.Propietarios;
+    var diccionarioUsos = (Dictionary<string, int>)ViewBag.Usos;
+    var diccionarioTipos = (Dictionary<string, int>)ViewBag.Tipos;
+        
+    var inmueblesFiltrados = (IList<Inmueble>)ViewBag.InmuebleFiltro;
+
+}
+
+<h1>Buscador de inmuebles</h1>
+
+
+<hr />
+<div class="row ">
+    <div class="col-3" >
+        <form asp-action="InmuebleBuscador" >
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+
+            <div class="col-md-10 form-group ">
+                <label asp-for="CantidadAmbientes" class="control-label"></label>
+                <input min="1" asp-for="CantidadAmbientes" class="form-control" />
+                <span asp-validation-for="CantidadAmbientes" class="text-danger"></span>
+            </div>
+            <div class="col-md-10 form-group">
+				<label class="control-label">Uso</label>
+				<select class="form-control" name="Uso">
+					@foreach (var item in diccionarioUsos)
+					{
+						<option value="@item.Value">@(item.Key)</option>
+					}
+				</select>
+				<span asp-validation-for="Uso" class="text-danger"></span>
+			</div>
+            <div class="col-md-10 form-group">
+				<label class="control-label">Tipo</label>
+				<select class="form-control" name="Tipo">
+					@foreach (var item in diccionarioTipos)
+					{
+						<option value="@item.Value">@(item.Key)</option>
+					}
+				</select>
+				<span asp-validation-for="Tipo" class="text-danger"></span>
+			</div>
+            <div class="col-md-10 form-group">
+                <label asp-for="Precio" class="control-label"></label>
+                <input asp-for="Precio" class="form-control" />
+                <span asp-validation-for="Precio" class="text-danger"></span>
+            </div>
+
+            <div class="col-md-10  form-group">
+                <label  class="control-label">Fecha de inicio</label>
+                <input type="date" class="form-control" name="FechaDesde" required/>
+                <span  class="text-danger"></span>
+            </div>
+           <div class="col-md-10  form-group">
+                <label  class="control-label">Fecha de fin</label>
+                <input type="date" class="form-control" name="FechaHasta" required/>
+                <span  class="text-danger"></span>
+            </div>
+            <span class="text-danger">@TempData["mensaje"]</span>
+
+
+
+
+            <div class="mb-3 form-group mt-4">
+              <a asp-action="Index" class="btn btn-primary ">Volver al listado</a> | 
+                <input type="submit" value="Buscar" class="btn btn-success" />                            
+            </div>
+        </form>
+    </div>
+    @if(inmueblesFiltrados != null){
+    <div class="col-9" >
+        <table class="table ">
+    <thead>
+        <tr>
+			<th>
+                @Html.DisplayNameFor(model => model.Propietario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Direccion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Uso)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Tipo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Precio)
+            </th>
+			<th>
+                @Html.DisplayNameFor(model => model.Disponible)
+            </th>
+            <th>
+                Ubicacion
+            </th>  
+			<th>Acciones</th>
+        </tr>
+    </thead>
+        <tbody>
+            @foreach (var item in inmueblesFiltrados)
+            {
+                <tr>
+                    <td>					
+                        @(item.Propietario.Nombre + " " + item.Propietario.Apellido)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Direccion)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Precio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Latitud)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Longitud)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Uso)
+                    </td>
+                    <td>
+                        @if(item.Disponible)
+                        {
+                            <input type="checkbox"  id="miCheckbox" checked style="display: none;">
+
+                            <i class="fa-solid fa-check fa-2xl" style="color: #00c20d;"></i>
+                        }
+                        else
+                        {
+                            <input type="checkbox"  id="miCheckbox" style="display: none;"> 
+                            <i value="@item.Disponible"  class="fa-solid fa-xmark fa-2xl" style="color: #c20000;"></i>
+                        }
+
+                    </td>	
+                    <td>
+
+                    </td>
+                </tr>
+                }
+            </tbody>
+    </table>
+    </div>
+    }
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
+
+
+
+    <script>
+        var filtroInput = document.getElementById("filtroInput");
+        filtroInput.addEventListener("input", filtrarOpciones);
+
+        function filtrarOpciones() {
+            var filtro = filtroInput.value.toLowerCase();
+            var select = document.getElementById("miSelect");
+            var opciones = select.getElementsByTagName("option");
+
+            for (var i = 0; i < opciones.length; i++) {
+                var opcionTexto = opciones[i].text.toLowerCase();
+                if (opcionTexto.includes(filtro)) {
+                    opciones[i].style.display = "";
+                } else {
+                    opciones[i].style.display = "none";
+                }
+            }
+        }
+    </script>
