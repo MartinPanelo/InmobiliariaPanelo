@@ -23,7 +23,8 @@ namespace InmobiliariaPanelo.Models{
         [Required]
         public decimal Monto { get; set; }
 
-
+        [Display(Name = "Estado del contrato")]
+        public bool Vigente { get; set; }
 
 		[Display(Name = "Inquilino")]
 		public int InquilinoId { get; set; }

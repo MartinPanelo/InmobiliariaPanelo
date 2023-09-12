@@ -64,6 +64,9 @@
                 <input asp-for="Email" class="form-control" />
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div> *@
+
+
+            <span class="text-danger">@TempData["mensajeGlobalFormulario"]</span>
             <div class="form-group mt-4">
               <a asp-action="Index" class="btn btn-primary ">Volver al listado</a> | 
                 <input type="submit" value="Agregar" class="btn btn-success" />                            

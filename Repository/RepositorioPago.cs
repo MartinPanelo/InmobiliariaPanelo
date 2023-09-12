@@ -78,14 +78,14 @@ namespace InmobiliariaPanelo.Models
 			return res;
 		} */
 
-		public List<Contrato> PagoObtenerTodos(){
+/* 		public List<Contrato> PagoObtenerTodos(){
 			
 			List<Contrato> res = new List<Contrato>();
 
 			res = repositorioContrato.ContratoObtenerTodos();
 			return res;
 
-		}
+		} */
 
 		
 		public int PagoEliminar(int id)
@@ -175,7 +175,7 @@ namespace InmobiliariaPanelo.Models
 
 
 
-		public Pago PagoObtenerPorIdContrato(int id){
+		public Pago PagoDetallePorIdContrato(int id){
 			Pago? p = null;
 
 
@@ -192,7 +192,7 @@ namespace InmobiliariaPanelo.Models
 				 INNER JOIN inmuebles AS T4 ON T2.InmuebleId = T4.IdInmueble WHERE T2.IdContrato = @id LIMIT 1"; */
 				
 				string sql =@"SELECT
-					T2.IdContrato, T2.InquilinoId, T2.InmuebleId, T2.FechaDesde, T2.FechaHasta, T2.Monto, 
+					T2.IdContrato, T2.InquilinoId, T2.InmuebleId, T2.FechaDesde, T2.FechaHasta, T2.Monto, T2.Vigente, 
 					T3.IdInquilino, T3.Nombre, T3.Apellido, T3.Dni, T3.Email, T3.Telefono,
 					T4.IdInmueble, T4.Direccion, T4.Tipo, T4.Latitud, T4.Longitud, T4.Precio, T4.Disponible 
 					FROM contratos AS T2
@@ -222,6 +222,7 @@ namespace InmobiliariaPanelo.Models
                                 FechaDesde = reader.GetDateTime("FechaDesde"),
                                 FechaHasta = reader.GetDateTime("FechaHasta"),
                                 Monto = reader.GetDecimal("Monto"),
+								Vigente = reader.GetBoolean("Vigente"),
                                 Inquilino = new Inquilino{
                                     IdInquilino = reader.GetInt32("IdInquilino"),
                                     Nombre = reader.GetString("Nombre"),
@@ -274,5 +275,51 @@ namespace InmobiliariaPanelo.Models
 			}
 			return res;
 		}
+
+
+
+		public int VerCantidadDePagos(int contratoId){
+			
+
+			int res = 0;
+
+
+			using (var connection = new MySqlConnection(connectionString)){
+
+
+			string sql = @"SELECT COUNT(*) AS cantidadDePagosRealizados
+						FROM pagos
+						WHERE ContratoId = @ContratoId;";
+				using (var command = new MySqlCommand(sql, connection))
+				{
+					command.Parameters.AddWithValue("@ContratoId", contratoId);
+					command.CommandType = CommandType.Text;
+					connection.Open();
+					var reader = command.ExecuteReader();
+					if (reader.Read())
+					{
+						res = reader.GetInt32("cantidadDePagosRealizados");
+
+
+
+					}
+					connection.Close();
+				}
+			}
+
+			return res;
+		}
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+

@@ -33,9 +33,15 @@
 
             <p class="my-3">Monto a pagar: $<span>@(Model.Contrato.Inmueble.Precio)</span></p>
 
+
             <div class="form-group mt-4">
-              <a asp-action="Index" class="btn btn-primary ">Volver al listado</a> | 
-                <input type="submit" value="Pagar" class="btn btn-success" />                            
+                <a asp-action="Index" class="btn btn-primary ">Volver al listado</a> | 
+                @if(Model.Contrato.Vigente){
+                        <input type="submit" value="Pagar" class="btn btn-success" />                            
+                    
+            }else{
+                <input disabled class="btn btn-warning" value="El contrato no esta vigente"/>
+            }
             </div>
         </form>
     </div>

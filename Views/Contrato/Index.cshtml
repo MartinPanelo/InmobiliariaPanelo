@@ -31,6 +31,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Inquilino)
             </th>
+			<th>
+                @Html.DisplayNameFor(model => model.Vigente)
+            </th>
 			<th>Acciones</th>
         </tr>
     </thead>
@@ -51,11 +54,32 @@
 					@Html.DisplayFor(modelItem => item.Inquilino.Apellido)
 				</td>
 				<td>
+					@if(item.Vigente)
+					{
+						<input type="checkbox"  id="miCheckbox" checked style="display: none;">
+
+						<i class="fa-solid fa-check fa-2xl" style="color: #00c20d;"></i>
+					}
+					else
+					{
+						<input type="checkbox"  id="miCheckbox" style="display: none;"> 
+						<i value="@item.Vigente"  class="fa-solid fa-xmark fa-2xl" style="color: #c20000;"></i>
+					}
+					
+				</td>
+				<td>
 				@if(User.IsInRole("Administrador")){
               		<a type="button" class="btn btn-danger" asp-action="ContratoEliminar" asp-route-id="@item.IdContrato" title="Eliminar contrato"><span>Borrar</span></a>
               	}
-				<a type="button" class="btn btn-warning" asp-action="ContratoEditar" asp-route-id="@item.IdContrato" title="Editar inmueble"><span>Editar</span></a>
-              	<a type="button" class="btn btn-primary" asp-action="VistaDetalles" asp-route-id="@item.IdContrato" title="Detalles"><span>Detalles</span></a>
+				@if(item.Vigente)
+				{
+					<a type="button" class="btn btn-warning" asp-action="ContratoEditar" asp-route-id="@item.IdContrato" title="Editar contrato"><span>Editar</span></a>
+
+				}else{
+					<a type="button" class="btn btn-warning" asp-action="ContratoEditar" asp-route-id="@item.IdContrato" title="Renovar contrato"><span>Renovar</span></a>
+
+				}
+              	<a type="button" class="btn btn-primary" asp-action="VistaDetalles" asp-route-id="@item.IdContrato" title="Detalles contrato"><span>Detalles</span></a>
 				</td>
 			</tr>
 			}

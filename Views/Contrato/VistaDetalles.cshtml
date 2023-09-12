@@ -28,6 +28,22 @@
             <dd class = "my-2 col-sm-9">
                 @Html.DisplayFor(model => model.Inmueble.Direccion)
             </dd>
+            <dt class = "my-2 col-sm-3">
+                @Html.DisplayNameFor(model => model.Vigente)
+            </dt>
+            <dd class = "my-2 col-sm-9">
+                @if(Model.Vigente)
+					{
+						<input type="checkbox"  id="miCheckbox" checked style="display: none;">
+
+						<i class="fa-solid fa-check fa-2xl" style="color: #00c20d;"></i>
+					}
+					else
+					{
+						<input type="checkbox"  id="miCheckbox" style="display: none;"> 
+						<i value="@Model.Vigente"  class="fa-solid fa-xmark fa-2xl" style="color: #c20000;"></i>
+					}
+            </dd>
         </dl>
                 <a class="btn btn-primary" asp-action="Index">Volver al listado</a>
 

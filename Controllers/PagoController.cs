@@ -7,10 +7,11 @@ namespace InmobiliariaPanelo.Controllers{
     public class PagoController : Controller{
 
         private readonly RepositorioPago repositorioPago = new RepositorioPago();
+        private readonly RepositorioContrato repositorioContrato = new RepositorioContrato();
 
         [Authorize]
         public ActionResult Index(){
-		    var lista = repositorioPago.PagoObtenerTodos();
+		    var lista = repositorioContrato.ContratoObtenerTodos();
 
             return View(lista);            
         }
@@ -27,7 +28,7 @@ namespace InmobiliariaPanelo.Controllers{
         [Authorize]
         public ActionResult VistaPago(int id){
 		
-		Pago pago = repositorioPago.PagoObtenerPorIdContrato(id);
+		Pago pago = repositorioPago.PagoDetallePorIdContrato(id);
         ViewData["detalle"]="detalle del pago";
         return View("VistaPago",pago);
             
@@ -46,7 +47,25 @@ namespace InmobiliariaPanelo.Controllers{
 				if (ModelState.IsValid)
 				{
                     
-					repositorioPago.PagoAlta(pago);
+					if(repositorioPago.PagoAlta(pago) != 1){ // se realizo el pago
+
+                        int cantpagos =   repositorioPago.VerCantidadDePagos(pago.ContratoId);
+
+                        Pago pagodetalle = repositorioPago.PagoDetallePorIdContrato(pago.ContratoId);
+
+                        if(cantpagos >= (pagodetalle.Contrato.FechaHasta.Month - pagodetalle.Contrato.FechaHasta.Month)){
+
+                            pagodetalle.Contrato.Vigente = false;
+                            repositorioContrato.ContratoEditar(pagodetalle.Contrato);
+
+                        }
+                    
+
+
+                    
+                    }
+
+
 
 					return RedirectToAction("Index");
 				}
