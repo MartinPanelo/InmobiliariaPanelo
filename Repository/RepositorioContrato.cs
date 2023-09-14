@@ -51,7 +51,7 @@ namespace InmobiliariaPanelo.Models
 		}
 
 
-		public bool FechaValida(Contrato contrato){
+		public bool ConsultaDeFecha(Contrato contrato){
 		
 
 			
@@ -59,11 +59,12 @@ namespace InmobiliariaPanelo.Models
 			{
 
 				string sql = @"SELECT * FROM `contratos` WHERE (FechaDesde < @FechaHasta OR FechaHasta > @FechaDesde)
-				 AND InmuebleId = @Id AND Vigente = 1";
+				 AND InmuebleId = @Id AND Vigente = 1 AND InquilinoId != @InquilinoId";// busco todos los fechas que se superpongan
 				 using (var command = new MySqlCommand(sql, connection))
 				{
 					command.CommandType = CommandType.Text;
 					command.Parameters.AddWithValue("@Id", contrato.InmuebleId);
+					command.Parameters.AddWithValue("@InquilinoId", contrato.InquilinoId);
 					command.Parameters.AddWithValue("@FechaDesde", contrato.FechaDesde);
 					command.Parameters.AddWithValue("@FechaHasta", contrato.FechaHasta);
 					
@@ -71,9 +72,21 @@ namespace InmobiliariaPanelo.Models
 					MySqlDataReader reader = command.ExecuteReader();
 					
 					if (reader.Read()){
-						return false;
+						Contrato c = new Contrato
+						{
+							IdContrato = reader.GetInt32("IdContrato"),
+							InquilinoId = reader.GetInt32("InquilinoId"),
+							InmuebleId = reader.GetInt32("InmuebleId"),
+							FechaDesde = reader.GetDateTime("FechaDesde"),
+							FechaHasta = reader.GetDateTime("FechaHasta"),
+							
+							Vigente = reader.GetBoolean("Vigente"),
+						
+
+						};
+						return false; 
 					}else{
-						return true;
+						return true;// cuando busco que no este ocupada la fecha
 					}	
 				} 
 			}
@@ -89,7 +102,7 @@ namespace InmobiliariaPanelo.Models
 			{
 
 				string sql = @"INSERT INTO contratos (InquilinoId, InmuebleId, FechaDesde, FechaHasta, Monto, Vigente)
-					VALUES (@InquilinoId, @InmuebleId, @FechaDesde, @FechaHasta, @Monto);
+					VALUES (@InquilinoId, @InmuebleId, @FechaDesde, @FechaHasta, @Monto, @Vigente);
 					SELECT LAST_INSERT_ID();";//devuelve el id insertado (SCOPE_IDENTITY para sql)
 				 using (var command = new MySqlCommand(sql, connection))
 				{
@@ -114,6 +127,7 @@ namespace InmobiliariaPanelo.Models
 
 		public int ContratoEliminar(int id)
         {
+			
             int res = 0;
 			using (var connection = new MySqlConnection(connectionString))
 			{

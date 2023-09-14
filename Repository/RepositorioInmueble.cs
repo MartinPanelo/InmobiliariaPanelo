@@ -67,8 +67,12 @@ namespace InmobiliariaPanelo.Models
 								FROM `inmuebles` AS i
 								INNER JOIN contratos AS c ON i.`IdInmueble` = c.InmuebleId 
 								INNER JOIN propietarios AS T4 ON i.PropietarioId = T4.IdPropietario
-								WHERE i.`CantidadAmbientes` = @CantidadAmbientes AND i.`Uso` = @Uso AND i.`Tipo` = @Tipo AND i.`Precio` BETWEEN (75000 - 5000) AND (75000 + 5000) AND i.`Disponible` = 1
-								AND (c.FechaDesde > @FechaHasta OR c.FechaHasta < @FechaDesde)";
+								WHERE i.`CantidadAmbientes` BETWEEN @CantidadAmbientes - 1 AND @CantidadAmbientes + 1  AND 
+								i.`Uso` = @Uso AND 
+								i.`Tipo` = @Tipo 
+								AND i.`Precio` BETWEEN @Precio - 10000 AND @Precio + 10000 AND 
+								i.`Disponible` = 1 AND 
+								(c.FechaDesde > @FechaHasta OR c.FechaHasta < @FechaDesde)";
 
 				using (var command = new MySqlCommand(sql, connection))
 				{
@@ -78,6 +82,7 @@ namespace InmobiliariaPanelo.Models
 					command.Parameters.AddWithValue("@Tipo", datos.Tipo);
 					command.Parameters.AddWithValue("@FechaDesde", FechaDesde);
 					command.Parameters.AddWithValue("@FechaHasta", FechaHasta);
+					command.Parameters.AddWithValue("@Precio", datos.Precio);
 
 					connection.Open();
 					var reader = command.ExecuteReader();

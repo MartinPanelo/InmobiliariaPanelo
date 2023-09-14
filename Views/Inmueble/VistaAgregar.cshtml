@@ -38,7 +38,7 @@
                     <label class="control-label">Propietario</label>
                     <div class="input-group">
                         <select class="form-control" name="PropietarioId" id="miSelect">
-                            <option value="-1">Seleccione un Propietario</option>
+                            <option hidden value="-1">Seleccione un Propietario</option>
                             @foreach (var item in listaPropietarios)
                             {
                                 <option value="@item.IdPropietario">@(item.ToString())</option>

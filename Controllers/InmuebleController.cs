@@ -33,6 +33,7 @@ namespace InmobiliariaPanelo.Controllers{
 
             try
             {
+                //controlar fechas validas
             ViewBag.InmuebleFiltro = repositorio.InmuebleObtenerConFiltro(inmueble,FechaDesde,FechaHasta);
             ViewBag.Propietarios = repositorioP.PropietarioObtenerTodos();
             ViewBag.Usos = repositorio.usos();
@@ -48,34 +49,11 @@ namespace InmobiliariaPanelo.Controllers{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         [Authorize]
         public ActionResult VistaDetalles(int id){
 		
 		Inmueble i = repositorio.InmuebleObtenerPorId(id);
-        ViewData["detalle"]="detalle del inmueble";
+        ViewData["detalle"]="Detalle del inmueble";
             return View("VistaDetalles",i);
             
         }
@@ -101,10 +79,10 @@ namespace InmobiliariaPanelo.Controllers{
 
             try
 			{
-				if (ModelState.IsValid && inmueble.PropietarioId != 0)
+				if (ModelState.IsValid)
 				{
 					repositorio.InmuebleAlta(inmueble);
-
+                    TempData["msj"] = "Se ha registrado el inmueble.";
 					return RedirectToAction("Index");
 				}
 				else
@@ -115,7 +93,7 @@ namespace InmobiliariaPanelo.Controllers{
 			}
 			catch (Exception ex)
 			{
-                TempData["Error"] = ex.Message;
+                TempData["msj"] = "Se ha producido un error, y el inmueble no se ha registrado.";
                 return RedirectToAction("Index");
 			}
         } 
@@ -135,13 +113,17 @@ namespace InmobiliariaPanelo.Controllers{
             //esto es la accion
            try
 			{
-                var InmuebleEliminar = repositorio.InmuebleObtenerPorId(id);
-				repositorio.InmuebleEliminar(id);
+               if(repositorio.InmuebleEliminar(id) != 0){
+                    TempData["msj"] = "Se ha eliminado el inmueble. ";
+               }else{
+                    TempData["msj"] = "No se ha eliminado el inmueble. ";
+               }
+				
 				return RedirectToAction("Index");
 			}            
 			catch (Exception ex)
 			{
-                TempData["Error"] = ex.Message;
+                TempData["msj"] = "No se ha producido un error, y el inmueble no se ha eliminado el inmueble. ";
                 return RedirectToAction("Index");
 			}
         }
@@ -165,18 +147,26 @@ namespace InmobiliariaPanelo.Controllers{
 
             Inmueble? i = null;
             try{
-                i = repositorio.InmuebleObtenerPorId(id);
-                i.CantidadAmbientes = inmueble.CantidadAmbientes;
-                i.Direccion = inmueble.Direccion;
-                i.Precio = inmueble.Precio;
-                i.Tipo = inmueble.Tipo;
-                i.Uso = inmueble.Uso;
-                i.PropietarioId = inmueble.PropietarioId;
-                i.Latitud = inmueble.Latitud;
-                i.Longitud = inmueble.Longitud;
-                i.Disponible = inmueble.Disponible;
-                repositorio.InmuebleEditar(i);
-                return RedirectToAction("Index");
+
+                if(ModelState.IsValid){
+                    i = repositorio.InmuebleObtenerPorId(id);
+                    i.CantidadAmbientes = inmueble.CantidadAmbientes;
+                    i.Direccion = inmueble.Direccion;
+                    i.Precio = inmueble.Precio;
+                    i.Tipo = inmueble.Tipo;
+                    i.Uso = inmueble.Uso;
+                    i.PropietarioId = inmueble.PropietarioId;
+                    i.Latitud = inmueble.Latitud;
+                    i.Longitud = inmueble.Longitud;
+                    i.Disponible = inmueble.Disponible;
+                    repositorio.InmuebleEditar(i);
+                    TempData["msj"] = "Se ha editado el inmueble de : "+ i.Propietario + " ubicado en : " + inmueble.Direccion;
+                    return RedirectToAction("Index");
+                }else{
+
+                     return InmuebleEditar(id);
+                }
+               
             }
             catch (Exception ex)
             {

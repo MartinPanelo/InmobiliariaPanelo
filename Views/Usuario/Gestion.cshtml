@@ -36,43 +36,47 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-		<tr>
-			<td>
-				@Html.DisplayFor(modelItem => item.Id)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Nombre)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Apellido)
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.Email)
-			</td>
-			<td>
-				@* <img width="32" src="@item.Avatar" /> *@
-                 @if (!string.IsNullOrEmpty(@item.Avatar))
-				{
-					<img width="64"  src="@item.Avatar" />
-				}
-				else
-				{
-					<p>Sin avatar</p>
-				}
-			</td>
-			<td>
-				@Html.DisplayFor(modelItem => item.RolNombre)
-			</td>
-            <td>
-                @if(User.IsInRole("Administrador")){
-                    <a type="button" class="btn btn-danger" asp-action="UsuarioEliminar" asp-route-id="@item.Id" title="Eliminar propietario"><span>Borrar</span></a>
-                    <a type="button" class="btn btn-warning" asp-action="UsuarioEditar" asp-route-id="@item.Id" title="Editar propietario"><span>Editar</span></a>
-                }
-                <a type="button" class="btn btn-primary" asp-action="VistaDetalles" asp-route-id="@item.Id" title="Detalles"><span>Detalles</span></a>
+        @if(!(User.Identity.Name == item.Email)){
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellido)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @* <img width="32" src="@item.Avatar" /> *@
+                    @if (!string.IsNullOrEmpty(@item.Avatar))
+                    {
+                        <img class="img-thumbnail" width="64"  src="@item.Avatar" />
+                    }
+                    else
+                    {
+                        <p>Sin avatar</p>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.RolNombre)
+                </td>
+                <td>
+                    @if(User.IsInRole("Administrador")){
+                    
+                        <a type="button" class="btn btn-danger" asp-action="UsuarioEliminar" asp-route-id="@item.Id" title="Eliminar propietario"><span>Borrar</span></a>
+                        
+                        <a type="button" class="btn btn-warning" asp-action="UsuarioEditar" asp-route-id="@item.Id" title="Editar propietario"><span>Editar</span></a>
+                    }
+                    <a type="button" class="btn btn-primary" asp-action="VistaDetalles" asp-route-id="@item.Id" title="Detalles"><span>Detalles</span></a>
 
-            </td>
+                </td>
 
-		</tr>
+            </tr>
+        }
 }
     </tbody>
 </table>

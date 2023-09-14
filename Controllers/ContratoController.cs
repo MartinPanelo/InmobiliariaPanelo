@@ -36,14 +36,15 @@ namespace InmobiliariaPanelo.Controllers{
                
                     if (ModelState.IsValid && (contrato.FechaDesde < contrato.FechaHasta) )
                     { 
-                        if(repositorio.FechaValida(contrato))
+                        if(repositorio.ConsultaDeFecha(contrato))
                         {
                             repositorio.ContratoAlta(contrato);
+                            TempData["msj"] = "Contrato agregado correctamente";
                             return RedirectToAction("Index");
                         }else{
                             ViewBag.listaInmuebles = repositorioInmueble.InmuebleObtenerTodos();
                             ViewBag.listaInquilinos = repositorioInquilino.InquilinoObtenerTodos();
-                            TempData["mensaje"] = "El inmueble esta ocupado en ese rango de fechas";
+                            TempData["ErrFecha"] = "El inmueble esta ocupado en ese rango de fechas";
                             return View("VistaAgregar", contrato);
                         }
                     }
@@ -53,7 +54,7 @@ namespace InmobiliariaPanelo.Controllers{
                         ViewBag.listaInmuebles = repositorioInmueble.InmuebleObtenerTodos();
                         ViewBag.listaInquilinos = repositorioInquilino.InquilinoObtenerTodos();
                         if(contrato.FechaDesde > contrato.FechaHasta){
-                            TempData["mensaje"] = "La fecha de inicio debe ser menor a la fecha de finalización";
+                            TempData["ErrFecha"] = "La fecha de inicio debe ser menor a la fecha de finalización";
                             return View("VistaAgregar", contrato);
                         }else{
                             TempData["mensajeGlobalFormulario"] = "El formulario no es válido";
@@ -63,7 +64,7 @@ namespace InmobiliariaPanelo.Controllers{
 			}
 			catch (Exception ex)
 			{
-                TempData["Error"] = ex.Message;
+                TempData["msj"] = "Se ha producido un error, y el contrato no se ha agregado.";
                 return RedirectToAction("Index");
 			}            
         }
@@ -84,13 +85,18 @@ namespace InmobiliariaPanelo.Controllers{
             //esto es la accion
            try
 			{
-                var ContratoEliminar = repositorio.ContratoObtenerPorId(id);
-				repositorio.ContratoEliminar(id);
-				return RedirectToAction("Index");
+                if(repositorio.ContratoEliminar(id) != 0){
+                    TempData["msj"] = "Se ha eliminado el contrato. ";
+                }else{
+                    TempData["msj"] = "No se ha eliminado el contrato. ";
+				    
+
+                }
+                return RedirectToAction("Index");
 			}            
 			catch (Exception ex)
 			{
-                TempData["Error"] = ex.Message;
+                TempData["msj"] = "No se ha producido un error, y el contrato no se ha eliminado el contrato. ";
                 return RedirectToAction("Index");
 			}
         }
@@ -110,7 +116,7 @@ namespace InmobiliariaPanelo.Controllers{
 
         [Authorize]
         public ActionResult ContratoEditar(int id){
-
+            TempData["mensaje"] = null;
             var ContratoEditar = repositorio.ContratoObtenerPorId(id);
             ViewBag.listaInmuebles = repositorioInmueble.InmuebleObtenerTodos();
             ViewBag.listaInquilinos = repositorioInquilino.InquilinoObtenerTodos();
@@ -127,20 +133,19 @@ namespace InmobiliariaPanelo.Controllers{
             Contrato? c = null;
             try{
                 c = repositorio.ContratoObtenerPorId(id);
-                // controlo las nuevas fechas 
                 if( contrato.FechaDesde < contrato.FechaHasta){
 
-                    if(repositorio.FechaValida(contrato)){
-                    //    c.InquilinoId = contrato.InquilinoId;
-                    //    c.InmuebleId = contrato.InmuebleId;
+                    if(repositorio.ConsultaDeFecha(contrato)){
                         c.FechaDesde = contrato.FechaDesde;
                         c.FechaHasta = contrato.FechaHasta;
                         c.Vigente = contrato.Vigente;
                         repositorio.ContratoEditar(c);
+                        TempData["msj"] = "Contrato editado correctamente";
                         return RedirectToAction("Index");
                 }else{
                     TempData["mensaje"] = "El inmueble esta ocupado en ese rango de fechas";
                     return RedirectToAction("ContratoEditar");
+                  //  return RedirectToAction("ContratoEditar",id); // mejor o peor?
                   //  return View("VistaEditar", contrato);     
                     
                     

@@ -35,16 +35,23 @@ namespace InmobiliariaPanelo.Controllers{
            try
 			{
               //  var PropietarioEliminar = repositorio.PropietarioObtenerPorId(id);
-
-				repositorio.PropietarioEliminar(id);
+                if(repositorio.PropietarioEliminar(id) != 0){
+                    @TempData["msj"] = "Se ha eliminado el propietario. ";
+                }else{
+                    @TempData["msj"] = "No se ha eliminado el propietario. ";
+                }
+				
+                
 				return RedirectToAction("Index");
 			}            
 			catch (Exception ex)
 			{
-                TempData["Error"] = ex.Message;
+                @TempData["msj"] = "Se ha producido un error, y el propietario no se ha eliminado.";
                 return RedirectToAction("Index");
 			}
         }
+
+        
         [Authorize]
         public ActionResult PropietarioAgregar(){			
             return View("VistaAgregar");            
@@ -59,7 +66,7 @@ namespace InmobiliariaPanelo.Controllers{
 				if (ModelState.IsValid)
 				{
 					repositorio.PropietarioAlta(propietario);
-					//TempData["Id"] = propietario.IdPropietario;
+					@TempData["msj"] = "Se ha agregado el propietario";
 					return RedirectToAction("Index");
 				}
 				else
@@ -67,8 +74,7 @@ namespace InmobiliariaPanelo.Controllers{
 			}
 			catch (Exception ex)
 			{
-                TempData["Error"] = ex.Message;
-                //mandar el error tambien
+                @TempData["msj"] = "Se ha producido un error al agregar el propietario";
                 return RedirectToAction("Index");
 			}
             
@@ -90,18 +96,25 @@ namespace InmobiliariaPanelo.Controllers{
 
             Propietario? p = null;
             try{
-                p = repositorio.PropietarioObtenerPorId(id);
-                p.Nombre = propietario.Nombre;
-                p.Apellido = propietario.Apellido;
-                p.Dni = propietario.Dni;
-                p.Telefono = propietario.Telefono;
-                p.Email = propietario.Email;
-                repositorio.PropietarioEditar(p);
-                return RedirectToAction("Index");
+
+                if(ModelState.IsValid){
+                    p = repositorio.PropietarioObtenerPorId(id);
+                    p.Nombre = propietario.Nombre;
+                    p.Apellido = propietario.Apellido;
+                    p.Dni = propietario.Dni;
+                    p.Telefono = propietario.Telefono;
+                    p.Email = propietario.Email;
+                    repositorio.PropietarioEditar(p);
+                    @TempData["msj"] = "Se ha editado el propietario : "+p.Nombre + "  " + p.Apellido;
+                    return RedirectToAction("Index");
+                }else{
+                    return View("VistaEditar",propietario);
+                }
+               
             }
             catch (Exception ex)
             {
-                TempData["Error"] = ex.Message;
+                @TempData["msj"] = "Se ha producido un error al editar el propietario";
                 return RedirectToAction("Index");
             }
         }

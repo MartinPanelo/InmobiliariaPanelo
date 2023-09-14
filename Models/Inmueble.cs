@@ -18,15 +18,30 @@ namespace InmobiliariaPanelo.Models{
 		[Required(ErrorMessage = "Este campo es obligatorio.")]
 		[Display(Name = "Dirección")]
 		public string? Direccion { get; set; }
-		[RegularExpression(@"^\d+(\.\d{1,2})?$", ErrorMessage = "Debe ser un número con hasta dos decimales.")]
+		
+		
+		
+		[RegularExpression(@"^[0-9]+([.,][0-9]{0,2})?$", ErrorMessage = "Debe ser un número con hasta dos decimales.")]
 		[Required(ErrorMessage = "Este campo es obligatorio.")]
+		[Display(Name = "Latitud")] // Personaliza el nombre del campo
 		public decimal Latitud { get; set; }
-		[RegularExpression(@"^-?\d+(\.\d{1,2})?$", ErrorMessage = "Debe ser un número con hasta dos decimales.")]
+		
+		
+		[RegularExpression(@"^[0-9]+([.,][0-9]{1,2})?$", ErrorMessage = "Debe ser un número con hasta dos decimales.")]
+
 		[Required(ErrorMessage = "Este campo es obligatorio.")]
 		public decimal Longitud { get; set; }
-		[RegularExpression(@"^-?\d+(\.\d{1,2})?$", ErrorMessage = "Debe ser un número con hasta dos decimales.")]
+		
+		
+		
+		[RegularExpression(@"^[0-9]+([.,][0-9]{1,2})?$", ErrorMessage = "Debe ser un número con hasta dos decimales.")]
+
 		[Required(ErrorMessage = "Este campo es obligatorio.")]
 		public decimal Precio { get; set; }
+		
+		
+		
+		
 		[Required(ErrorMessage = "Este campo es obligatorio.")]
 		public bool Disponible { get; set; }
 

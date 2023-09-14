@@ -15,17 +15,20 @@ namespace InmobiliariaPanelo.Models
 		[Key]
 		[Display(Name = "Código")]
 		public int Id { get; set; }
-		[Required]
+		/* [Required] */
+		[Required(ErrorMessage = "El nombre es obligatorio."),RegularExpression(@"^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+$", ErrorMessage = "El nombre debe contener solo letras.")]
 		public string Nombre { get; set; }
-		[Required]
+/* 		[Required] */
+		[Required(ErrorMessage = "El apellido es obligatorio."),RegularExpression(@"^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]+$", ErrorMessage = "El apellido debe contener solo letras.")]	
 		public string Apellido { get; set; }
-		[Required, EmailAddress]
+		[Required(ErrorMessage = "El Email es obligatorio.")]
+		[DataType(DataType.EmailAddress, ErrorMessage = "El email debe contener un formato valido.")]
 		public string Email { get; set; }
-		[Required, DataType(DataType.Password)]
+		[Required(ErrorMessage = "La clave es obligatorio."), DataType(DataType.Password)]
 		public string Clave { get; set; }
 
 		public string Avatar { get; set; } = "";
-		
+		[Display(Name = "Imagen de perfil")]
 		public IFormFile? AvatarFile { get; set; }
 		public int Rol { get; set; }
 	

@@ -40,13 +40,19 @@ namespace InmobiliariaPanelo.Controllers{
             //esto es la accion
            try
 			{
-                var InquilinoEliminar = repositorio.InquilinoObtenerPorId(id);
-				repositorio.InquilinoEliminar(id);
+                if(repositorio.InquilinoEliminar(id) != 0){
+
+                    	@TempData["msj"] = "Se ha eliminado el inquilino. ";
+                }else{
+
+                    	@TempData["msj"] = "No se ha eliminado el inquilino. ";
+                }
 				return RedirectToAction("Index");
+			
 			}            
 			catch (Exception ex)
 			{
-                TempData["Error"] = ex.Message;
+               @TempData["msj"] = "No se ha producido un error, y el inquilino no se ha eliminado el inquilino. ";
                 return RedirectToAction("Index");
 			}
         }
@@ -64,7 +70,7 @@ namespace InmobiliariaPanelo.Controllers{
 				if (ModelState.IsValid)
 				{
 					repositorio.InquilinoAlta(inquilino);
-
+                    @TempData["msj"] = "Se ha agregado el inquilino. " + inquilino.Nombre + " " + inquilino.Apellido;
 					return RedirectToAction("Index");
 				}
 				else
@@ -72,7 +78,7 @@ namespace InmobiliariaPanelo.Controllers{
 			}
 			catch (Exception ex)
 			{
-                TempData["Error"] = ex.Message;
+                @TempData["msj"] = "Se ha producido un error, y el inquilino no se ha agregado.";
 
                 return RedirectToAction("Index");
 			}
@@ -99,11 +105,12 @@ namespace InmobiliariaPanelo.Controllers{
                 i.Telefono = inquilino.Telefono;
                 i.Email = inquilino.Email;
                 repositorio.InquilinoEditar(i);
+                TempData["msj"] = "Se ha editado el inquilino. " + inquilino.Nombre + " " + inquilino.Apellido;
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                TempData["Error"] = ex.Message;
+                TempData["msj"] = "Se ha producido un error, y el inquilino no se ha editado.";
                 return RedirectToAction("Index");
             }
         }
