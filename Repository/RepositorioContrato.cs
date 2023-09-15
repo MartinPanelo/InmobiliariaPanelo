@@ -52,14 +52,25 @@ namespace InmobiliariaPanelo.Models
 
 
 		public bool ConsultaDeFecha(Contrato contrato){
+
+			bool res = false;
 		
 
 			
 			using (var connection = new MySqlConnection(connectionString))
 			{
 
-				string sql = @"SELECT * FROM `contratos` WHERE (FechaDesde < @FechaHasta OR FechaHasta > @FechaDesde)
-				 AND InmuebleId = @Id AND Vigente = 1 AND InquilinoId != @InquilinoId";// busco todos los fechas que se superpongan
+				
+
+			//	string sql = @"SELECT * FROM `contratos` WHERE (FechaDesde < @FechaHasta OR FechaHasta > @FechaDesde)
+			//	 AND InmuebleId = @Id AND Vigente = 1 AND InquilinoId != @InquilinoId";// busco todos los fechas que se superpongan
+				string sql = @"SELECT CASE WHEN EXISTS ( 
+					SELECT 1 
+					FROM contratos 
+					WHERE (FechaDesde < @FechaHasta OR FechaHasta > @FechaDesde)
+						AND InmuebleId = @Id AND Vigente = 1 
+						AND InquilinoId != @InquilinoId) 
+					THEN 'Sí' ELSE 'No' END AS Resultado";
 				 using (var command = new MySqlCommand(sql, connection))
 				{
 					command.CommandType = CommandType.Text;
@@ -72,25 +83,20 @@ namespace InmobiliariaPanelo.Models
 					MySqlDataReader reader = command.ExecuteReader();
 					
 					if (reader.Read()){
-						Contrato c = new Contrato
-						{
-							IdContrato = reader.GetInt32("IdContrato"),
-							InquilinoId = reader.GetInt32("InquilinoId"),
-							InmuebleId = reader.GetInt32("InmuebleId"),
-							FechaDesde = reader.GetDateTime("FechaDesde"),
-							FechaHasta = reader.GetDateTime("FechaHasta"),
-							
-							Vigente = reader.GetBoolean("Vigente"),
+						String a = reader.GetString("Resultado");
 						
+						if(reader.GetString("Resultado").Equals("Sí")){
+							res = false;
+						}else{
+							res =  true;
+						}
 
-						};
-						return false; 
-					}else{
-						return true;// cuando busco que no este ocupada la fecha
+
+					connection.Close();
 					}	
 				} 
 			}
-
+			return res;
 		
 		}
 

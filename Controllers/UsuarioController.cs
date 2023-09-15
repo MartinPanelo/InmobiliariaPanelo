@@ -84,17 +84,16 @@ namespace InmobiliariaPanelo.Controllers
 						}
 						repositorioUsuario.Modificacion(u);
 					}
+					TempData["msj"] = "Usuario agregado correctamente";
 					return Gestion(); 
 				}
 				catch (Exception ex)
 				{
+					TempData["msj"] = "Se ha producido un error y el usuario no se ha agregado";
 					ViewBag.Roles = Usuario.ObtenerRoles();
 					return View("VistaAgregar");
 				}
 			}else{
-				var errors = ModelState.Select(x => x.Value.Errors)
-                           .Where(y=>y.Count>0)
-                           .ToList();
 					AgregarUsuario();
 					
 			}
@@ -155,13 +154,13 @@ namespace InmobiliariaPanelo.Controllers
 				IList<Usuario> usuarios = repositorioUsuario.ObtenerTodos();
 				return  Redirect("Gestion");
 				}
-			//	TempData["returnUrl"] = returnUrl;
+			 //	TempData["mjs"] = "Formulario invalido";
 				return View();
 
 			}
 			catch (Exception ex)
 			{
-				ModelState.AddModelError("", ex.Message);
+				ModelState.AddModelError("", "Se ha producido un error y el usuario no se ha logeado");
 				return View();
 			}
 		}
@@ -195,14 +194,21 @@ namespace InmobiliariaPanelo.Controllers
 				int res = repositorioUsuario.UsuarioBorrar(id);
 				if(res > 0){
 					var ruta = Path.Combine(environment.WebRootPath, "Uploads", $"avatar_{id}" + Path.GetExtension(usuario.Avatar));
-					if (System.IO.File.Exists(ruta))
+					if (System.IO.File.Exists(ruta)){
 						System.IO.File.Delete(ruta);
+						
+					}
+					TempData["msj"] = "Usuario eliminado correctamente";	
 				}
+				else{
+						TempData["msj"] = "No se ha podido eliminar el usuario";
+					}
 
 				return Gestion();
 			}
 			catch
 			{
+				TempData["msj"] = "Se ha producido un error y el usuario no se ha eliminado";
 				return View();
 			}
 		}
@@ -212,9 +218,6 @@ namespace InmobiliariaPanelo.Controllers
 		
 		Usuario u = repositorioUsuario.ObtenerPorId(id);
 
-        
-
-      
             return View("VistaDetalles",u);
             
         }
@@ -271,11 +274,12 @@ namespace InmobiliariaPanelo.Controllers
 						usuarioActual.Clave = hashed;
 
 						repositorioUsuario.Modificacion(usuarioActual);
+						TempData["msj"] = "Contraseña modificada correctamente";
 						return Gestion();
 					}
 					catch (Exception ex)
 					{
-						TempData["Error"] = ex.Message;
+						TempData["msj"] = "Se ha producido un error y la contraseña no se ha modificado";
 						return RedirectToAction("Gestion");
 					}
 					
@@ -315,11 +319,12 @@ namespace InmobiliariaPanelo.Controllers
 						
 
 						repositorioUsuario.Modificacion(usuarioActual);
+						TempData["msj"] = "Perfil modificado correctamente";
 						return Gestion();
 					}
 					catch (Exception ex)
 					{
-						TempData["Error"] = ex.Message;
+						TempData["msj"] = "Se ha producido un error y el perfil no se ha modificado";
 						return RedirectToAction("Gestion");
 					}
 					
@@ -330,56 +335,78 @@ namespace InmobiliariaPanelo.Controllers
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		[Authorize]
-		public ActionResult UsuarioEditarAvatar(int id, Usuario AvatarNuevo)
+		public ActionResult UsuarioEditarAvatar(Usuario AvatarNuevo)
 		{
 
 			Usuario usuarioActual ;
 			if (!User.IsInRole("Administrador"))//no soy admin
 			// sin embargo tengo que ver si esta tratando de modificando a otro usuario lo que no esta permitido
 			// 
+			{
+				usuarioActual = repositorioUsuario.ObtenerPorEmail(User.Identity.Name);
+				if (usuarioActual.Id != AvatarNuevo.Id) // estoy editando mi perfil? o quiero editar el de alguien mas ( no puedo)
 				{
-					usuarioActual = repositorioUsuario.ObtenerPorEmail(User.Identity.Name);
-					if (usuarioActual.Id != id) // estoy editando mi perfil o quiero editar el de alguien mas ( no puedo)
-					{
 
-						return View("AccesoDenegado");
-					}
-				}else{
-					usuarioActual = repositorioUsuario.ObtenerPorId(AvatarNuevo.Id);
+					return View("AccesoDenegado");
 				}
+			}else{
+				int a =2;
+				usuarioActual = repositorioUsuario.ObtenerPorId(AvatarNuevo.Id);
+			}
 				
 				
-				try{
+			try{
 
-			
-					if (AvatarNuevo.AvatarFile != null && AvatarNuevo.Id > 0)
-					{
-						string wwwPath = environment.WebRootPath;
-						string path = Path.Combine(wwwPath, "Uploads");
-						/* if (!Directory.Exists(path))
-						{
-							Directory.CreateDirectory(path);
-						} */
-						//Path.GetFileName(u.AvatarFile.FileName);//este nombre se puede repetir
-						string fileName = "avatar_" + AvatarNuevo.Id + Path.GetExtension(AvatarNuevo.AvatarFile.FileName);
-						string pathCompleto = Path.Combine(path, fileName);
-						AvatarNuevo.Avatar = Path.Combine("/Uploads", fileName);
-						// Esta operación guarda la foto en memoria en la ruta que necesitamos
-						using (FileStream stream = new FileStream(pathCompleto, FileMode.Create))
-						{
-							AvatarNuevo.AvatarFile.CopyTo(stream);
+				
+				if(Request.Form["Borrar"] == "Borrar avatar" ){ // si quiero borrar la foto
+
+					try{
+						string ruta = Path.Combine(environment.WebRootPath, "Uploads", $"avatar_{usuarioActual.Id}" + Path.GetExtension(usuarioActual.Avatar));
+
+						if (System.IO.File.Exists(ruta)){
+							System.IO.File.Delete(ruta);
+							usuarioActual.Avatar = null;
+							repositorioUsuario.Modificacion(usuarioActual);
+							TempData["msj"] = "Avatar borrado correctamente";
 						}
-						repositorioUsuario.ModificacionAvatar(AvatarNuevo);
-					}
-
-
-						return Gestion();
-					}
-					catch (Exception ex)
-					{
-						TempData["Error"] = ex.Message;
+						
+					}catch(Exception ex){
+						TempData["msj"] = "Se ha producido un error y el avatar no se ha borrado";
 						return RedirectToAction("Gestion");
 					}
+					
+
+				}
+				if (AvatarNuevo.AvatarFile != null && AvatarNuevo.Id > 0)
+				{
+					string wwwPath = environment.WebRootPath;
+					string path = Path.Combine(wwwPath, "Uploads");
+					if (!Directory.Exists(path))
+					{
+						Directory.CreateDirectory(path);
+					}
+					//Path.GetFileName(u.AvatarFile.FileName);//este nombre se puede repetir
+					string fileName = "avatar_" + AvatarNuevo.Id + Path.GetExtension(AvatarNuevo.AvatarFile.FileName);
+					string pathCompleto = Path.Combine(path, fileName);
+					AvatarNuevo.Avatar = Path.Combine("/Uploads", fileName);
+					// Esta operación guarda la foto en memoria en la ruta que necesitamos
+					using (FileStream stream = new FileStream(pathCompleto, FileMode.Create))
+					{
+						AvatarNuevo.AvatarFile.CopyTo(stream);
+					}
+					repositorioUsuario.ModificacionAvatar(AvatarNuevo);
+					TempData["msj"] = "Avatar modificado correctamente";
+				}
+					
+					return RedirectToAction("Gestion");
+
+				/* 	return Gestion(); */
+				}
+				catch (Exception ex)
+				{
+					TempData["msj"] = "Se ha producido un error y el avatar no se ha modificado";
+					return RedirectToAction("Gestion");
+				}
 
 
 

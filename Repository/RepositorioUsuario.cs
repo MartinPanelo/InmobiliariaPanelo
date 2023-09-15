@@ -144,7 +144,7 @@ namespace InmobiliariaPanelo.Models
 							Apellido = reader.GetString("Apellido"),
 							//Avatar = reader.GetString("Avatar"),
 						//	Avatar = !reader.IsDBNull(reader.GetString("Avatar")) ? null : reader.GetString("Avatar"),
-							Avatar = !reader.IsDBNull(reader.GetOrdinal("Avatar")) ? reader.GetString(reader.GetOrdinal("Avatar")) : null,
+							Avatar = !reader.IsDBNull(reader.GetOrdinal("Avatar")) ? reader.GetString("Avatar") : null,
 							Email = reader.GetString("Email"),
 							Clave = reader.GetString("Clave"),
 							Rol = reader.GetInt32("Rol"),

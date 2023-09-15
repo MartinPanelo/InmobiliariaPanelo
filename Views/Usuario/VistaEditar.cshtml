@@ -4,29 +4,25 @@
 } *@
 
 
-<h4>@ViewData["Title"] </h4>
+<h1>@ViewData["Title"] </h1>
 <hr />
 <div class="row">
-    <!-- Primera columna para editar Nombre, Apellido y Email -->
     <div class="col-md-4">
         <form asp-action="UsuarioEditarPerfil">
              <input type="hidden" name="Id" value="@Model.Id" />
 
-            <!-- Código para editar Nombre -->
             <div class="form-group">
                 <label asp-for="Nombre" class="control-label"></label>
                 <input asp-for="Nombre" class="form-control" />
                 <span asp-validation-for="Nombre" class="text-danger"></span>
             </div>
             
-            <!-- Código para editar Apellido -->
             <div class="form-group">
                 <label asp-for="Apellido" class="control-label"></label>
                 <input asp-for="Apellido" class="form-control" />
                 <span asp-validation-for="Apellido" class="text-danger"></span>
             </div>
             
-            <!-- Código para editar Email -->
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>
                 <input asp-for="Email" class="form-control" />
@@ -47,43 +43,39 @@
 				</div>
 			}
             
-            <!-- Botón para enviar el formulario de esta columna -->
             <div class="form-group my-3">
                 <input type="submit" value="Guardar" class="btn btn-success" />
             </div>
         </form>
     </div>
 
-    <!-- Segunda columna para editar Avatar -->
     <div class="col-md-4">
         <form asp-action="UsuarioEditarAvatar" enctype="multipart/form-data">
-        <input type="hidden" name="Id" value="@Model.Id" />
-            <!-- Código para editar Avatar -->
+            <input type="hidden" name="Id" value="@Model.Id" />
             <div class="form-group">
                 <label asp-for="Avatar" class="control-label"></label><br />
-               @if (Model.Avatar != "" && Model.Avatar != null)
-				{
-					<img class="img-thumbnail" width="256"  src="@Model.Avatar" />
-				}
-				else
-				{
-					<p>Sin avatar</p>
-				}
+                @if (Model.Avatar != "" && Model.Avatar != null)
+                {
+                    <img class="img-thumbnail" width="256"  src="@Model.Avatar" />
+                }
+                else
+                {
+                    <p>Sin avatar</p>
+                }
                 <div class="form-group">
-				    <label asp-for="AvatarFile" class="control-label"></label>
-				    <input type="file" name="AvatarFile" />
-				<span  class="text-danger"></span>
-			</div>
+                    <label asp-for="AvatarFile" class="control-label"></label>
+                    <input type="file" name="AvatarFile" />
+                <span  class="text-danger"></span>
+                </div>
             </div>
             
-            <!-- Botón para enviar el formulario de esta columna -->
             <div class="form-group my-3">
                 <input type="submit" value="Guardar" class="btn btn-success" />
+                <input type="submit" name="Borrar" value="Borrar avatar" class="btn btn-danger" />
             </div>
         </form>
     </div>
 
-    <!-- Tercera columna para editar Contraseña -->
         <div class="col-md-4">
             <form asp-action="UsuarioEditarContrasena">
                 <input type="hidden" name="Id" value="@Model.Id" />
@@ -95,14 +87,12 @@
                     <span asp-validation-for="Clave" class="text-danger"></span>
                 </div>
 
-                                <!-- Código para confirmar Nueva Contraseña -->
                 <div class="form-group">
                     <label for="Clave" class="control-label">Nueva Contraseña</label>
                     <input id="Clave" name="Clave" class="form-control" type="password" />
                     <span asp-validation-for="Clave" class="text-danger"></span>
                 </div>
 
-                <!-- Botón para enviar el formulario de esta columna -->
                 <div class="form-group my-3">
                     <input type="submit" value="Guardar" class="btn btn-success" />
                 </div>
