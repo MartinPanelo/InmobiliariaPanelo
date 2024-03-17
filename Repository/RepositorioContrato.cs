@@ -67,9 +67,10 @@ namespace InmobiliariaPanelo.Models
 				string sql = @"SELECT CASE WHEN EXISTS ( 
 					SELECT 1 
 					FROM contratos 
-					WHERE (FechaDesde < @FechaHasta OR FechaHasta > @FechaDesde)
-						AND InmuebleId = @Id AND Vigente = 1 
-						AND InquilinoId != @InquilinoId) 
+					WHERE (FechaDesde < @FechaHasta AND FechaHasta > @FechaDesde)
+						AND InmuebleId = @Id 
+						AND Vigente = 1 
+					)	
 					THEN 'Sí' ELSE 'No' END AS Resultado";
 				 using (var command = new MySqlCommand(sql, connection))
 				{
@@ -83,7 +84,7 @@ namespace InmobiliariaPanelo.Models
 					MySqlDataReader reader = command.ExecuteReader();
 					
 					if (reader.Read()){
-						String a = reader.GetString("Resultado");
+						//String a = reader.GetString("Resultado");
 						
 						if(reader.GetString("Resultado").Equals("Sí")){
 							res = false;

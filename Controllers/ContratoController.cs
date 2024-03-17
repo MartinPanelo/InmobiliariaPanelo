@@ -64,7 +64,7 @@ namespace InmobiliariaPanelo.Controllers{
 			}
 			catch (Exception ex)
 			{
-                TempData["msj"] = "Se ha producido un error, y el contrato no se ha agregado.";
+                TempData["msj"] = "Se ha producido un error, y el contrato no se ha agregado."+ex.Message;
                 return RedirectToAction("Index");
 			}            
         }
