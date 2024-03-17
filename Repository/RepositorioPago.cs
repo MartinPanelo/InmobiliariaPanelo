@@ -210,10 +210,10 @@ namespace InmobiliariaPanelo.Models
 					{
 						p = new Pago
 						{
-                            //IdPago = reader.GetInt32("IdPago"),
-                        /*     ContratoId = reader.GetInt32("ContratoId"),
+                           // IdPago = reader.GetInt32("IdPago"),
+                           // ContratoId = reader.GetInt32("ContratoId"),
                             Monto = reader.GetDecimal("Monto"),
-                            Fecha = reader.GetDateTime("Fecha"), */
+                          //  Fecha = reader.GetDateTime("Fecha"),
                              Contrato = new Contrato
                             {
                                 IdContrato = reader.GetInt32("IdContrato"),

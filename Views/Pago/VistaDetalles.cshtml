@@ -1,10 +1,11 @@
-@model IEnumerable<InmobiliariaPanelo.Models.Pago>
+@model InmobiliariaPanelo.Models.Contrato
 @{
     ViewData["Title"] = "Detalle";
 
 
-    int pagos = ViewBag.pagos;
+    int cantpagos = ViewBag.cantpagos;
     int cuotas = ViewBag.cuotas;
+    List<Pago> pagosRealizados = ViewBag.ListaDePagos;
 
 
 }
@@ -37,14 +38,14 @@
                 Identificador de Contrato
             </dt>
             <dd class = "my-2 col-sm-9">
-                @Html.DisplayFor(model => model.FirstOrDefault().Contrato.IdContrato)
+                @Html.DisplayFor(model => model.IdContrato)
             </dd>
             <dt class = "my-2 col-sm-3">
                 Nombre del inquilino
             </dt>
             <dd class = "my-2 col-sm-9">
-                @Html.DisplayFor(model => model.FirstOrDefault().Contrato.Inquilino.Nombre)
-                @Html.DisplayFor(model => model.FirstOrDefault().Contrato.Inquilino.Apellido)
+                @Html.DisplayFor(model => model.Inquilino.Nombre)
+                @Html.DisplayFor(model => model.Inquilino.Apellido)
             </dd>
         </dl>
     </div>
@@ -55,7 +56,7 @@
                 Cuotas pagadas :
             </dt>
             <dd class = "my-2 col">
-                @pagos / @cuotas
+                @cantpagos / @cuotas
             </dd>
 
         </dl>
@@ -66,22 +67,22 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Fecha)</th>
-                    <th scope="col">@Html.DisplayNameFor(model => model.Monto)</th>
+                    <th scope="col">Fecha de pago</th>
+                    <th scope="col">Monto</th>
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
-            @foreach (var item in Model) {
+            @foreach (var pago in pagosRealizados) {
                 <tr>
-                    <td>@Html.DisplayFor(model => item.Fecha)</td>
-                    <td>@Html.DisplayFor(model => item.Monto)</td>
+                    <td>@Html.DisplayFor(model => pago.Fecha)</td>
+                    <td>@Html.DisplayFor(model => pago.Monto)</td>
                     
                         @if(User.IsInRole("Administrador")){
                             <td>        
                                 <form asp-action="EliminarPago" method="post">
-                                    <input type="hidden" name="id" value="@item.IdPago" />
-                                    <input type="hidden" name="id2" value="@item.Contrato.IdContrato" />
+                                    <input type="hidden" name="id" value="@pago.IdPago" />
+                                    <input type="hidden" name="id2" value="@pago.Contrato.IdContrato" />
                                     <button type="submit" class="btn btn-danger">Eliminar</button>
                                 </form>
                             </td>  

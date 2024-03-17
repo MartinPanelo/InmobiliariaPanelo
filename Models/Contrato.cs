@@ -21,6 +21,7 @@ namespace InmobiliariaPanelo.Models{
         public DateTime FechaHasta { get; set; }
 
         [Required]
+        [Display(Name = "Costo Total")]
         public decimal Monto { get; set; }
 
         [Display(Name = "Estado del contrato")]

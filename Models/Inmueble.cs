@@ -37,6 +37,7 @@ namespace InmobiliariaPanelo.Models{
 		[RegularExpression(@"^[0-9]+([.,][0-9]{1,2})?$", ErrorMessage = "Debe ser un número con hasta dos decimales.")]
 
 		[Required(ErrorMessage = "Este campo es obligatorio.")]
+		[Display(Name = "Costo Mensual")]
 		public decimal Precio { get; set; }
 		
 		

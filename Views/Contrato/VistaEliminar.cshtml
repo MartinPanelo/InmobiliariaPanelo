@@ -49,6 +49,13 @@
             <dd class = "my-2 col-sm-9">
                 @Html.DisplayFor(model => model.Inmueble.Direccion)
             </dd>
+            <dt class = "my-2 col-sm-3">
+                @Html.DisplayNameFor(model => model.Monto)
+            </dt>
+            <dd class = "my-2 col-sm-9">
+                @Html.DisplayFor(model => model.Monto)
+            </dd>
+            
         </dl>
                    <form asp-action="ContratoEliminar">
         <a class="btn btn-primary" asp-action="Index">Volver al listado</a> | 

@@ -1,6 +1,7 @@
 @model InmobiliariaPanelo.Models.Pago
 @{
     ViewData["Title"] = "Realizar pago";
+    var MontoAPagar = ViewBag.MontoAPagar;
     //    var listaInquilinos = (IList<Inquilino>)ViewBag.listaInquilinos;
     //    var listaInmuebles = (IList<Inmueble>)ViewBag.listaInmuebles;
 }
@@ -31,7 +32,7 @@
                 <span asp-validation-for="Fecha" class="text-danger"></span>
             </div>
 
-            <p class="my-3">Monto a pagar: $<span>@(Model.Contrato.Inmueble.Precio)</span></p>
+            <p class="my-3">Monto a pagar: $ <span>@MontoAPagar</span></p>
 
 
             <div class="form-group mt-4">
