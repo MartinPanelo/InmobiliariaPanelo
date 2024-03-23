@@ -32,7 +32,14 @@
                 <span asp-validation-for="Fecha" class="text-danger"></span>
             </div>
 
-            <p class="my-3">Monto a pagar: $ <span>@MontoAPagar</span></p>
+            <p class="my-3">Monto a pagar: $ 
+                
+                @if(Model.Contrato.Vigente){
+                    <span>@MontoAPagar</span>
+                }else{
+                    <span><strong>El contrato ya a finalizado y no esta vigente</strong></span>
+                }
+               
 
 
             <div class="form-group mt-4">

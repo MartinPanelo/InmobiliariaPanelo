@@ -60,7 +60,7 @@ namespace InmobiliariaPanelo.Controllers
 
 
 
-            Pago pagodetalle = repositorioPago.PagoDetallePorIdContrato(id);
+            Pago pagodetalle = repositorioPago.PagoDetallePorIdContrato(id);            
             TimeSpan diferencia = pagodetalle.Contrato.FechaHasta - pagodetalle.Contrato.FechaDesde;
 
             int cuotas = diferencia.Days / 30;
@@ -69,7 +69,16 @@ namespace InmobiliariaPanelo.Controllers
             {
                 cuotas++;
             }
-            ViewBag.MontoAPagar = pago.Monto / cuotas;
+
+            int cantpagos = repositorioPago.VerCantidadDePagos(id);
+
+            if(cantpagos == (cuotas-1)){
+                ViewBag.MontoAPagar = Math.Round(pago.Contrato.Inmueble.Precio / 30 * (diferencia.Days % 30), 2);/*  + pago.Contrato.Inmueble.Precio / 30 * (diferencia.Days % 30); */
+            }else{
+                ViewBag.MontoAPagar = pago.Contrato.Inmueble.Precio;
+            }
+
+            
 
 
             return View("VistaPago", pago);
@@ -103,14 +112,21 @@ namespace InmobiliariaPanelo.Controllers
                     {
                         cuotas++;
                     }
-                    pago.Monto = pagodetalle.Monto / cuotas;
+                    int cantpagos = repositorioPago.VerCantidadDePagos(pago.ContratoId);
+
+                    if(cantpagos == (cuotas-1)){
+                        pago.Monto = pago.Monto / 30 * (diferencia.Days % 30);
+                    }else{
+                        pago.Monto = pago.Monto;
+                    }
+                    //pago.Monto = pagodetalle.Monto / cuotas;
                     if (repositorioPago.PagoAlta(pago) != 1)
                     { // se realizo el pago
 
-                        int cantpagos = repositorioPago.VerCantidadDePagos(pago.ContratoId);
+                        int cantpago = repositorioPago.VerCantidadDePagos(pago.ContratoId);
 
-                        Console.WriteLine(cantpagos + " " + cuotas);
-                        if (cantpagos >= cuotas)
+                       
+                        if (cantpago >= cuotas)
                         {
 
                             pagodetalle.Contrato.Vigente = false;

@@ -70,6 +70,7 @@ namespace InmobiliariaPanelo.Models
 					WHERE (FechaDesde < @FechaHasta AND FechaHasta > @FechaDesde)
 						AND InmuebleId = @Id 
 						AND Vigente = 1 
+						AND InquilinoId != @InquilinoId
 					)	
 					THEN 'Sí' ELSE 'No' END AS Resultado";
 				 using (var command = new MySqlCommand(sql, connection))
@@ -112,10 +113,22 @@ namespace InmobiliariaPanelo.Models
 					VALUES (@InquilinoId, @InmuebleId, @FechaDesde, @FechaHasta, @Monto, @Vigente);
 					SELECT LAST_INSERT_ID();";//devuelve el id insertado (SCOPE_IDENTITY para sql)
 
-				TimeSpan DiasDeAlquiler = contrato.FechaHasta - contrato.FechaDesde;
+
+				contrato.Monto = repositorioInmueble.InmuebleObtenerPorId(contrato.InmuebleId).Precio;
+
+				int mesesDeDiferencia = ((contrato.FechaHasta.Year - contrato.FechaDesde.Year) * 12) + contrato.FechaHasta.Month - contrato.FechaDesde.Month;
+
+				int diasDeDiferencia = (int)(contrato.FechaHasta - contrato.FechaDesde).TotalDays;
+
+				diasDeDiferencia -= mesesDeDiferencia * 30;
+
+				decimal montoTotal = contrato.Monto * mesesDeDiferencia + (contrato.Monto/30 * diasDeDiferencia);
+
+
+			/* 	TimeSpan DiasDeAlquiler = contrato.FechaHasta - contrato.FechaDesde;
 				int dias = (int)DiasDeAlquiler.TotalDays;
 				contrato.Monto = repositorioInmueble.InmuebleObtenerPorId(contrato.InmuebleId).Precio/30 * dias;
-
+ */
 
 				 using (var command = new MySqlCommand(sql, connection))
 				{
@@ -125,7 +138,7 @@ namespace InmobiliariaPanelo.Models
 					command.Parameters.AddWithValue("@FechaDesde", contrato.FechaDesde);
 					command.Parameters.AddWithValue("@FechaHasta", contrato.FechaHasta);
 					command.Parameters.AddWithValue("@Vigente", true);
-					command.Parameters.AddWithValue("@Monto", contrato.Monto);
+					command.Parameters.AddWithValue("@Monto", montoTotal);
 
 					
 					connection.Open();
@@ -209,6 +222,9 @@ namespace InmobiliariaPanelo.Models
 				string sql = @"UPDATE contratos
 					SET	InquilinoId=@InquilinoId, InmuebleId=@InmuebleId, FechaDesde=@FechaDesde, FechaHasta=@FechaHasta, Vigente=@Vigente
 					WHERE IdContrato=@IdContrato;";
+
+
+				
 				using (var command = new MySqlCommand(sql, connection))
 				{
 					command.CommandType = CommandType.Text;
@@ -228,7 +244,34 @@ namespace InmobiliariaPanelo.Models
 		}
 
 
-		
+		public int ContratoRenovar(Contrato contrato)
+		{
+			int res = -1;
+			using (var connection = new MySqlConnection(connectionString))
+			{
+				string sql = @"UPDATE contratos
+					SET	InquilinoId=@InquilinoId, InmuebleId=@InmuebleId, FechaDesde=@FechaDesde, FechaHasta=@FechaHasta, Vigente=@Vigente
+					WHERE IdContrato=@IdContrato;";
+
+
+				
+				using (var command = new MySqlCommand(sql, connection))
+				{
+					command.CommandType = CommandType.Text;
+					command.Parameters.AddWithValue("@IdContrato", contrato.IdContrato);
+					command.Parameters.AddWithValue("@InquilinoId", contrato.InquilinoId);
+					command.Parameters.AddWithValue("@InmuebleId", contrato.InmuebleId);
+					command.Parameters.AddWithValue("@FechaDesde", contrato.FechaDesde);
+					command.Parameters.AddWithValue("@FechaHasta", contrato.FechaHasta);
+					command.Parameters.AddWithValue("@Vigente", contrato.Vigente);
+
+					connection.Open();
+					res = command.ExecuteNonQuery();
+					connection.Close();
+				}
+			}
+			return res;
+		}
 		
     }
 }

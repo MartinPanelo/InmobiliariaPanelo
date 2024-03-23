@@ -52,7 +52,7 @@ namespace InmobiliariaPanelo.Controllers{
 			}            
 			catch (Exception ex)
 			{
-               @TempData["msj"] = "No se ha producido un error, y el inquilino no se ha eliminado el inquilino. ";
+               @TempData["msj"] = "Se ha producido un error, y el inquilino no se ha eliminado el inquilino: "+ ex.Message;
                 return RedirectToAction("Index");
 			}
         }

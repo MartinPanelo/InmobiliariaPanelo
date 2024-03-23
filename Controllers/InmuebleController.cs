@@ -123,7 +123,7 @@ namespace InmobiliariaPanelo.Controllers{
 			}            
 			catch (Exception ex)
 			{
-                TempData["msj"] = "No se ha producido un error, y el inmueble no se ha eliminado el inmueble. ";
+                TempData["msj"] = "Se ha producido un error, y el inmueble no se ha eliminado el inmueble. ";
                 return RedirectToAction("Index");
 			}
         }

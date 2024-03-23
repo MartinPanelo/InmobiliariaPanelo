@@ -1,39 +1,31 @@
 @model InmobiliariaPanelo.Models.Contrato
 @{
-    ViewData["Title"] = "Editar Contrato";
+    ViewData["Title"] = "Renovar Contrato";
     var listaInquilinos = (IList<Inquilino>)ViewBag.listaInquilinos;
     var listaInmuebles = (IList<Inmueble>)ViewBag.listaInmuebles;
 }
 
-<h1>Editar Contrato</h1>
+<h1>Renovar Contrato</h1>
 
 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="ContratoEditar">
+        <form asp-action="ContratoAgregar">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" name="IdContrato" value="@Model.IdContrato" />
-
-
             <div class="form-group">
                 <label asp-for="FechaDesde" class="control-label"></label>
-               
-       
-                <input  asp-for="FechaDesde"  class="form-control"  />
-                
-                
+                <input asp-for="FechaDesde" class="form-control" disabled>
                 <span asp-validation-for="FechaDesde" class="text-danger"></span>
             </div>
-
-
-
            <div class="form-group">
                 <label asp-for="FechaHasta" class="control-label"></label>
-                <input asp-for="FechaHasta" class="form-control" />
+                <input asp-for="FechaHasta" class="form-control" value="null" min="@Model.FechaDesde"/>
                 <span asp-validation-for="FechaHasta" class="text-danger"></span>
             </div>
-            <span class="text-danger">@TempData["mensaje"]</span>
+            <span class="text-danger">@TempData["ErrFecha"]</span>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" name="IdContrato" value="@Model.IdContrato" />
 
 @* 
             @if(Model.Vigente == true){
