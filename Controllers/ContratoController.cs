@@ -160,7 +160,7 @@ namespace InmobiliariaPanelo.Controllers
             }
             catch (Exception ex)
             {
-                TempData["msj"] = "Se ha producido un error, y el contrato no se ha eliminado el contrato. ";
+                TempData["msj"] = "Se ha producido un error, y el contrato no se ha eliminado el contrato. :"+ex.Message;
                 return RedirectToAction("Index");
             }
         }
@@ -208,7 +208,13 @@ namespace InmobiliariaPanelo.Controllers
                     {
                         c.FechaDesde = contrato.FechaDesde;
                         c.FechaHasta = contrato.FechaHasta;
+                        c.InmuebleId = contrato.InmuebleId;
+                        c.InquilinoId = contrato.InquilinoId;
                         c.Vigente = contrato.Vigente;
+                        c.Monto = contrato.Monto;
+                        Console.Write("c: " + c);
+                        Console.Write("contrato: " + contrato);
+
                         repositorio.ContratoEditar(c);
                         TempData["msj"] = "Contrato editado correctamente";
                         return RedirectToAction("Index");
