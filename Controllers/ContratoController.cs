@@ -6,7 +6,7 @@ namespace InmobiliariaPanelo.Controllers
 {
 
     public class ContratoController : Controller
-    {
+    {        
 
         private readonly RepositorioContrato repositorio = new RepositorioContrato();
         private readonly RepositorioInmueble repositorioInmueble = new RepositorioInmueble();

@@ -9,27 +9,8 @@
 
 <div class="row">
     <div class="col">
-        <h1>Detalles del contrato</h1>
-        <hr/>
+        <h2>Detalles del contrato</h2>        
         <dl class="row align-items-center">
-@*             <dt class = "my-2 col-sm-3">
-                @Html.DisplayNameFor(model => model.IdContrato)
-            </dt>
-            <dd class = "my-2 col-sm-9">
-                @Html.DisplayFor(model => model.IdContrato)
-            </dd> *@
-          @*   <dt class = "my-2 col-sm-3">
-                @Html.DisplayNameFor(model => model.InquilinoId)
-            </dt>
-            <dd class = "my-2 col-sm-9">
-                @Html.DisplayFor(model => model.InquilinoId)
-            </dd>
-            <dt class = "my-2 col-sm-3">
-                @Html.DisplayNameFor(model => model.InmuebleId)
-            </dt>
-            <dd class = "my-2 col-sm-9">
-                @Html.DisplayFor(model => model.InmuebleId)
-            </dd> *@
             <dt class = "my-2 col-sm-3">
                 @Html.DisplayNameFor(model => model.FechaDesde)
             </dt>
@@ -70,9 +51,8 @@
         <div class="col-md-6">
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Detalles del inmueble</h1>
-                    <hr/>
-                        <dl class="row align-items-center">
+                    <h2>Detalles del inmueble</h2>
+                    <dl class="row align-items-center">
                         <dt class="my-2 col-sm-3">
                             @Html.DisplayNameFor(model => model.Inmueble.Direccion)
                         </dt>
@@ -107,8 +87,9 @@
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <h1>Detalles del inquilino</h1>
                     <hr/>
+                    <h2>Detalles del inquilino</h2>
+                    
                         <dl class="row align-items-center">
                         <dt class="my-2 col-sm-3">
                             @Html.DisplayNameFor(model => model.Inquilino.Nombre)
